@@ -12,6 +12,10 @@ During the initial development of additions and changes to the GENESIS
 neural simulator, the changed files will be distributed as replacement
 files, rather than as patches, or a new GENESIS distribution.
 
+The current files and directories that replace or add to one in the
+GENESIS 'genesis' directory are in 'gen2.4-additions0.1'.
+The complete collection may be downloaded from 'gen2.4-additions0.1.tar.gz'.
+
 From time to time, a complete genesis-2.4beta-src.tar.gz file will
 be provided.
 
