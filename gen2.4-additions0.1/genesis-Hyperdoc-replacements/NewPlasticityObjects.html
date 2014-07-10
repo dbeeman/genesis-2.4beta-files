@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.11: http://docutils.sourceforge.net/" />
+<title>Creating new synaptic plasticity objects</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 7614 2013-02-21 15:55:51Z milde $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
+  overflow: hidden;
+}
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title, .code .error {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left, .figure.align-left, object.align-left {
+  clear: left ;
+  float: left ;
+  margin-right: 1em }
+
+img.align-right, .figure.align-right, object.align-right {
+  clear: right ;
+  float: right ;
+  margin-left: 1em }
+
+img.align-center, .figure.align-center, object.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.align-left {
+  text-align: left }
+
+.align-center {
+  clear: both ;
+  text-align: center }
+
+.align-right {
+  text-align: right }
+
+/* reset inner alignment in figures */
+div.align-right {
+  text-align: inherit }
+
+/* div.align-center * { */
+/*   text-align: left } */
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font: inherit }
+
+pre.literal-block, pre.doctest-block, pre.math, pre.code {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+pre.code .ln { color: grey; } /* line numbers */
+pre.code, code { background-color: #eeeeee }
+pre.code .comment, code .comment { color: #5C6576 }
+pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
+pre.code .literal.string, code .literal.string { color: #0C5404 }
+pre.code .name.builtin, code .name.builtin { color: #352B84 }
+pre.code .deleted, code .deleted { background-color: #DEB0A1}
+pre.code .inserted, code .inserted { background-color: #A3D289}
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+/* "booktabs" style (no vertical lines) */
+table.docutils.booktabs {
+  border: 0px;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-collapse: collapse;
+}
+table.docutils.booktabs * {
+  border: 0px;
+}
+table.docutils.booktabs th {
+  border-bottom: thin solid;
+  text-align: left;
+}
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="creating-new-synaptic-plasticity-objects">
+<h1 class="title">Creating new synaptic plasticity objects</h1>
+
+<p>This documentation describes the implementation of the 'stdp_rules'
+object, and how it may be used as a model for implementing synaptic
+plasticity in a manner that is compatible with hsolve.</p>
+<div class="section" id="background-synaptic-plasticity-and-hsolve">
+<h1>Background - synaptic plasticity and hsolve</h1>
+<p>The object-oriented paradigm for scripting simulations in GENESIS 2 is
+one of its most attractive features.  By isolating cell variables and
+parameters into separate objects that communicate with 'messages' it
+is easy to modify, share, and reuse pieces of simulation scripts
+without needing to understand most details of the simulation from
+which they were taken.  This modularity has also made it possible for
+users with a little programming expertise to easily add new commands
+or objects to GENESIS for different types of synaptic plasticity.</p>
+<p>In order to avoid the inefficiency of this message-based approach at
+the implementation level. The GENESIS 2 'hsolve' object was developed
+to bypass the object-oriented implementation and allow fast cable
+model solutions, as well as much more efficient delivery of spike
+events to synaptically activated channels.  The computational speed
+increases when highly connected network models are simulated with
+hsolve are impressive, typically a factor of 10 to 20.  However, the
+price for this efficiency is that only a subset of the GENESIS objects
+can be used with hsolve, and it is not possible to modify these
+objects without major changes to the simulator code.</p>
+<p>As a result, it is not possible to use hsolve with cells that contain
+a facsynchan, hebbsynchan, or a new variety of synchan that is created
+by following the procedure givem in Doc/NewSynapticObjects.txt.
+However, the synapse (which is a substructure of the synchan) is not
+directly used by hsolve, so it is possible to modify the weights of a
+synaptic connection, and even to add extra fields in addition to the
+weight and delay.</p>
+<p>The concept behind the 'stdp_rules' object is very general, but this
+particular implementation is specific to the Song, Miller, and Abbott
+(2000) (SMA) phenomenlogical model of spike timing dependent
+plasticity (STDP). Rather than using a more biologically based model
+that depends on calcium influx to the cell, the weight modification
+rules are based on experimentally observed relationships between the
+timing of pre and postsynaptic spikes, e.g. Dan and Poo (2004). It has
+been adapted for compartmental models with continous conductance
+changes, Hodgkin-Huxley channels, and axonal delays, rather than for
+'point neuron' integrate and fire (IF) cells.</p>
+</div>
+<div class="section" id="how-to-create-a-new-synaptic-plasticity-object">
+<h1>How to create a new synaptic plasticity object</h1>
+<p>The commented simulation code in src/newconn/stdp_rules.c can be used
+as a model for implementing other types of synaptic plasticity.  For
+example, a reimplementation of the facsynchan to be hsolvable would
+use another algorithm and variables to modify the standard synchan,
+but will have much in common with the code used for 'stdp_rules'.</p>
+<p>In order to create another plasticity 'rules' object to modify synchan
+weights, begin with by studying the notes below on 'stdp_rules', and
+the demonstration scripts in Scripts/stdp_rules. The README file in
+that directory describes a script function 'apply_stdp_rules' that can
+be called with a clocked 'script_out' object to perform the same
+synaptic weight modifications as 'stdp_rules'. It will be slower, of
+course, but it can be modfied as a prototype for a new variety of
+hsolvable plasticity rules. After testing and refinement, the
+prototyped plasticity model can be compiled into an object in a new
+GENESIS library, by following the instructions in Doc/NewObjects.txt.</p>
+<p>You will want to study these files in src/newconn in order to understand
+the relationship between the SLI script and the C code implementation:</p>
+<pre class="literal-block">
+Makefile   -- adds stdp_rules.o to OBJECTS
+newconnlib.g -- adds section for 'object stdp_rules stdp_rules_type StdpRules'
+newconn_struct.h -- added '#include &quot;stdp_rules_struct.h&quot;'; changed SYNAPSE_TYPE
+stdp_rules_struct.h -- defines struct stdp_rules_type for the object fields
+stdp_rules.c -- the source code for StdpRules() and functions
+synchan.c -- has additions to the 'EVENT' and 'RESET' cases
+</pre>
+<p>Modifications to synchan.c should be restricted to those that do not
+affect the hsolvability of the synchan. In particular, no new messages
+should be added, nor any changes to the PROCESS action. In this case,
+synchan.c was modified to add the 'last_spike_time' field to each
+synapse and set it to the time of the last presynaptic spike plus
+delay in order to get the arrival time. This was done within the
+'EVENT' case, where spike events are processed outside of hsolve.</p>
+<p>Aplus and Aminus fields were added for use by stdp_rules or another
+synapse modification object. The added field 'lastupdate' can be used
+to store the time that the synapse weight, Aplus, and Aminus
+fields were last updated. Other than initialization on RESET, these
+three fields are not directly used by the synchan.</p>
+</div>
+<div class="section" id="overview-of-stdp-rules">
+<h1>Overview of stdp_rules</h1>
+<p>The 'stdp_rules' object (see Doc/stdp_rules.txt) is a clocked object
+(usually with a step of about 1 msec) that examines pre and post
+synaptic spike times of a cell or list of cells, and changes the
+weight of each synapse accordingly.</p>
+<p>At each clock step, for the cell (or in turn for each cell):</p>
+<p>It gets the 'lastevent' field of the cell's spikegen to find when
+it last spiked.  Comparing it with the current time tells if it has
+spiked since the last clocked call of the function, or when it last
+spiked.  The same thing is done for each of the synaptic connections
+to this synapse, by examining the 'last_spike_time' field of the
+synapse, in order to find the most recent presynaptic spike arrival
+time. For example:</p>
+<p><tt class="docutils literal">getfield <span class="pre">/cell[5]/dend/Ex_channel</span> <span class="pre">synapse[0].last_spike_time</span></tt></p>
+<p>The relative timing of the pre- and post-synaptic spikes is used in
+the STDP algorithm to adjust the weights.  In this implementation it
+involves an exponential time window with a small number of parameters.
+This gives higher negative or positive weight changes when the time
+difference is small. (The change is negative if the pre-synaptic cell
+fired later). For more details, see the Methods section of Song et
+al. (2000).</p>
+<p>In particular, note that the SMA algorithm adds each weight change to
+an ongoing exponentially decaying change from previous spike events,
+rather than adding it directly to the current weight.  This provides a
+type of 'momentum' term to keep weight changes moving in the same
+direction. Using this approach instead of using a simple increase of
+weight by a fixed increment required the addition of the 'Aplus' and
+'Aminus' fields to the synapse.  The differences between these
+approaches to weight modification is discussed in the paper by
+Morrison, et al. (2008) For a description of an implementation of the
+SMA rules in Python using the Brian simulator, see Stimberg et
+al. (2104)</p>
+<p>See also: synchan, spikegen, NewObjects, NewSynapticObjects</p>
+</div>
+<div class="section" id="references">
+<h1>References</h1>
+<p>Dan Y and Poo M (2004) Spike timing-dependent plasticity of neural
+circuits. Neuron, 44:232-330.</p>
+<p>Morrison A, Diesmann M, Gerstner W (2008) Phenomenological models of
+synaptic plasticity based on spike timing. Biol. Cybern. 98: 459-478.</p>
+<p>Song S, Miller KD, Abbott LF (2000) Competitive Hebbian learning
+through spike-timing-dependent synaptic plasticity.
+Nat. Neurosci. 3: 919–926.</p>
+<p>Stimberg M, Goodman DFM, Benichoux V, Brette R (2014)
+Equation-oriented specification of neural models for simulations.
+Front. Neuroinf. 8: Article 6. doi: 10.3389/fninf.2014.00006</p>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.11: http://docutils.sourceforge.net/" />
+<title></title>
+<style type="text/css">
+
+/*
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 7614 2013-02-21 15:55:51Z milde $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
+  overflow: hidden;
+}
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title, .code .error {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left, .figure.align-left, object.align-left {
+  clear: left ;
+  float: left ;
+  margin-right: 1em }
+
+img.align-right, .figure.align-right, object.align-right {
+  clear: right ;
+  float: right ;
+  margin-left: 1em }
+
+img.align-center, .figure.align-center, object.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.align-left {
+  text-align: left }
+
+.align-center {
+  clear: both ;
+  text-align: center }
+
+.align-right {
+  text-align: right }
+
+/* reset inner alignment in figures */
+div.align-right {
+  text-align: inherit }
+
+/* div.align-center * { */
+/*   text-align: left } */
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font: inherit }
+
+pre.literal-block, pre.doctest-block, pre.math, pre.code {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+pre.code .ln { color: grey; } /* line numbers */
+pre.code, code { background-color: #eeeeee }
+pre.code .comment, code .comment { color: #5C6576 }
+pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
+pre.code .literal.string, code .literal.string { color: #0C5404 }
+pre.code .name.builtin, code .name.builtin { color: #352B84 }
+pre.code .deleted, code .deleted { background-color: #DEB0A1}
+pre.code .inserted, code .inserted { background-color: #A3D289}
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+/* "booktabs" style (no vertical lines) */
+table.docutils.booktabs {
+  border: 0px;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-collapse: collapse;
+}
+table.docutils.booktabs * {
+  border: 0px;
+}
+table.docutils.booktabs th {
+  border-bottom: thin solid;
+  text-align: left;
+}
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document">
+
+
+<pre class="literal-block">
+                    G E N E S I S
+
+        The GEneral NEural Simulation System
+             Version 2.4 - beta release
+Last edited: $Date: Tue Jul  8 17:31:14 MDT 2014 $
+</pre>
+<div class="section" id="introduction">
+<h1>Introduction</h1>
+<p>This directory contains the distribution of GENESIS version 2.4.</p>
+<p>A detailed list of source code changes from previous versions is provided in
+genesis/ChangeLog.  New features of version 2.3 and 2.4 are described in
+genesis/Doc/Changes.txt.</p>
+<p>Directions for installing binary distributions may be found in README.bindist
+in this directory. Directions for building and installing source distributions
+are in src/README.  Be sure to read the directions
+concerning the installation of the &quot;.simrc&quot; file.  Directions for printing
+and using the documentation may be found in Doc/README.  The
+Scripts/README file describes the demonstration and tutorial simulations
+which are included with this distribution.</p>
+</div>
+<div class="section" id="description-of-genesis">
+<h1>Description of GENESIS</h1>
+<p>GENESIS is a general purpose simulation platform which was developed to
+support the simulation of neural systems ranging from complex models of
+single neurons to simulations of large networks made up of more abstract
+neuronal components.  Most current GENESIS applications involve realistic
+simulations of biological neural systems.  Although the software can also
+model more abstract networks, there exist other simulation packages that
+are more suitable for backpropagation and similar connectionist modeling.</p>
+<p>A detailed guide to the GENESIS neuroscience tutorials and the construction
+of GENESIS simulations is given in:</p>
+<blockquote>
+The Book of GENESIS: Exploring Realistic Neural Models with the GEneral
+NEural SImulation System, Second Edition, by James M. Bower and David
+Beeman, Springer-Verlag (1998).  The free Internet Edition is available
+at <a class="reference external" href="http://www.genesis-sim.org/GENESIS/bog/bog.html">http://www.genesis-sim.org/GENESIS/bog/bog.html</a></blockquote>
+<p>Additional hypertext documentation, including a beginners guide to
+UNIX/Linux commands, can be found in genesis/Tutorials.</p>
+<p>Source code contributed by GENESIS users which must be compiled is found in
+src/contrib; other contributions, such as scripts and utilities are in contrib.</p>
+</div>
+<div class="section" id="obtaining-genesis">
+<h1>Obtaining GENESIS</h1>
+<p>GENESIS source and binary distributions can be obtained from:
+<a class="reference external" href="http://sourceforge.net/projects/genesis-sim">http://sourceforge.net/projects/genesis-sim</a>, and <a class="reference external" href="http://genesis-sim.org">http://genesis-sim.org</a>.</p>
+</div>
+<div class="section" id="machine-dependence">
+<h1>Machine dependence</h1>
+<p>GENESIS and its graphical front-end XODUS are written in C and are
+known to run under many UNIX-based systems with the X Window System
+(X11R5, X11R6, Xorg), as well as OSX and Windows with Cygwin. Most
+recent experiences are with Fedora and Ubuntu. It has also been used
+under various MS Windows virtual environments for running Linux.</p>
+<p>Here is a partial list of tested older platforms:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>x86-based Linux systems:</dt>
+<dd><ul class="first last simple">
+<li>Debian Linux with kernel 2.x</li>
+<li>Fedora Core 2, 3, and 4</li>
+<li>Gentoo</li>
+<li>Mandrake Linux 7, 8, and 9.1 (but not 9.0)</li>
+<li>Red Hat Linux 5, 6, 7, 8, and 9</li>
+<li>Slackware 10</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>64 bit Linuces:</dt>
+<dd><ul class="first last simple">
+<li>Fedora Core 3 and 4</li>
+<li>Red Hat Enterprise</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">x86-based FreeBSD 4.1</p>
+</li>
+<li><p class="first">Alpha with Debian 3.0</p>
+</li>
+<li><p class="first">IBM SP2 systems running AIX 4.2 and 4.3</p>
+</li>
+<li><p class="first">PPC-based Linux systems running LinuxPPC, SUSE 7.0, and OSX</p>
+</li>
+<li><p class="first">SGI MIPS-based systems running IRIX 5.x and 6.5.x</p>
+</li>
+<li><p class="first">Sun SPARC and x86 systems running Solaris 2.6, and 2.7</p>
+</li>
+</ul>
+<p>It is quite likely that GENESIS will also work on systems running other
+versions of the operating systems listed above; however, the GENESIS
+developers only have direct experience with the particular systems listed.</p>
+<p>GENESIS may <em>fail</em> to work on DEC Alpha-based systems. Please let us know of
+any experiences with this platform.</p>
+<p>GENESIS has in the past worked on the following systems, but the developers
+do not have these systems available for full testing and have not been able
+to adequately verify that GENESIS 2.3 compiles and runs properly:</p>
+<ul class="simple">
+<li>Sun SPARC-based systems running SunOS 4.1.x</li>
+<li>Sun SPARC-based running Solaris 2.5/2.5.1</li>
+<li>HP-UX systems</li>
+<li>Intel Paragon</li>
+<li>DECStation running Ultrix 4.x or 3.x</li>
+<li>Cray T3E and T3D</li>
+</ul>
+<p>We welcome feedback on experiences with these platforms.  If you attempt to
+use GENESIS on these systems and have problem reports (or even better,
+fixes), please contact the GENESIS maintainers.</p>
+</div>
+<div class="section" id="genesis-users-mailing-list">
+<h1>GENESIS Users Mailing List</h1>
+<p>Serious users of GENESIS are advised to join the GENESIS
+genesis-sim-users mailing list at
+<a class="reference external" href="https://lists.sourceforge.net/lists/listinfo/genesis-sim-users">https://lists.sourceforge.net/lists/listinfo/genesis-sim-users</a>.  Find
+the latest new simulations, libraries of cells and channels,
+additional simulator components, new documentation and tutorials, and
+patches at the main GENESIS web site <a class="reference external" href="http://genesis-sim.org">http://genesis-sim.org</a>.</p>
+</div>
+<div class="section" id="disclaimer">
+<h1>Disclaimer</h1>
+<p>It should be understood that this software system is being provided for
+general distribution as a public service to the neural network and
+computational neuroscience communities.  We make no claims as to the
+quality or functionality of this software for any purpose whatsoever and
+its release does not constitute a commitment on our part to provide support
+of any kind.</p>
+<div class="section" id="copyright-notice">
+<h2>Copyright Notice</h2>
+<blockquote>
+<p>Copyright 1988 - 2001 by the California Institute of Technology</p>
+<p>This program is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the Free
+Software Foundation.  Portions of this program are in library form.  The
+libraries are also free software; you can redistribute them and/or modify
+them under the terms of the GNU Lesser General Public License as published
+by the Free Software Foundation; either version 2.1 of the License, or (at
+your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License and the
+GNU Lesser General Public License along with this program; if not, write to
+the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+Boston, MA 02110-1301  USA.</p>
+<p>Recent additions to the GENESIS libraries are copyrighted by other
+institutions or authors, and are covered by the GNU General Public
+License (GPL), GNU Lesser General Public License (LGPL), or by other
+licenses that are compatible with the GPL and that do not restrict the
+free distribution of GENESIS.  These licenses appear with these modules.</p>
+<p>For a statement of the GPL, see the file &quot;GPLicense&quot;.
+For a statement of the LGPL, see the file &quot;LGPLicense&quot;.</p>
+</blockquote>
+</div>
+</div>
+</div>
+</body>
+</html>
