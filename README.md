@@ -14,10 +14,7 @@ files, rather than as patches, or a new GENESIS distribution.
 
 The current files and directories that replace or add to one in the
 GENESIS 'genesis' directory are in 'gen2.4-additions0.1'.
-The complete collection may be downloaded from 'gen2.4-additions0.1.tar.gz'.
-
-From time to time, a complete genesis-2.4beta-src.tar.gz file will
-be provided.
+The complete collection may be downloaded by clicking on "Download ZIP".
 
 See README-install.txt (or .html) for instructions for installing or
 upgrading to the latest GENESIS 2.4 release.
