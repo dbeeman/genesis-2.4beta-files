@@ -413,8 +413,7 @@ object	stdp_rules  stdp_rules_type StdpRules       output \
 	-readwrite   dAminus	  "increment for negative weight changes" \
 	-readwrite   change_weights "flag: 0 = plasticity off, otherwise on" \
 	-readwrite   debug_level "flag: 0 = no messages, 1 = some messages, 2 = more" \
-  -readonly    synlist     "GENESIS ElementList of cell synchans to modify" \
-  -readonly    spikelist     "GENESIS ElementList of cell spikegens" \
+  -readonly    celllist     "GENESIS ElementList of cells to modify" \
 	-description "A clocked object to modify synaptic weights for all " \
 		     "synapses of a specified (wildcarded) cell and synchan, " \
          "e.g. '/layer4/pyr[]' and 'apical3/AMPA'. " \

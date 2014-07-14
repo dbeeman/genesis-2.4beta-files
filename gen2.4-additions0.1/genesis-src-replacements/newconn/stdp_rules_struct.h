@@ -17,6 +17,6 @@ struct stdp_rules_type
   short change_weights; /* flag: 0 = plasticity off, otherwise on */
   short debug_level; /* flag: 0 = no messages, 1 = some messages, 2 = more messages */
   /* Fields that are set by the 'stdp_rules' element */
-  ElementList *synlist; /* GENESIS ElementList of synchans */
-  ElementList *spikelist; /* GENESIS ElementList of spikegens */
+  ElementList *celllist; /* GENESIS ElementList of cells */
+
 };

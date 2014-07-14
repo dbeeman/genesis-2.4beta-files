@@ -26,8 +26,8 @@ Fields:
              dAminus         increment for negative weight changes
              change_weights  flag: 0 = plasticity off, otherwise on
              debug_level     flag: 0 = no messages, 1 = some messages, 2 = more
-             synlist         GENESIS ElementList of cell synchans to modify
-	     spikelist       GENESIS ElementList of cell spikegens
+             synlist         GENESIS ElementList of cells to modify
+
 
 ------------------------------------------------------------------------------
 

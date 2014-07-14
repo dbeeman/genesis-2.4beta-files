@@ -26,8 +26,7 @@
  * short change_weights;  flag: 0 = plasticity off, otherwise on
  * short debug_level; flag: 0 = no messages, 1 = some messages, 2 = more messages
  * These fields are set on RESET:
- * ElementList *synlist; GENESIS ElementList of synchans
- * ElementList *spikelist; GENESIS ElementList of spikegens
+ * ElementList *celllist; GENESIS ElementList of cells
  *
  * Author: Dave Beeman, June 2014.
  *
@@ -42,15 +41,10 @@ stdp_rules_reset(stdpelement)
   struct stdp_rules_type *stdpelement;
  {
    char  *cellpath, *synpath, *spikepath;
-   ElementList *synlist, *spikelist;
+   ElementList *celllist;
    short debug_level;
-   char fullsynpath[256];  /* Instead of using calloc() assume 255 char max */  
-   char fullspikepath[256];
-   short output_len;
    debug_level = stdpelement->debug_level;
    cellpath = stdpelement->cellpath;
-   synpath = stdpelement->synpath;  /* relative path from cell */
-   spikepath = stdpelement->spikepath; /* relative path from cell */
    synpath = stdpelement->synpath;  /* relative path from cell */
    spikepath = stdpelement->spikepath; /* relative path from cell */
 
@@ -58,31 +52,13 @@ stdp_rules_reset(stdpelement)
      printf("WARNING - The fields 'cellpath', 'spikepath' and 'synpath' must be set\n");
       return;
      }
-   /* Now construct the full wildcarded paths from the wildcard cellpath */
-   output_len = snprintf(fullsynpath, 256, "%s/%s", cellpath, synpath);
-   if (output_len >= 256)
-     printf("Length of the full path to the synchan exceeded limit of "
-	    "255 characters by %d\n" "string truncated to %s\n",
-	    output_len - 255, fullsynpath);
-   output_len = snprintf(fullspikepath, 256, "%s/%s", cellpath, spikepath);
-   if (output_len >= 256)
-     printf("Length of the full path to the spikegen exceeded limit of "
-	    "255 characters by %d\n" "string truncated to %s\n",
-	    output_len - 255, fullspikepath);
-
-   if (debug_level > 0) {
-     printf("debug level = %d\n", debug_level);
-     printf("cellpath = %s\n", cellpath);
-     printf("fullspikepath =  %s\n", fullspikepath);
-     printf("fullsynpath =  %s\n", fullsynpath);
-   }
 
    /* Need some explanation of 'blockmode' argument */
-   synlist =  WildcardGetElement(fullsynpath, 1);
-   spikelist = WildcardGetElement(fullspikepath, 1);
-   /* store the constructed element lists in the structure */
-   stdpelement->synlist = synlist;
-   stdpelement->spikelist = spikelist;
+   celllist = WildcardGetElement(cellpath, 1);
+
+  /* store the constructed element lists in the structure */
+   stdpelement->celllist = celllist;
+
 }
 
 /* do_stdp_update(stdpelement, synchan, spikegen) is called by the
@@ -241,10 +217,16 @@ int StdpRules(stdpelement, action)
     short  debug_level, change_weights;
     double  curr_time, last_post_spike, last_pre_spike;
     int    curr_step;
-    char *synpath, *spikepath;
-    ElementList *synlist, *spikelist;
+    char *cellpath, *synpath, *spikepath;
+    ElementList *celllist;
+
     struct Synchan_type* synchan;
     struct Spikegen_type* spikegen;
+
+   char fullsynpath[256];  /* Instead of using calloc() assume 255 char max */  
+   char fullspikepath[256];
+   short output_len;
+   char *pathstr;
 
     SELECT_ACTION(action)
     {
@@ -269,23 +251,32 @@ int StdpRules(stdpelement, action)
 
     case PROCESS:
 	if (stdpelement->change_weights == 0) break;
-	spikelist = stdpelement->spikelist;
-	synlist = stdpelement->synlist;
+
+        cellpath = stdpelement->cellpath;
+        synpath = stdpelement->synpath;  /* relative path from cell */
+        spikepath = stdpelement->spikepath; /* relative path from cell */
+
+	celllist = stdpelement->celllist;
 	debug_level = stdpelement->debug_level;
 	/* Loop over all cells to get the spikegen and synchan to modify */
-        if (debug_level > 0) printf("spikegens: %d\n", spikelist->nelements);
+        if (debug_level > 0) printf("Number of cells =: %d\n", celllist->nelements);
 
-	for (n = 0; n <  spikelist->nelements; n++)
+	for (n = 0; n <  celllist->nelements; n++)
 	{
-	    spikegen = (struct Spikegen_type*) spikelist->element[n];
-	    synchan = (struct Synchan_type*) synlist->element[n];
+
+	  /* Turn the element list into strings   */
+	  pathstr = Pathname(celllist->element[n]);
+	  output_len = snprintf(fullsynpath, 256, "%s/%s", pathstr, synpath);
+	  output_len = snprintf(fullspikepath, 256, "%s/%s", pathstr, spikepath);
+	  /* now get the spikegen and synchan element for the cell */
+
+	  spikegen = (struct Spikegen_type*) GetElement(fullspikepath);
+	  synchan = (struct Synchan_type*) GetElement(fullsynpath);
+
 	    if (debug_level > 0) {
-		printf("spikegen number: %d\n", n);
-		/* I may need a way to check if synlist->element[n] corresponds to the
-		   same cell as spikelist->element[n]
-		*/
-		printf("number of spikegens = %d\n", spikelist->nelements);
-		printf("number of synchans = %d\n", synlist->nelements);
+		printf("cell number: %d\n", n);
+		printf("full synpath = %s\n",fullsynpath );
+		printf("full spikepath = %s\n",fullspikepath );
 	    }
 	    do_stdp_update(stdpelement, synchan, spikegen);
 	}
