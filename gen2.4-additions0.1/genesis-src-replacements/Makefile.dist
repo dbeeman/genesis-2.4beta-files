@@ -2,7 +2,7 @@
 #
 #				G E N E S I S
 #		    The General Neural Simulation System
-#				 Version 2.3
+#				 Version 2.4beta
 #
 # SYNOPSIS: This is the top-level Makefile for GENESIS.  
 #           YOU MUST EDIT THIS FILE BEFORE RUNNING "make".
@@ -935,12 +935,19 @@ SPRNGLIB   = $(SPRNGDIR)/lib/lib$(SPRNG_LIB).a
 ## end	Linux 2.x and up on PPC-based systems (LinuxPPC)
 
 # ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~
-# System:       MacOS X and Darwin (PPC-based systems)
+# System:       MacOS X and Darwin (PPC and Intel x86 based systems)
 # Compiler:     Apple Computer, Inc. v.gcc-932.1, based on gcc v.2.95.2
 # ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~
 
 ## This configuration was originally provided by a GENESIS user, Alfonso
 ## Delgado-Reyes.
+##
+## For this beta release, we would appreciate comments and feedback from other
+## users of recent versions of MacOS.  The paths below for XLIB and XINCLUDE
+## may no longer be valid, will probably not cause problems.
+## If compilation fails because of errors in netcdf, see the earlier comments
+## on changing the definitions for the netCDF file format, in order to disable it.
+##
 
 # MACHINE=MacOSXDarwin
 # OS=BSD
@@ -973,7 +980,7 @@ SPRNGLIB   = $(SPRNGDIR)/lib/lib$(SPRNG_LIB).a
 # TERMCAP=-lcurses
 # TERMOPT=-DTERMIO -DDONT_USE_SIGIO
 
-## end  MacOS X and Darwin (PPC-based systems)
+## end  MacOS X and Darwin (PPC and Intel x86 based systems)
 
 # ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~
 # System:	FreeBSD 4.1
@@ -1524,7 +1531,7 @@ nxinstall: makedirs
 mininstall: makedirs
 	@make -f $(MF) MF="$(MF)" INSTALLDIR="$(INSTALLDIR)" INSTALLBIN="$(INSTALLBIN)" SPRNG_LIB="$(SPRNG_LIB)" MINSUBDIR="$(MINSUBDIR)" RANLIB="$(RANLIB)" mininstall
 
-VERSNAME="genesis-2.3"
+VERSNAME="genesis-2.4"
 bindist: genesis nxgenesis
 	make INSTALLDIR="`pwd`/../distributions/$(VERSNAME)/genesis" install
 	cp nxgenesis "../distributions/$(VERSNAME)/genesis"
@@ -1571,7 +1578,6 @@ TestSuite:
 		tar czf TestSuite.tar.gz --exclude CVS TestSuite; \
 		tar cjf TestSuite.tar.bz2 --exclude CVS TestSuite)
 
-		
 
 # ----------------------------------------------------------------------
 # G. REVISION HISTORY
