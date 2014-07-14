@@ -9,24 +9,47 @@ as patches, or a new GENESIS distribution.
 In order to use these files,
 
   * Begin with clean GENESIS 2.3 distribution, from genesis-2.3-src.tar.gz
+    You may download the original March 2006 release from
+    http://genesis-sim.org/GENESIS/genesis-ftp/genesis-2.3-src.tar.gz.
+
+  * unpack it where it will not conflict with any existing installation
+    of 'genesis-2.3' (for example in ~/tmp).
 
   * Rename the top directory 'genesis-2.3' to something else, such as
     'genesis-2.4beta-0'
 
-  * Copy the files from these 'replacement directories' into the
-    appropriate subdirectories of 'genesis-2.4beta-0/genesis'.  For
-    example, 'genesis-Doc-replacements' contains files to be copied into
-    'genesis/Doc' to augment or update the documentation files.
-    Note that some of the new documentation may exist in HTML form,
-    as well as plain text. Likewise, genesis/Scripts-additions contains
-    directories that should be copied into the genesis/Scripts directory,
-    and genesis-replacements contains replacement README and Changelog
-    information for the main 'genesis' directory. Any exceptions are
-    listed below.
+  * Obtain a copy of these replacement files by clicking on
+     "Download ZIP" to download the file 'genesis-2.4beta-files-master.zip'.
+
+  * Unpack the ZIP file and copy the files from these 'replacement
+    directories' into the appropriate subdirectories of
+    'genesis-2.4beta-0/genesis'.  For example,
+    'genesis-Doc-replacements' contains files to be copied into
+    'genesis/Doc' to augment or update the documentation files.  Note
+    that some of the new documentation may exist in HTML form, as well
+    as plain text. Likewise, genesis/Scripts-additions contains
+    directories that should be copied into the genesis/Scripts
+    directory, and genesis-replacements contains replacement README
+    and Changelog information for the main 'genesis' directory. Any
+    exceptions are listed below.
 
   * Then make genesis as usual, following the instructions in src/README.
+    Note the instructions for sending the output to a 'make.out' file, in
+    order to locate relevant error messages. Be sure to set any necessary
+    path names in order to find the right 'genesis' if you also have
+    release 2.3 installed.
+
     Please report any compilation problems, or needed Makefile changes
     to me (dbeeman@colordo.edu) or to the genesis-sim-users mailing list.
+    MacOS users: Please see the comments in Makefile.dist regarding
+    Mac settings, and the possible need to disable netcdf compilation.
+
+Some exceptions:
+
+  * The original Scripts/purkinje directory should be removed before copying
+    in the new one.
+
+Additional notes:
 
 Currently, the directory 'genesis-src-replacements/newconn/' contains
 these files to be copied into src/newconn::
@@ -57,9 +80,3 @@ not yet been indexed.
 See genesis-Scripts-replacements for other new tutorial simulations.
 
 See src/ChangeLog for the latest additions and changes.
-
-Some exceptions:
-
-  * The original Scripts/purkinje directory should be removed before copying
-    in the new one.
-

@@ -347,25 +347,55 @@ changed files will be distributed as replacement files, rather than
 as patches, or a new GENESIS distribution.</p>
 <p>In order to use these files,</p>
 <blockquote>
-<ul class="simple">
-<li>Begin with clean GENESIS 2.3 distribution, from genesis-2.3-src.tar.gz</li>
-<li>Rename the top directory 'genesis-2.3' to something else, such as
-'genesis-2.4beta-0'</li>
-<li>Copy the files from these 'replacement directories' into the
-appropriate subdirectories of 'genesis-2.4beta-0/genesis'.  For
-example, 'genesis-Doc-replacements' contains files to be copied into
-'genesis/Doc' to augment or update the documentation files.
-Note that some of the new documentation may exist in HTML form,
-as well as plain text. Likewise, genesis/Scripts-additions contains
-directories that should be copied into the genesis/Scripts directory,
-and genesis-replacements contains replacement README and Changelog
-information for the main 'genesis' directory. Any exceptions are
-listed below.</li>
-<li>Then make genesis as usual, following the instructions in src/README.
-Please report any compilation problems, or needed Makefile changes
-to me (<a class="reference external" href="mailto:dbeeman&#64;colordo.edu">dbeeman&#64;colordo.edu</a>) or to the genesis-sim-users mailing list.</li>
+<ul>
+<li><p class="first">Begin with clean GENESIS 2.3 distribution, from genesis-2.3-src.tar.gz
+You may download the original March 2006 release from
+<a class="reference external" href="http://genesis-sim.org/GENESIS/genesis-ftp/genesis-2.3-src.tar.gz">http://genesis-sim.org/GENESIS/genesis-ftp/genesis-2.3-src.tar.gz</a>.</p>
+</li>
+<li><p class="first">unpack it where it will not conflict with any existing installation
+of 'genesis-2.3' (for example in ~/tmp).</p>
+</li>
+<li><p class="first">Rename the top directory 'genesis-2.3' to something else, such as
+'genesis-2.4beta-0'</p>
+</li>
+<li><dl class="first docutils">
+<dt>Obtain a copy of these replacement files by clicking on</dt>
+<dd><p class="first last">&quot;Download ZIP&quot; to download the file 'genesis-2.4beta-files-master.zip'.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">Unpack the ZIP file and copy the files from these 'replacement
+directories' into the appropriate subdirectories of
+'genesis-2.4beta-0/genesis'.  For example,
+'genesis-Doc-replacements' contains files to be copied into
+'genesis/Doc' to augment or update the documentation files.  Note
+that some of the new documentation may exist in HTML form, as well
+as plain text. Likewise, genesis/Scripts-additions contains
+directories that should be copied into the genesis/Scripts
+directory, and genesis-replacements contains replacement README
+and Changelog information for the main 'genesis' directory. Any
+exceptions are listed below.</p>
+</li>
+<li><p class="first">Then make genesis as usual, following the instructions in src/README.
+Note the instructions for sending the output to a 'make.out' file, in
+order to locate relevant error messages. Be sure to set any necessary
+path names in order to find the right 'genesis' if you also have
+release 2.3 installed.</p>
+<p>Please report any compilation problems, or needed Makefile changes
+to me (<a class="reference external" href="mailto:dbeeman&#64;colordo.edu">dbeeman&#64;colordo.edu</a>) or to the genesis-sim-users mailing list.
+MacOS users: Please see the comments in Makefile.dist regarding
+Mac settings, and the possible need to disable netcdf compilation.</p>
+</li>
 </ul>
 </blockquote>
+<p>Some exceptions:</p>
+<blockquote>
+<ul class="simple">
+<li>The original Scripts/purkinje directory should be removed before copying
+in the new one.</li>
+</ul>
+</blockquote>
+<p>Additional notes:</p>
 <p>Currently, the directory 'genesis-src-replacements/newconn/' contains
 these files to be copied into src/newconn:</p>
 <pre class="literal-block">
@@ -392,13 +422,6 @@ genesis-Hyperdoc-replacements. At present, the new additions have
 not yet been indexed.</p>
 <p>See genesis-Scripts-replacements for other new tutorial simulations.</p>
 <p>See src/ChangeLog for the latest additions and changes.</p>
-<p>Some exceptions:</p>
-<blockquote>
-<ul class="simple">
-<li>The original Scripts/purkinje directory should be removed before copying
-in the new one.</li>
-</ul>
-</blockquote>
 </div>
 </body>
 </html>
