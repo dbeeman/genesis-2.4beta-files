@@ -1,6 +1,6 @@
 
-Creating new synaptic plasticity objects
-========================================
+21.1.4 Creating new synaptic plasticity objects
+===============================================
 
 This documentation describes the implementation of the 'stdp_rules'
 object, and how it may be used as a model for implementing synaptic
