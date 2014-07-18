@@ -1,9 +1,9 @@
 GENESIS Python tools
 ====================
 
-This directory (python-tools) contains a collection of stand-alone
+This directory (gpython-tools) contains a collection of stand-alone
 Python-based graphical utilities for plotting, visualizing, and
-analyzing the output of GENESIS 2.3 and GENESIS 3 (G-3) simulations.
+analyzing the output of GENESIS 2 and GENESIS 3 (G-3) simulations.
 There is nothing specific about GENESIS in these Python scripts, other
 than the format of the plain text files that contain the simulation
 output.  The scripts are well documented and commented, and may be
@@ -82,12 +82,13 @@ However, these links are your first stop for documentation.
 Scripting examples
 ------------------
 
-The python-tools/examples directory contains some simple example
+The gpython-tools/examples directory contains some simple example
 Python scripts and data files that were used in the January 2014
 LASCON Python Tutorial.  They are described in the `README
 <examples/README.html>`_ file, along with suggested exercises.
 
 Dave Beeman
-Sun Dec 29 21:37:42 MST 2013
+Thu Jul 17 15:14:33 MDT 2014
+
 
 
