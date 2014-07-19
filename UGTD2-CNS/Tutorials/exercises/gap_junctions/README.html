@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE></TITLE>
+<META NAME="generator" CONTENT="txt2html v1.28">
+</HEAD>
+<BODY>
+<H1><A NAME="section-1.">Exercise: The effect of gap junctions on synchronization</A></H1>
+
+<P>
+Dendrodendritic connections between interneurons via gap junctions
+("electical synapses") are believed to facilitate synchronized firing in
+networks.  (For example, see the 2009 Hjorth et al striatal interneuron
+network model on the genesis-sim web site.) In GENESIS, a gap junction
+between compartments in two different cells can be implemented by passing
+an RAXIAL message directly from each compartment to the other, with the Ra
+field replaced by a number representing the resistance of the gap junction.
+The BoG gives an example of this in Section 19.6.
+
+<P>
+To see this effect, create two neurons that receive independent
+random excitation, and then experiment with different values of
+gap junction coupling beteeen the dendrites.  The simple-network
+exercise provides a good starting point for this, with a graphics
+script to plot the results and the files needed to create the
+simple two-compartment cells.  Instead of applying current injection
+to the soma, set the frequency field of the excitatory synchan to
+about 200 Hz, in order to provide Poisson-distributed activation
+at the specified average frequency.  After plotting the firing
+of the two cells, add the gap junction beteeen the dendrite
+compartments of the two cells, and note the result for different
+values of the gap resistance.
+
+<HR>
+<P>
+<h2><a href="../index.html">Back to the index of exercises</a></h2>
+
+</BODY>
+</HTML>

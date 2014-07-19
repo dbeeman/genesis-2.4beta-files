@@ -1,0 +1,58 @@
+This directory (new_mit) has some of Upi's mitral cell scripts converted to
+GENESIS 2, and my new mitral cell scripts.  All of Upi's original scripts are
+in the jneurophys.jun93.tar file in the babel cells/mitrall_granule directory.
+
+Some relevant files:
+
+Notes - my notes on jneurophys.jun93 contents and the development of my
+    scripts.
+
+mit.p - the original mit.p file for the 286 compartment mitral cell model with
+    Upi's hack for the soma leakage resistance replaced by having a different
+    SOMA Vm
+
+smit2.p - A smaller 53 compt mitral cell model - differs from
+    chan_kinetics/smit.p in not having the synaptically aactivated channels.
+    Also has the fix for the soma RM.
+
+newbulbchan.g - a corrected version of the neurokit/prototypes/newbulbchan.g
+    file for the channel prototypes
+
+userprefs.g - lets you run Neurokit in this directory to experiment with
+    smit2.p and mit.p.  This is the easiest way to experiment with the models
+    when developing things to try for the tutorial.  Start by recording from
+    the soma and one of the distal denrites, with 0.5 nA injection to the
+    soma.
+
+injtut.g - This is a general-purpose current injection demo for experimenting
+    with different kinds of file output, xcell display, etc., by setting some
+    flags at the start of the script.  It was designed to be the basis for
+    code that is used to initialize the GENESIS server when used with the
+    Modeler's Workspace.  It contains no model-specific code, but can be used
+    to run any model with a .p file and a channel prototypes file.
+
+protodefs.g - this is included by injtut.g, and contains the model-dependent
+    statements.  This version is a copy of protodefs.mit.g or
+    protodefs.smit2.g.  It makes the channel prototypes and sets some global
+    variables used by injtut.g.  A lot of this would be replaced by files
+    created by, or commands sent by the client program in the Workspace.
+
+cellview.g - is included by injtut.g to provide the xcell display.
+
+inj2.g - The GENESIS 2 version of Upi's mit_curr_inj/inj.g script, used for
+   creating the simulations plot in FOg. 4.
+
+inj2.gif/inj2.ps.gz - display created by inj2
+
+Fig4A.data - experimental data file (Upi's correct.block) for Fig. 4A current
+    injection with blocking of Na and Kfast (K2_mit_usb) and partial blocking
+    of K channels.
+
+Fig4D.data - experimental data file (Upi's correct.noblock) for Fig. 4D current
+    injection with no channel blocking.
+
+experiment.gif - screen grab of Fig. 4D. without any axes or scales shown.
+
+For details on the output of Vm of all compartments to a file, and the
+blocking of Na and K channels to produce Fig. 4 B, see the notes at the end of
+"Notes".

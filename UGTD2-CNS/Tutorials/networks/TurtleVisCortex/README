@@ -1,0 +1,127 @@
+GENESIS Turtle Cortex Model README file
+=======================================
+
+This is the large scale model of turtle visual cortex (the "NGU model")
+described in:
+
+Nenadic, Z., Ghosh, B.K. and Ulinski. P. (2003)
+Propagating Waves in Visual Cortex: A Large Scale Model of Turtle Visual
+Cortex", J. Computational Neuroscience 14:161-184.
+
+and
+
+Nenadic, Z., Ghosh, B.K. and Ulinski. P. (2002) Modeling and Estimation
+Problems in the Turtle Visual Cortex, IEEE Trans. Bio-Med. Eng., 49:753-762
+
+It is also described in considerable detail in the file
+TurtleVisCortex-descrip.pdf, which is included in this archive.
+This README file tells how to run the simulation with GENESIS.
+
+To run the simulation
+---------------------
+
+1. If you do not have the GENESIS simulator installed, download it from
+   the GENESIS web site at http://genesis-sim.org/GENESIS.  It is available
+   in source and binary versions for UNIX/Linux, MAC OSX, and Windows with
+   Cygwin.  Follow the installation instructions provided with the
+   GENESIS distribution.
+
+2. Unpack the archive TurtleVisCortex.tar.gz or TurtleVisCortex.zip.
+   It will unpack to the directory TurtleVisCortex/.
+
+3. In a console window, change to the directory TurtleVisCortex/models
+
+4. Start genesis
+
+5. In genesis, type "TurtleVisCortex"
+
+With the default settings in the main simulation script
+TurtleVisCortex.g, a simple graphical interface appears, after a few
+minutes of setup time for the network.  It's use is optional, and the
+main script may be modified to perform the simulation with no graphics,
+as for doing long simulation runs in batch mode.  In either case, output
+is generated to plain text files in subdirectories of TurtleVisCortex/output.
+
+6. Click on RUN in the CONTROL PANEL
+
+The default stimulus applied is the "diffuse light flash", simulated
+with a 0.15 sec pulse of 0.2 nA injection current to the soma of all 201
+LGN neurons.  The four graphs show the network response by plotting the
+soma membrane potential of the medial and lateral layer pyramidal cell
+neurons /network_lateral/cell321, /network_medial/cell279,
+/network_lateral/cell1, and /network_medial/cell1.  The window under the
+control panel shows the locations of the lateral (represented by
+squares) and medial (represented by triangles) pyramidal cells.  During
+the simulation, they change color to represent the soma membrane
+potenial of the cells cells.  For the first 0.6 seconds of the
+simulation, you will see the spreading wave of activation, due to the
+flash.
+
+Further notes on the simulation scripts
+---------------------------------------
+
+The TurtleVisCortex.g script includes various GENESIS scripts in ../lib
+that define functions that are used in the main script for setting up
+the network.  It defines several global variables that may be changed to
+alter the simulation behavior.  Some of the more important ones are:
+
+Simulation duration and integration step size in seconds:
+
+float tmax = 1.50   // Time in seconds for the simulation to run
+float dt = 0.00005  // Internal time stepsize
+
+The stimulation flags:
+
+int DIFFUSE_LIGHT_FLASH = 1
+int STATIONARY_LIGHT_SPOT = 0
+int MOVING_LIGHT_SPOT = 0
+int DIRECT_NEURON_STIM_REC = 0
+int DIRECT_NEURON_STIM_CIR = 0
+
+These are for
+
+1. Diffuse light flash (the default)
+2. Stationary spot flash
+3. Moving spot stimulation
+4. Direct neuron stimulation -- rectangular area
+5. Direct neuron stimulation -- circular area
+
+The functions can be used individually, or in combinations. In fact, you
+can stimulate all five ways in the same run if you want to.  Details for
+changing the stimulus are provided in TurtleVisCortex.g and in
+TurtleVisCortex/lib/stimulus.g.
+
+The default name of the data directory for the output response files is 
+defined in TurtleVisCortex.g as:
+
+str responseName  = "TurtleVisCortex_diffuse_" 
+
+Change this name for each different run.  If files in a directory with
+this name exist, they will be overwritten the next time the simulation
+is run.
+
+../lib/utilities_control.g defines the functions that are used to run
+the simulation with or without graphics.  It can be used as the starting
+point for more sophisticated graphical interfaces to the simulation.
+
+../coords contains plain text data files with the coordinates
+of neurons in the seven layers of the model.  The figure in
+TurtleVisCortex/coords/Distribution_of_Neurons_Cortex.pdf shows the
+locations of the 368 lateral neurons (blue), 311 medial neurons
+(yellow), 20 horizontal neurons (green), 45 stellate neurons (red), and
+44 subpial neurons (magenta) in a simulated 1.6 x 1.6 mm piece of
+cortex.  There are also 201 LGN input neurons, represented as a line of
+equally spaced cells.
+ 
+Displaying simulation results with DAVIS
+----------------------------------------
+
+Davis (Data Viewing System) is a general-purpose data viewer designed
+for the simultaneous display of a large number of dynamic data sets.
+Davis was inspired by the need to explore computational models of the
+cerebral cortex, and may be used to provide a variety of visualizations
+of the output from this model.
+
+You may find more about Davis from  http:/visual.cs.utsa.edu/davis/
+and instructions for using webstart to run it directly from a browser
+in order to further analyze the output of this model.

@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002 (1.62) JA patch-1.4
+patched version by:  Kenshi Muto, Debian Project.
+LaTeX2HTML 2002 (1.62),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>storemode</TITLE>
+<META NAME="description" CONTENT="storemode">
+<META NAME="keywords" CONTENT="tutorial2">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002 JA patch-1.4">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutorial2.css">
+
+<LINK REL="next" HREF="node43.html">
+<LINK REL="previous" HREF="node41.html">
+<LINK REL="up" HREF="node40.html">
+<LINK REL="next" HREF="node43.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html688"
+  HREF="node43.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html684"
+  HREF="node40.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html678"
+  HREF="node41.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html686"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html689"
+  HREF="node43.html">no_elminfo</A>
+<B> Up:</B> <A NAME="tex2html685"
+  HREF="node40.html">Advanced Fields</A>
+<B> Previous:</B> <A NAME="tex2html679"
+  HREF="node41.html">calcmode</A>
+ &nbsp <B>  <A NAME="tex2html687"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION03122000000000000000">
+<TT>storemode</TT></A>
+</H2>
+Sometimes you will be interested in the contribution of a single
+channel type to the behavior of a complex multi-compartmental model,
+say you are interested in the overall <!-- MATH
+ $\mathrm{Ca}^{2+}$
+ -->
+<IMG
+ WIDTH="40" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img65.png"
+ ALT="$ \mathrm{Ca}^{2+}$"> influx.
+Computing this variable would imply getting the current or conductance
+from each channel of the specified type in each compartment and then
+adding them up.  From viewpoint of single elements that act as a model
+description for <TT>hsolve</TT>, such values are simply not
+accessible, nevertheless since <TT>hsolve</TT> has access to all
+computed variables in chanmode 4 and 5, it will compute such an
+integrated current or conductance when the <TT>storemode</TT> field is
+set.  You will not be able to find these variables with the
+<TT>findsolvefield</TT> command, but with a small trick,
+<TT>hsolve</TT> will report in your terminal where to find these
+variables.
+
+<P>
+These variables are defined as the summation of the field <TT>Ik</TT>
+or <TT>Gk</TT> for each channel of the same type in the model.  For
+this to work correctly, each channel of the same type must have the
+same name in each compartment.  Then, before the <TT>SETUP</TT>
+action, the <TT>storemode</TT> field should be set to one of the
+following values:
+
+<P>
+<DL COMPACT>
+<DT></DT>
+<DD>0: the default value, no sums are stored.
+</DD>
+<DT></DT>
+<DD>1: total currents are stored.
+</DD>
+<DT></DT>
+<DD>2: total conductances are stored.
+</DD>
+</DL>
+Afterwards, you use <TT>hsolve</TT> as usual (set other fields, call
+<TT>SETUP</TT> etc.).
+
+<P>
+Now if you want <TT>hsolve</TT> to report where it will store the
+totals of currents or conductances for each channel type, set the
+silent flag of Genesis to a negative value, call the <TT>RESET</TT>
+action on the <TT>hsolve</TT> element and reset the silent flag to its
+original value.  <TT>Hsolve</TT> will then report where to find the
+computed fields for each channel type (or better for each unique
+channel name that is encountered in the model):
+
+<P>
+<PRE>
+    genesis &gt; silent -1
+    genesis &gt; call solver RESET
+    storing leak in itotal[0]
+    storing CaP in itotal[1]
+    storing KC in itotal[2]
+    storing K2 in itotal[3]
+    storing Ca_pool in itotal[4]
+    storing Ca_nernst in itotal[5]
+    storing stellate in itotal[6]
+    storing Kdr in itotal[7]
+    storing NaF in itotal[8]
+    transferring element field values into solve arrays
+    genesis &gt; silent 0
+</PRE>
+
+<P>
+Now you can use the <TT>getfield</TT> and <TT>showfield</TT> commands
+to examine the values of the variables.
+
+<P>
+<PRE>
+    genesis &gt; step
+    genesis &gt; showfield solve itotal[1]
+    [ /Purkinje/solve ]
+    itotal[3]            = 8.777549691e-10
+</PRE>
+
+<P>
+The <TT>storemode</TT> field does not influence any other
+functionality of <TT>hsolve</TT>.  So you are still able to use
+<TT>findsolvefield</TT> to inspect other computed values of interest.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html688"
+  HREF="node43.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html684"
+  HREF="node40.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html678"
+  HREF="node41.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html686"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html689"
+  HREF="node43.html">no_elminfo</A>
+<B> Up:</B> <A NAME="tex2html685"
+  HREF="node40.html">Advanced Fields</A>
+<B> Previous:</B> <A NAME="tex2html679"
+  HREF="node41.html">calcmode</A>
+ &nbsp <B>  <A NAME="tex2html687"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+
+2002-11-15
+</ADDRESS>
+</BODY>
+</HTML>

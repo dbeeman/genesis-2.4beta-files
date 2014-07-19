@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002 (1.62) JA patch-1.4
+patched version by:  Kenshi Muto, Debian Project.
+LaTeX2HTML 2002 (1.62),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Taylor series</TITLE>
+<META NAME="description" CONTENT="Taylor series">
+<META NAME="keywords" CONTENT="tutorial2">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002 JA patch-1.4">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutorial2.css">
+
+<LINK REL="next" HREF="node6.html">
+<LINK REL="previous" HREF="node4.html">
+<LINK REL="up" HREF="node4.html">
+<LINK REL="next" HREF="node6.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html209"
+  HREF="node6.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html205"
+  HREF="node4.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html199"
+  HREF="node4.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html207"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html210"
+  HREF="node6.html">Numerical Schemes</A>
+<B> Up:</B> <A NAME="tex2html206"
+  HREF="node4.html">Numerical Preliminaries</A>
+<B> Previous:</B> <A NAME="tex2html200"
+  HREF="node4.html">Numerical Preliminaries</A>
+ &nbsp <B>  <A NAME="tex2html208"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION02111000000000000000">
+Taylor series</A>
+</H2>
+
+<P>
+If we denote with <!-- MATH
+ $y^{(n)}(t)$
+ -->
+<IMG
+ WIDTH="49" HEIGHT="36" ALIGN="MIDDLE" BORDER="0"
+ SRC="img2.png"
+ ALT="$ y^{(n)}(t)$"> the function value at point <IMG
+ WIDTH="10" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img3.png"
+ ALT="$ t$"> of the
+<IMG
+ WIDTH="14" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img4.png"
+ ALT="$ n$">'the derivative of a function <IMG
+ WIDTH="12" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img5.png"
+ ALT="$ y$">, then the Taylor series of a
+continuous
+function <IMG
+ WIDTH="12" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img5.png"
+ ALT="$ y$"> at point <IMG
+ WIDTH="10" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img3.png"
+ ALT="$ t$"> is given by:
+
+<P>
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="eq:taylor-series"></A><!-- MATH
+ \begin{equation}
+y(t+h) = y(t) + hy^{(1)}(t) + \frac{1}{2!}h^2y^{(2)}(t) +
+  \frac{1}{3!}h^3y^{(3)}(t) + \cdots + \frac{1}{n!}h^ny^{(n)}(t) +
+  \cdots
+\end{equation}
+ -->
+<TABLE CELLPADDING="0" WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE">
+<TD NOWRAP ALIGN="CENTER"><IMG
+ WIDTH="549" HEIGHT="49" ALIGN="MIDDLE" BORDER="0"
+ SRC="img6.png"
+ ALT="$\displaystyle y(t+h) = y(t) + hy^{(1)}(t) + \frac{1}{2!}h^2y^{(2)}(t) + \frac{1}{3!}h^3y^{(3)}(t) + \cdots + \frac{1}{n!}h^ny^{(n)}(t) + \cdots$"></TD>
+<TD NOWRAP WIDTH="10" ALIGN="RIGHT">
+(1.1)</TD></TR>
+</TABLE></DIV>
+<BR CLEAR="ALL"><P></P>
+
+<P>
+Some remarks about this expansion:
+
+<OL>
+<LI><IMG
+ WIDTH="13" HEIGHT="15" ALIGN="BOTTOM" BORDER="0"
+ SRC="img7.png"
+ ALT="$ h$"> can be any element of <!-- MATH
+ $\mathbb{R}$
+ -->
+<IMG
+ WIDTH="16" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img8.png"
+ ALT="$ \mathbb{R}$">, such that a function is
+  completely defined by its Taylor expansion at any single point of
+  its domain.  (Full knowledge of the function at a single point
+  determines the full function at all points).
+</LI>
+<LI>The successive terms of the Taylor series are decreasing in
+  magnitude in an exponential way.
+</LI>
+<LI>We can truncate a Taylor series to approximate the original
+  function.  This divides the Taylor series in two separate series:
+  the numerical scheme and the error series.  The error after
+  truncation is mainly dependent on the first term of the error
+  series.
+</LI>
+</OL>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html209"
+  HREF="node6.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html205"
+  HREF="node4.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html199"
+  HREF="node4.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html207"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html210"
+  HREF="node6.html">Numerical Schemes</A>
+<B> Up:</B> <A NAME="tex2html206"
+  HREF="node4.html">Numerical Preliminaries</A>
+<B> Previous:</B> <A NAME="tex2html200"
+  HREF="node4.html">Numerical Preliminaries</A>
+ &nbsp <B>  <A NAME="tex2html208"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+
+2002-11-15
+</ADDRESS>
+</BODY>
+</HTML>

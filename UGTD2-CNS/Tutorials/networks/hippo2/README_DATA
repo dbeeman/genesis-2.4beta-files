@@ -1,0 +1,42 @@
+Some remarks about file names and contained data:
+=================================================
+Files ff*_soma, fb*_soma and pyr*_soma contain the somatic membrane
+potential of the respective simulated cell (1.5 seconds). The
+integration step size of 2.5e-5 seconds leads to 40,000 sample points
+per second. Time is given in the first column, potential in the second
+column of the files. Each of the three cell arrays is independendly
+numbered, cell 0 being in the lower left corner.
+
+Files ff*_spikes, fb*_spikes and pyr*_spikes contain points in time
+of spike initiation for selected cells. The respective cells are
+marked by black circles in the graphic (cellarrays.eps or
+cellarrays.pdf). The first column of the files can be ignored. It has
+to be emphasized, that the point in time of spike initiation, not the
+point in time of highest peak amplitude is noted. In the case of
+pyramidal cells, spike initiation is assumed, if the membrane
+potential crosses a threshold of -30 mV. In the case of interneurons,
+this threshold equals 0 mV. Therefore, if one compares points in time of spike
+initiation as contained in the *_spikes-files against detected points
+in time
+of highest peak amplitude, one has to allow for a certain difference
+of about 0.25 msec. 
+
+Files e120_* contain extracellularly recorded potentials, again, time
+in the first column and potential in the second one. The simulated
+multi-site recording probe, comprising 13 different recording sites,
+is approximately 4 micrometer away from pyramidal cell 40. In the
+graphic, the position of the probe is indicated by a red cross. "120"
+indicates the opening angle. Cells on the left of the probe that lie
+in a 120° sector are recorded from. The individual recording sites are
+linearly arranged, perpendicularly to the xy-plane. The lowest
+z-coordinate is at -55 micrometer, the highest one at 95
+micrometer. Thus individual recording sites have a distance of 12.5
+micrometer. 
+ 
+The file signal_noise contains the recorded data from e120_10, but
+with added white noise. The SNR equals 21:1, calculated as ratio of
+average spike peak-to-peak amplitude and noise rms value
+(root-mean-squared).
+In this data set, we were able to detect spikes from pyramidal cells
+46, 40 and 27.
+

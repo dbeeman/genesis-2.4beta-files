@@ -1,0 +1,50 @@
+The Traub'94 simulation has been implemented by Pulin Sampat
+(Brandeis University) and by Patricio Huerta (MIT) with
+help from Dr. Roger Traub.
+
+CHANGES FOR TRAUB94
+
+The Traub91 simulation has been modified to incorporate the new
+model by Traub, et. al. [Journal of Physiology, Vol. 481.1, p. 79
+(1994)].  Basically, the new model should replicate (almost exactly)
+the '91 results.  Some of the new features of the model are:
+1.  Implementation of dendritic branching.  The model now has
+    sixty-four soma-dendritic compartments.
+2.  Implementation of an axon initial segment, and an axon compartment.
+3.  Model is constrained using antidromic stimulation.
+4.  Implementation of spines on dendritic compartments.  This was
+    done by doubling the area (in his paper).  However, to incorporate
+    this in GENESIS, I had to double CM, halve RM, and double the
+    ionic conductance densities for each compartment.
+5.  I have not yet implemented synaptic channels.
+6.  Time step is 2.5 microseconds; much smaller than the 1991 paper.
+    So the simulation is a lot slower, when used with non-hsolve methods.
+There are other subtle changes; please refer to the paper for the
+differences.
+
+Questions or comments?  Contact Pulin at pulin@eliza.cc.brandeis.edu.
+
+=========================================================================
+Additional comments by Dave Beeman (dbeeman@dogstar.colorado.edu)
+
+As this model has a large number of compartments, it should be run using
+one of the implicit integration methods (method 10 or 11), using hsolve.
+This will allow a step size of about 25 microseconds, instead of the
+2.5 microsecond step required for the default method 0.  This is illustrated
+in the script "traub94.g", which uses hsolve with chanmode 1, and method 11
+(Crank-Nicholson).  The "userprefs.g" file included here allows it to
+be used with Neurokit.
+
+Files in this directory:
+
+README		This file
+CA3.p		The cell parameter file for the model
+traub94proto.g	File defining functions to create the library of channels
+traub94.g	Script to run the model with chanmode 1 and method 11.
+		At the cost of increased execution time, the "make_xcell"
+		statement near the end of the script may be uncommented to
+		create a display of the cell.  This requires GENESIS 2.1
+                or later.
+userprefs.g	Used to run the model under Neurokit.  NOTE: This requires
+		the version of Neurokit provided with GENESIS 2.0.1 or later.
+traub94.old.g   Version of traub94.g for GENESIS 2.0 - 2.0.2

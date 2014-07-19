@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002 (1.62) JA patch-1.4
+patched version by:  Kenshi Muto, Debian Project.
+LaTeX2HTML 2002 (1.62),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>A Practical Example 1: Hsolve and the efield Object</TITLE>
+<META NAME="description" CONTENT="A Practical Example 1: Hsolve and the efield Object">
+<META NAME="keywords" CONTENT="tutorial2">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002 JA patch-1.4">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutorial2.css">
+
+<LINK REL="next" HREF="node26.html">
+<LINK REL="previous" HREF="node22.html">
+<LINK REL="up" HREF="node14.html">
+<LINK REL="next" HREF="node26.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html463"
+  HREF="node26.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html459"
+  HREF="node14.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html453"
+  HREF="node24.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html461"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html464"
+  HREF="node26.html">A Practical Example 2:</A>
+<B> Up:</B> <A NAME="tex2html460"
+  HREF="node14.html">Introducing Hsolve for Single</A>
+<B> Previous:</B> <A NAME="tex2html454"
+  HREF="node24.html">The 'findsolvefield' command</A>
+ &nbsp <B>  <A NAME="tex2html462"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION02270000000000000000">
+A Practical Example 1: <TT>Hsolve</TT> and the <TT>efield</TT>
+  Object</A>
+</H1>
+
+<P>
+As a first practical example, we show how to use <TT>hsolve</TT> for
+extracellular field recordings.  The <TT>efield</TT> object represents
+an extracellular field potential recording electrode that uses current
+sources and their distance from the electrode site to calculate the
+field potential.  The current sources are the compartments that are
+computed by <TT>hsolve</TT>.  If the <TT>RESET</TT> action is called
+on the <TT>efield</TT> object, it calculates the distances from the
+compartments to the electrode, and fills in the distance from the
+source element, that is sending the message, to the destination
+element, the <TT>efield</TT> element.
+
+<P>
+
+<OL>
+<LI>Create a model of a multi-compartment cell.
+</LI>
+<LI>Create an <TT>efield</TT> element and give it a sensible
+  position.  Create messages between the compartments and the
+  <TT>efield</TT> element to have it calculate the extracellular field
+  potential.
+</LI>
+<LI>Create and setup <TT>hsolve</TT>.
+</LI>
+<LI>Reset the simulation and check the simulation schedule with the
+  <TT>showsched</TT> command.
+</LI>
+<LI>Inspect the distances between the compartments and the recording
+  electrode.  These distances have been calculated by the
+  <TT>efield</TT> element because of the <TT>reset</TT>.
+</LI>
+<LI>Run a simulation for some time, check that the <TT>efield</TT>
+  is indeed calculating the field potential.
+</LI>
+</OL>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<TABLE  WIDTH="635">
+<TR><TD>
+  <FONT SIZE="-1"><B>NOTE:</B> In <TT>chanmode</TT> 4 <TT>hsolve</TT>
+    calculates the capacitive current for the field <TT>Im</TT>, not
+    the total membrane current.  You can use <TT>chanmode</TT> 4 in
+    this example, but the results will not be what you expect.
+    Nevertheless it is a useful exercise, also check out what changing
+    from <TT>chanmode</TT> 0 to <TT>chanmode</TT> 4 does to the
+    simulation schedule.
+</FONT></TD></TR>
+</TABLE>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<TABLE  WIDTH="635">
+<TR><TD>
+  <FONT SIZE="-1"><B>NOTE:</B> The scripts for this example allow to switch
+    off <TT>hsolve</TT> and use the compartments to do the
+    computations.  What happens if you naively switch from
+    <TT>hsolve</TT> to the compartments and why?
+</FONT></TD></TR>
+</TABLE>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html463"
+  HREF="node26.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html459"
+  HREF="node14.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html453"
+  HREF="node24.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html461"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html464"
+  HREF="node26.html">A Practical Example 2:</A>
+<B> Up:</B> <A NAME="tex2html460"
+  HREF="node14.html">Introducing Hsolve for Single</A>
+<B> Previous:</B> <A NAME="tex2html454"
+  HREF="node24.html">The 'findsolvefield' command</A>
+ &nbsp <B>  <A NAME="tex2html462"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+
+2002-11-15
+</ADDRESS>
+</BODY>
+</HTML>

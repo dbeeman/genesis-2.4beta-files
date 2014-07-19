@@ -1,0 +1,639 @@
+<HTML>
+<HEAD>
+<TITLE>Intro to CNS part II
+</TITLE> </HEAD>
+<BODY BGCOLOR="#ffffff" TEXT="#000000">
+
+
+<H1>Modeling Dendrites and Synapses</H1>
+
+
+<p> In the <a href="cns1.html">previous lecture</a> we learned the basics
+of <a href="compartments.gif">compartmental modeling of neurons</a>,
+including Hodgkin-Huxley models of voltage activated channels.  In this
+lecture and the following one, we will talk about what
+goes on in the dendrites and how this relates to the behavior of more complex
+cells and networks.
+
+<P> The image of the <a href="ca3small.gif">pyramidal cell</a> from the CA3
+region of the hippocampus that we looked at in the last lecture is just one
+of the many varieties of neurons that one might want to model.  Here are
+some others:
+
+<P ALIGN=CENTER><IMG SRC="BoGfig5_1s.gif"><P>
+<center><b>
+(A) Cerebellar Purkinje cell; (B) spinal cord motoneuron; (C) neostriatal
+spiny neuron; (D) locust interneurons
+</b></center>
+
+<P>
+The many varieties of dendritic structure that are seen in these cells
+has a great deal to do with their functional role -- i.e., the types of
+"neural computations" that are performed.
+
+<P>
+There are four main steps to perform in order to build a realistic model
+neuron, and to connect it to others in biologically realistic network.
+
+<P>
+
+<OL>
+
+<LI>Create a <I>morphological reconstruction</I> of the cell to be modeled.
+Neurons are stained, and a specialized microscope and software are used
+to trace the dendritic structure and create a data file with segment
+coordinates, lengths, diameters, and branch points.
+
+<P>
+
+<LI>Build a suitably realistic passive compartmental model, without the
+variable conductances.  This may involve simplifications of the
+reconstruction.  There are two main questions to be answered:
+<P>
+
+<OL TYPE=A>
+<LI>How long should a compartment be?
+<P>
+<LI>What values of R<sub>m</sub>, C<sub>m</sub>, and R<sub>a</sub> should
+be used for each compartment?
+</OL>
+<P>
+
+<LI>Add the appropriate variable conductances to compartments that correspond
+to the part of the cell where they appear.
+<P>
+
+<OL TYPE=A>
+<P>
+<LI>Add voltage and/or calcium activated conductances.  These are usually
+implemented with some variation of the 
+<a href="cns1.html#HHmodel">Hodgkin-Huxley model</a>
+described in the previous lecture, with parameters derived from voltage
+clamp data on neurons that contain the conductances to be modeled.
+
+<P>
+
+<LI>Add synaptically activated conductances, using a model to be covered a
+little later in this lecture.
+
+</OL>
+<P>
+<LI>Connect to other cells in a network, or provide artificial inputs
+to simulate the <i>in-vivo</i> inputs to the neuron.
+<P>
+</OL>
+<P>
+
+Step 2 is difficult.
+<A HREF="http://www.genesis-sim.org/GENESIS/iBoG/iBoGpdf/">Chapter 5 of
+"The Book of GENESIS"</A> ("the BoG"), which was assigned as reading for
+this lecture, gives some useful information for answering the two
+questions.  This chapter <a href="references.html#Segev2005">(Segev,
+2005)</a> is also very mathematical, and it is easy to get lost in the
+equations and forget what they are used for.  I wanted you to read it in
+order to get an overview of the theory of passive propagation in dendrites.
+Now, I'll list what I think is important for you to remember.  There are
+three things that can be measured experimentally and are related to the
+parameters that we need for a model:
+
+<OL>
+<P>
+<LI>The attentuation of voltage with distance, and the "space constant" or
+"length constant".
+<P>
+<LI>The membrane time constant.
+<P>
+<LI>The input resistance of the cell, measured at the soma.
+<P>
+</OL>
+
+<P><FONT SIZE="+1">This slide gives a summary of the electrical properties
+of a uniform section of passive dendrite having length <i>l</i> and
+diameter <i>d</i>.</FONT>
+
+<p align=center><img src="dendrite_section2.gif">
+
+<P>
+The conducting cytoplasm inside the neuron, the insulating neural membrane,
+and the liquid (similar to salt water) surrounding the neuron form a
+cable with a capacitance C<SUB>m</SUB>.  The inner conductor, the
+cytoplasm, is a poorer conductor than the copper wire used in an
+undersea cable, and it has an resistance along the length of the
+cable R<SUB>a</SUB>, the "axial resistance".  The membrane in not
+a perfect insulator due to the ion-conducting channels that pass through
+it.  It is convenient to make a distinction between the "passive channels"
+that do not vary in conductance, and the "active channels" that have
+conductances varying with voltage, calcium concentration, or synaptic
+input.  The passive channels account for the membrane resistance
+R<SUB>m</SUB> and the associated leakage current I<SUB>leak</SUB>.
+The active channels are represented by the various variable conductances
+that are labeled as G<SUB>k</SUB> in the neural compartment diagram and the
+differential equation for V<SUB>m</SUB> that we described in the
+<a href="cns1.html">previous lecture</a>:
+<p align=center><img src="compt.gif">
+<p align=center><img src="compteqn.gif">
+
+
+<P>
+<B>Some Notation</B>
+<P>
+
+The quantities R<sub>m</sub>, R<sub>a</sub>, C<sub>m</sub>, V<sub>m</sub>,
+etc. that appear in the diagram and equation are given in ohms, farads, or
+volts, and will depend on the size of the compartment.  In order to specify
+parameters that are independent of the compartment dimensions, <i>specific
+units</i> are used.  For a cylindrical compartment, the membrane resistance
+is inversely proportional to the area of the cylinder, so we define a
+<i>specific membrane resistance</i> R<sub>M</sub>, which has units of
+<i>ohms&middot;m&sup2;</i>.  The membrane capacitance is proportional to
+the area, so it is expressed in terms of a <i>specific membrane
+capacitance</i> C<sub>M</sub>, with units of <i>farads</i>/<i>m&sup2;</i>.
+Compartments are connected to each other through their axial resistances
+R<sub>a</sub>.  The axial resistance of a cylindrical compartment is
+proportional to its length and inversely proportional to its
+cross-sectional area.  Therefore, we define the <i>specific axial
+resistance</i> R<sub>A</sub> to have units of <i>ohms&middot;m</i>.  <P> For a
+piece of dendrite or a compartment of length <i>l</i> and diameter <i>d</i>
+we then have
+
+<P>
+<BR><P></P>
+<DIV ALIGN="CENTER">
+<IMG
+ WIDTH="315" HEIGHT="46" BORDER="0"
+ SRC="cableeqn1.gif"
+ ALT="\begin{displaymath}R_{m} = \frac{R_M}{\pi l d},\; C_{m} = \pi l d C_M,\;
+R_{a}= \frac{4 l R_A}{\pi d^{2}}.
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+
+<P> 
+<FONT COLOR="#ff0000">WARNING</FONT>: Many treatments of the passive properties of neural tissue use
+the symbols R<sub>m</sub>, R<sub>a</sub>, and C<sub>m</sub> for the
+specific resistances and capacitance, instead of this notation with
+R<sub>M</sub>, R<sub>A</sub>, and C<sub>M</sub>.  Also, many textbooks and
+journal papers define the resistance and capacitance in terms of that for a
+unit length of cable having a specified diameter.
+<P>
+
+Sections 5.3 through 5.5 in BoG Chapter 5 describes how sections of
+dendrite can be modeled using the one-dimensional cable equation.  For some
+additional background with more details than are given in this lecture, see the
+<A HREF="Cabletut.html">Digression on Cable Theory of Passive Propagation in
+Dendrites</A>.  
+
+<P>
+The relationships between the original neuron and a cable
+model or a compartmental models are shown in BoG Figure 5.4:
+
+<p align=center><img src="BoGfig5_4s.gif">
+<P>
+Equation 5.13 in the BoG gives the attenuation of voltage with distance
+<i>x</i> along an infinitely long uniform section of dendrite, in terms of the
+"space constant" (or "length constant"), which is given in Equation 5.7.
+Together, they give:
+
+<P>
+<DIV ALIGN="CENTER">
+<!-- MATH
+ \begin{displaymath}
+V(x) = V_0 e^{-x/\lambda}, \mbox{ where } \lambda = \sqrt{(d/4)R_M/R_A}
+\end{displaymath}
+ -->
+ <IMG
+ WIDTH="353" HEIGHT="36" BORDER="0"
+ SRC="cableeqn2.gif"
+ ALT="\begin{displaymath}
+V(x) = V_0 e^{-x/\lambda}, \mbox{ where } \lambda = \sqrt{(d/4)R_M/R_A}
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+
+<P> This result is useful for determining the length of the compartments
+that are used to model a section of dendrite.  Sections of dendrite that
+have a continuous variation of voltage along the length are being replaced
+by a "lumped parameter model" with discrete jumps in membrane potential.
+By using very many short compartments, the compartmental model can approach
+the result of the continous cable equation.  But, for computational
+efficiency, one would like to use fewer compartments with a length that
+gives reasonable accuracy.  A common guideline used by modelers is to
+use a compartment length that is less than 1/20 of the space constant.
+In that case, the voltages in two adjacent compartments
+will differ by a factor of exp(-0,05) = 0.9512, or by about 5%.
+
+<P> 
+<H3>Determining values of C<SUB>M</SUB>, R<SUB>M</SUB>, and
+R<SUB>A</SUB></H3>
+
+<P> 
+
+Usually one assumes that the values of C<SUB>M</SUB>, R<SUB>M</SUB>, and
+R<SUB>A</SUB> are the same in all compartments, as they are intrinsic
+properties of the neural membrane and cytoplasm.  C<SUB>M</SUB> depends on
+the intrinsic properties of the thickness and dielectric constant of the
+membrane, and is usually close to 0.01 F/m<sup>2</sup>.
+
+<P>
+
+Part A of the figure above shows a current injection pulse being injected
+into the soma of the neuron, and the meaured change in membrane potential.
+Can you guess why it is a hyperpolarizing pulse, and not a depolarizing
+one?
+
+<P>
+<P>
+
+
+This chapter describes two quantities that may be calculated from this
+meaurement.
+
+BoG Equation 5.8 gives the membrane time constant for a short uniform
+section of dendrite.
+
+<P>
+<DIV ALIGN="CENTER"><IMG SRC="tau_m_eq.gif"></DIV>
+<P>
+Note that it is independent of the dimensions of the section, because
+R<SUB>m</SUB> is inversely proportional to the surface area, and
+C<SUB>m</SUB> is proportional to the surface area.
+This has importance for determining the time that it takes for ionic
+currents to produce changes in the membrane potential, and is also a
+measurement that can be made to estimate values for R<SUB>M</SUB>.
+
+<P>
+If the neuron were a simple spherical soma with little dendritic structure,
+it could be modeled with a single compartment, and the decay of
+the voltage after the current pulse would be given by an exponential
+involving the membrane time constant.
+
+
+<P>
+<DIV ALIGN="CENTER"><IMG SRC="Vdecay.gif"></DIV>
+<P>
+
+
+so it should be a simple matter to measure the membrane time constant and
+to estimate R<SUB>M</SUB>.  The situation is more complicated for long
+cables or branched dendritic structures, but BoG Section 5.4.2 describes
+how the solution to the cable equation in the more general case can
+be expressed in terms of a sum of exponentials with different time
+constants (Eq. 5.20) and that the longest time constant in the series
+is just the membrane time constant, R<SUB>M</SUB>&middot;C<SUB>M</SUB>.
+
+
+<P>
+This can be illustrated with the GENESIS Cable tutorial simulation,
+which allows one to construct an extensible neuronal cable.  Current
+injection or synaptic input may be provided to any one of the compartments,
+and all relevant parameters are adjustable from "pop-up" menus.
+In the figure below, a passive cable was created with a soma and 10
+identical dendrite compartments.  A 50 picoampere current injection pulse
+was applied to the soma, and the resulting membrane potential and its
+natural log were plotted for the soma and the most distal dentrite
+compartment
+
+<P>
+<DIV ALIGN="CENTER"><IMG SRC="cable-inj5.gif"></DIV>
+<P>
+Note that the log plot becomes linear at longer times, when the term in
+the series with the largest time constant dominates.  From the slope of
+this line, you should be able to calculate that 
+the membrane time constant <IMG ALIGN="bottom" SRC="tau_m.gif"> is about
+10 msec, which is the value of  R<SUB>M</SUB>&middot;C<SUB>M</SUB>.
+These plots will also let you calculate the voltage attenuation with
+distance, and compare it with the predicted results for an infinitely
+long cable using the value of the space constant
+<IMG ALIGN="bottom" SRC="lambda.gif"> and the parameter values that are
+shown above.
+<P>
+<P>
+
+The input resistance of a neuron at the point of a current injection
+pulse is given by Ohm's law from the change in membrane potential
+after it has reached a steady state. 
+
+<P>
+<DIV ALIGN="CENTER"><IMG SRC="Rin_eqn.gif"></DIV>
+<P>
+What is the input resistance of this cable, as measured at the soma? 
+This is another measureable quantity that can help to provide values
+for R<SUB>M</SUB> and R<SUB>A</SUB>.  If we were dealing with a neuron
+that could be modeled as a single soma compartment, then the input
+resistance would simply be given by the membrane resistance,
+R<SUB>in</SUB> = R<SUB>m</SUB> = R<SUB>M</SUB>/area.  When there are other
+compartments, then the axial resistances and membrane resistances of these
+compartments also add to the resistive load, and the expression becomes
+more complicated.   For a simple model with a few compartments, circuit
+theory can be used to calculate R<SUB>in</SUB> in terms of R<SUB>M</SUB>,
+R<SUB>A</SUB>, and the compartment dimensions.  BoG Section 5.4.4
+gives the result for an infinite cable (Equation 5.24) and a finite cable
+(Equation 5.26), and discusses conditions under which a branched dendritic
+structure can be approximated by a single finite cable.  This is useful
+when constructing simple "ball and stick" models of neurons with a soma
+having the appropriate surface area of the actual cell soma,
+connected to a linear chain of cylindrical dendrite compartments. These are
+designed to provide a "collapsed dentritic tree" with the same passive
+properties of a much more detailed model made from a reconstruction of a
+measured cell morpholgy.  
+
+<P>
+However, this is not of much help when dealing with a detailed
+morphologically accurate model, such as the 
+<a href="references.html#DeSchutterBower1994a">
+De Schutter and Bower (1994)</a>
+Purkinje cell model.  The figure below shows a run of the GENESIS Purkinje
+cell tutorial simulation, with a current injection pulse
+applied to the soma.  The plots were performed in overlay mode to show
+the results of both a depolarizing pulse of 1 nA, and a hyperpolarizing
+pulse of -1 nA.  
+
+<P>
+<DIV ALIGN="CENTER"><IMG SRC="purk_inj5.gif"></DIV>
+<P>
+
+Now, is it clear why hyperpolarizing pulses are used?
+The depolarizing pulse causes the the voltage-activated channels to open,
+causing the cell to fire.  The hyperpolarizing pulse deactivates the
+channels, and allows one to see the passive properties.  (Even this may
+not be enough to completely get rid of the effects of active channels.
+Often one applies channel blockers to block any channels that are active
+at low membrane potentials.)  What is the input resistance of this neuron?
+When fitting parameters for a model of this complexity, it is common to
+inject current pulses of various amplitudes into the neuron being modeled
+while recording the membrane potential.  The simulation is then run under
+similar conditions, and automated parameter searches are performed to
+adjust C<SUB>M</SUB>, R<SUB>M</SUB>, and R<SUB>A</SUB> to give the best
+fit of the simulated V<SUB>m</SUB> with the experimental results.
+
+<P>Further details of the process of constructing realistic single
+cell models are given in a downloadable tutorial paper by 
+<a href="references.html#BoG_Chapt7">Jaeger (2005)</a>.
+
+<P>
+
+<a name="synapses"><H2>Modeling Synapses</H2></a>
+<P>  The next step is to model synaptically (chemically) activated channels.
+The variable conductance in the <a href="compt.gif"> generic compartment
+diagram</a> could also represent a synaptically activated cconductance, usually
+in a dendritic compartment.
+
+<p align=center><img src="syncond.gif" WIDTH=483 HEIGHT=196>
+
+<p> This diagram shows a synapse with an action potential propagating to the
+pre-synaptic terminal, causing neurotransmitter release, and the resulting
+post-synaptic conductance change, G(t). Current flow through this conductance
+can lead to a post-synaptic potential (PSP).
+
+<p> There is a lot of biochemistry and molecular biology involved in this
+behavior, often involving complicated chains of reactions and 'second
+messengers'.  Fortunately, we can often use an empirical fit to the observed
+behavior, rather than modeling it in detail.
+
+<p>
+Typically, the conductance change from a quantum of neurotransmitter
+follows a linear rise and exponential decay, so it is often modeled
+with a so-called "alpha" function with a single time constant, tau.
+
+<P>
+<DIV ALIGN="CENTER"><FONT SIZE="+2">
+<IMG WIDTH="180" HEIGHT="44" ALIGN="MIDDLE" BORDER="0" SRC="alphafunc.gif">
+</FONT></DIV>
+
+<P>Sometimes, a dual exponential function will be used:
+<P>
+<DIV ALIGN="CENTER"><FONT SIZE="+2">
+<IMG WIDTH="247" HEIGHT="45" ALIGN="MIDDLE" BORDER="0" SRC="dualexp.gif">
+ for
+<IMG WIDTH="63" HEIGHT="36" ALIGN="MIDDLE" BORDER="0" SRC="tau1gttau2.gif">
+</FONT></DIV>
+
+
+<P>
+The current due to this conductance is I = G&middot;(E<sub>k</sub> - V<sub>m</sub>), 
+which may be into or out of the cell, depending on the size of the ionic
+equilbrium potential E<sub>k</sub>, relative to the membrane potential.  Here
+we have adopted the convention that a positive current flows into the cell.
+Thus, if the E<sub>k</sub> is large (Na or Ca), the current will be into the
+cell, and it will be a depolarizing (excitatory) synapse.  If it is large and
+negative (E<sub>k</sub> < V<sub>m</sub>, as for potassium), it will be an
+inhibitory synapse.  So, we can use the same model for both types of synapses.
+
+<P>
+<H2>Modeling axons and axonal connections</H2>
+<P>
+If we were interested in understanding the details of axonal propagation we
+could model an axon as a series of linked compartments containg
+Hodgkin-Huxley Na and K conductances.  We can model synaptic connections
+more efficiently if we treat an axon as just a delay line for the
+propagation of spike events that are triggered by action potentials and
+that last for a single time step.
+
+<P ALIGN=CENTER><img src="syn-connect.gif">
+
+<P>
+
+<a name="Neuron_tut"><H2>Some simulations demonstrating the effects of
+synaptic input</H2></a>
+
+We'll use the alpha function form in a GENESIS tutorial simulation called
+"Neuron" in order to understand both temporal and spatial summation of
+synaptic inputs.
+
+<p> Although we won't do it here, the simulation that I'll describe will also
+let you experiment with "silent inhibition" (shunting inhibition), in which
+there can be an inhibitory effect when there is no PSP, or even a slightly
+depolarizing one.  Do you know how this can happen?
+
+<p>
+Another thing that we can do in this simulation is to scale the conductance by
+a "synaptic weight" factor.
+This would let us experiment with the effect of multiple inputs in synchrony,
+or with learning (synaptic plasticity) by varying the weight.
+
+<p>
+Another time constant that is relevant for determining the properties of
+the cell is the membrane time constant,
+R<sub>m</sub>&middot;C<sub>m</sub>. This represents the time that it takes
+to charge up and to discharge the membrane capacitance, and will also
+affect the duration of a post-synaptic potential.  We could also use the
+Neuron simulation (but won't here) to see what happens if you have a small
+time constant for synaptic activation and a large membrane time constant.
+
+<h2>Single Neuron Behavior - Temporal Summation</h2>
+
+<p>
+This simulation has a help menu that can show a schematic diagram of
+the model neuron and the types of inputs that we can give to it.
+
+<P ALIGN=CENTER><IMG SRC="neuron1.gif" WIDTH=640 HEIGHT=350>
+
+<p>
+We have a simple model neuron with a soma and two dendrite compartments
+that are connected by axial resistances, as well as the option of putting
+any number of passive cable compartments between these two dendrite
+compartments.  These passive compartments are like the ones shown, but have no
+variable conductances.
+This will let us see what happens if we have spatially
+separated inputs to the neuron.  The soma has Hodgkin-Huxley voltage
+activated channels like the ones we used in the last simulation, and the
+dendrite compartments have both excitatory and inhibitory synaptically
+activated channels that respond to spikes applied at the synapses.  Not
+only can we change the various parameters of the cell by popping up menus,
+but we can apply different types of stimulation.  For example, we can inject
+pulses of current into any of the compartments, or connect spike trains to
+any of the synapses with a specified weighting.  We'll start by applying a
+burst of spikes 10 milliseconds apart to the Excitatory synapse in the first
+dendrite section.
+
+<P ALIGN=CENTER><IMG SRC="temporal1.gif" WIDTH=469 HEIGHT=575>
+
+<p>
+The spike train starts after 10 milliseconds. {UPPER WINDOW}
+
+<p>
+We can see that each spike causes a rise and decay in the conductance of
+this channel.  {MIDDLE WINDOW}
+
+<p>
+However, the conductance decays before the postsynaptic potential can build
+up to a very high level. {LOWER WINDOW}
+
+<p>
+The persistence of a PSP is determined not only by the decay constant of
+the conductance, but also by R<sub>m</sub>&middot;C<sub>m</sub>, the rate
+at which the voltage across the membrane capacitance is discharged through
+the membrane resistance.  In this simulation, tau for the decay of the
+excitatory synaptic conductance is 3 msec, and
+R<sub>m</sub>&middot;C<sub>m</sub> is 5 msec.  Both of these are less than
+the spike interval.  So, let's see what happens if we make the input spikes
+come four times as fast.
+
+<P ALIGN=CENTER><IMG SRC="temporal2.gif" WIDTH=921 HEIGHT=573> 
+
+<p>
+This is done in overlay mode, with the new results plotted in blue, so
+we can compare them with the previous results.  (However, the
+plots of activation parameters and soma conductances were not overlayed, in
+order to keep the plots simple.)
+
+<p> Now, we are getting a good buildup of conductance as each increase adds to
+the previous one, and we see action potentials both in the dendrite
+compartment {LOWER LEFT} and in the soma {LOWER RIGHT}.  Why do we see action
+potentials in the dendrite compartment?  You might notice that the action
+potentials are a little higher in the soma.  This is because the PSP in the
+dendrite is propagated to the soma, where the voltage activated channels cause
+the action potentials, and these are propagated back to the dendrite through
+an axial resistance.  In the dendrite compartment, we're seeing a
+superposition of the small PSP produced here and the large action potential
+that is produced in the soma.  If we were to look in a more distant dendrite
+section, the peaks would be much more attenuated.  We'll do this in the next
+simulation run.
+
+<h2>Single Neuron Behavior - Spatial Summation</h2>
+
+<p>
+Now we'll explore the effects of summing spatially separated inputs to the
+neuron.  Although it isn't shown on this diagram, I've added 5 passive
+cable sections between the two dendrite compartments, so dendrite
+compartment #2 is much further from the soma.  With the dimensions and
+resistances that are used here, cable theory predicts that a voltage in
+this compartment will be attenuated by about 50% by the time it gets to
+the soma.  This distance is 0.7 of the "length constant", so the attenuation
+is exp(-0.7), or about 50%  Do you know how to calculate this? For the
+details, see the <A HREF="Cabletut.html">Digression on Cable Theory of
+Passive Propagation in Dendrites</A>.
+
+<p>You may want to consult the <a href="neuron1.gif">neuron inputs diagram</a>
+ to remind yourself of the location of the three compartments.
+
+<p>
+I've set the interval for both sources of spike trains to 2 msecs, but I'll
+start applying Source A to the excitatory input of dendrite #2 right away,
+and wait 60 msec before applying Source B to the inhibitory input of
+dendrite #1.
+
+<p>
+Since the excitatory input is further away, we'll give it a fighting chance by
+giving it a higher synaptic weight.  The weight of 40 means that we are
+scaling the conductance as if 40 synapses were being made at this point in the
+dendrite, and they are all getting the same input.  The inhibitory input to
+dendrite #1 gets half this weight.  We use this synaptic weighting because the
+input from a single synapse is rarely enough to fire an action potential,
+unless the cell is a motor neuron.
+
+<P ALIGN=CENTER><IMG SRC="spatial.gif" WIDTH=910 HEIGHT=495>
+
+<p> The excitatory spike train (in red) starts right away (Inputs to cell -
+UPPER LEFT), and causes a large buildup of conductance in the excitatory
+channel of the distal dendrite compartment {UPPER RIGHT}.  This leads to a
+large increase in the membrane potential in this compartment - way above
+threshold.
+
+<p>
+This passively propagates to the soma where it produces action potentials.
+These are shown in slightly attenuated form in the nearby dendrite #1
+compartment (LOWER LEFT), and in much more attenuated form in the distant
+dendrite #2 compartment (LOWER RIGHT).  In this compartment, we can see the
+postsynaptic potential clearly, with the attenuated somatic action potentials
+superimposed.
+
+<p>
+After about 60 msec, the action potentials are
+disappearing.  Let's look at our inputs and see what's happening.
+Now we are getting spikes to the inhibitory channel dendrite #1 {UPPER
+LEFT}.  It produces a fairly small buildup of conductance {MIDDLE LEFT},
+which produces a modest hyperpolaring influence in the compartment {LOWER
+LEFT}.  But, since this compartment is close to the soma, it has a stronger
+effect than the depolarizing PSP in the distal dendrite compartment, and it
+stops the production of action potentials in the soma.
+
+<p>If we like, we can change
+the display to plot the soma membrane potential and see this directly.
+
+<P ALIGN=CENTER><IMG SRC="spatialsoma.gif" WIDTH=440 HEIGHT=219>
+
+<p>
+We've seen two properties of neurons that are relevant to
+understanding the ways which neurons compute:
+
+<ul>
+<li> Inputs have a greater effect when the arrive within a short time
+  interval (temporal integration).
+
+<li> Inhibitory inputs close to the soma can gate, or block, the effect
+  of stronger excitatory inputs that are applied at a greater
+  distance (spatial integration).
+</ul>
+
+<p> Next, we will look at the behavior of more complex neurons that have a
+variety of active conductances in the dendrites, and conclude with a model
+of a cortical network.
+
+<P>
+
+<p><HR>
+<p>
+<a href="cns2b.html"><img src="fwdbtn.gif" align="middle" hspace=12> Next
+lecture</a> 
+<a href="cns1.html"> <img src="backbtn.gif" align="middle" hspace=12> Previous
+ lecture</a>
+<a href="../index.html"><img src="upbtn.gif" align="middle" hspace=12>
+Return to the main page</a>
+
+<p>
+<a href="cnslecs.html"><img src="tutorial.gif" align="middle" hspace=12>
+Index of Lectures on Computational Neuroscience</a>
+
+<p><a href="http://www.genesis-sim.org/">
+<img src="genbtn.gif" align="middle" hspace=12> The GENESIS Home Page </a>
+
+<p><HR>
+<P><ADDRESS>
+<I>Dave Beeman, University of Colorado, Boulder<BR>
+Tue Jun 17 14:33:15 MDT 2008
+</I>
+</ADDRESS>
+<HR>
+</BODY>
+</HTML>

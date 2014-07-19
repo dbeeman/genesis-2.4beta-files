@@ -1,0 +1,86 @@
+                 RUNNING THE PASSIVE TUTORIAL SIMULATION
+
+  
+  DESCRIPTION OF THE MODEL
+  ________________________
+
+  This simulation demonstrates the functioning of a net of 100
+  active compartments connected with synapses. 
+
+
+  THE CONTROL BUTTONS
+  ___________________
+
+  The control panel at the top center of the screen contains buttons which
+  control the starting and stopping of the simulation.  If you are eager to
+  get going, click the left mouse button on the box labeled STEP to start
+  the simulation while you are reading the help messages.
+
+  The various buttons are:
+
+  HELP-----brings up the help menu.
+
+  RESET----resets the simulation to time step 0 and clears the graphs unless
+           the simulation is set for OVERLAY mode.
+
+  Remove Inject--Removes current injection from all cells.  This may be
+           used instead of clicking on each cell that has injection applied
+           in order to set the injection level back to zero.
+  
+  STOP-----temporarily stops the simulation.  You may then change the parame-
+           ters and click on STEP to continue, or RESET and STEP to start
+           over.
+
+  QUIT-----exposes a confirmation box which asks if the user would like to
+           exit the simulation.
+
+  OVERLAY--toggles the overlay mode.  When in overlay mode, RESET followed by
+           STEP causes the next plot to be plotted over the previous plot.
+  
+  STEP-----in addition to initiating the simulation, this also functions as a
+           dialog box for setting the number of simulation steps which are
+           performed each time.  To change the numeric field of a dialog box,
+           use the mouse to move the cursor into the dialog box.  Then, use
+           the keyboard right and left arrow keys to move the "^" symbol to
+           the right of the place where you wish to make the changes.  Then
+           use the "Delete" key to back up over anything you wish to change,
+           and type in the changes.  To cause the changes to be entered, you
+           must then hit "Return" while the cursor is in the numeric field.
+
+  dt-------is a dialog box used for setting the simulation time step.  The
+           default value of 0.01 milliseconds was chosen for accuracy in
+           reproducing the action potentials.  You can speed up the operation
+           of the simulation by chosing a larger value if you just want to
+           get an estimate of the effects of various parameter changes.  For
+           more accurate results, change the time step back to the original
+           value.
+
+
+  GRAPHS
+  ______
+
+  There are 10 graph windows for displaying the membrane potential of
+  10 compartments each. By default they are hidden.
+
+  To change the scale for a simulation graph, click on the SCALE button
+  associated with the graph, change the values in the appropriate dialog
+  boxes and press the DONE button.  For example, you may wish to increase the
+  time scale (xmax) if you click on STEP more than once without resetting,
+  or you may wish to view a more limited range of data in order to increase
+  the resolution.  Note that the existing data will be replotted whenever the
+  scale is changed. You may also scale a graph by dragging the left and
+  or right border of an axis with the mouse cursor while pressing the
+  left mouse button.
+
+
+
+  VIEWFORM
+  ________
+
+
+  The viewform depicts each cell as a colored circle. The color of
+  each circle codes changes in the membrane potential of the corresponding
+  cell. By clicking on one of the cells, you toggle on or off an injection
+  current into this cell of amplitude {injectval}.
+____________________________________________________________________________
+

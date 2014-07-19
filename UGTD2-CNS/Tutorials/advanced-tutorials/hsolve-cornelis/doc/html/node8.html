@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002 (1.62) JA patch-1.4
+patched version by:  Kenshi Muto, Debian Project.
+LaTeX2HTML 2002 (1.62),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Backward-Euler</TITLE>
+<META NAME="description" CONTENT="Backward-Euler">
+<META NAME="keywords" CONTENT="tutorial2">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002 JA patch-1.4">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutorial2.css">
+
+<LINK REL="next" HREF="node9.html">
+<LINK REL="previous" HREF="node7.html">
+<LINK REL="up" HREF="node6.html">
+<LINK REL="next" HREF="node9.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html247"
+  HREF="node9.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html243"
+  HREF="node6.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html237"
+  HREF="node7.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html245"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html248"
+  HREF="node9.html">Exponential Euler</A>
+<B> Up:</B> <A NAME="tex2html244"
+  HREF="node6.html">Numerical Schemes</A>
+<B> Previous:</B> <A NAME="tex2html238"
+  HREF="node7.html">Forward-Euler</A>
+ &nbsp <B>  <A NAME="tex2html246"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H4><A NAME="SECTION02112020000000000000">
+Backward-Euler</A>
+</H4>
+The backward-Euler method also truncates the Taylor series after two
+terms.  The difference is that the derivative is evaluated at point
+<IMG
+ WIDTH="39" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img17.png"
+ ALT="$ t+h$"> instead of at point <IMG
+ WIDTH="10" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img3.png"
+ ALT="$ t$">.
+
+<P>
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="eq:backward-euler"></A><!-- MATH
+ \begin{equation}
+y(t+h) = y(t) + hy^{(1)}(t+h)
+\end{equation}
+ -->
+<TABLE CELLPADDING="0" WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE">
+<TD NOWRAP ALIGN="CENTER"><IMG
+ WIDTH="208" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img20.png"
+ ALT="$\displaystyle y(t+h) = y(t) + hy^{(1)}(t+h)$"></TD>
+<TD NOWRAP WIDTH="10" ALIGN="RIGHT">
+(1.3)</TD></TR>
+</TABLE></DIV>
+<BR CLEAR="ALL"><P></P>
+
+<P>
+Assuming that the value at point <IMG
+ WIDTH="10" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img3.png"
+ ALT="$ t$"> is correct, the backward-Euler
+method computes the value at point <IMG
+ WIDTH="39" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img17.png"
+ ALT="$ t+h$"> with a local truncation error
+that scales with <IMG
+ WIDTH="20" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"
+ SRC="img18.png"
+ ALT="$ h^2$">.  The backward-Euler method always gives
+undershoots on the original curve.
+
+<P>
+Normally we do not know the derivative at point <IMG
+ WIDTH="39" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img17.png"
+ ALT="$ t+h$">, although we
+need it to compute the function value at point <IMG
+ WIDTH="39" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img17.png"
+ ALT="$ t+h$">.  In practice
+this requires a rearrangement of the equation.  We call such a
+numerical scheme an <I>implicit numerical scheme</I>.  For most
+equations implicit schemes are more stable than explicit schemes
+because of the undershoots.
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="fig:backward-euler"></A><A NAME="107"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure:</STRONG>
+Graphical illustration of
+    the backward-Euler method.  To obtain point 2 from point 1, we
+    take the derivative at point 2 and extrapolate it at point 1.  To
+    obtain point 3 starting at point 2, we do the same: take the
+    derivative at point 3 and extrapolate it at point 2.</CAPTION>
+<TR><TD><IMG
+ WIDTH="388" HEIGHT="363" ALIGN="BOTTOM" BORDER="0"
+ SRC="img21.png"
+ ALT="\includegraphics[scale=0.6]{figures/beuler.eps}"></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html247"
+  HREF="node9.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html243"
+  HREF="node6.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html237"
+  HREF="node7.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html245"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html248"
+  HREF="node9.html">Exponential Euler</A>
+<B> Up:</B> <A NAME="tex2html244"
+  HREF="node6.html">Numerical Schemes</A>
+<B> Previous:</B> <A NAME="tex2html238"
+  HREF="node7.html">Forward-Euler</A>
+ &nbsp <B>  <A NAME="tex2html246"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+
+2002-11-15
+</ADDRESS>
+</BODY>
+</HTML>

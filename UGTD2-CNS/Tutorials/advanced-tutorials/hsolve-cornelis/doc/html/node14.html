@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002 (1.62) JA patch-1.4
+patched version by:  Kenshi Muto, Debian Project.
+LaTeX2HTML 2002 (1.62),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Introducing Hsolve for Single Cells</TITLE>
+<META NAME="description" CONTENT="Introducing Hsolve for Single Cells">
+<META NAME="keywords" CONTENT="tutorial2">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002 JA patch-1.4">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutorial2.css">
+
+<LINK REL="next" HREF="node31.html">
+<LINK REL="previous" HREF="node3.html">
+<LINK REL="up" HREF="node2.html">
+<LINK REL="next" HREF="node15.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html315"
+  HREF="node15.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html311"
+  HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html305"
+  HREF="node13.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html313"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html316"
+  HREF="node15.html">Basic Use: A short</A>
+<B> Up:</B> <A NAME="tex2html312"
+  HREF="node2.html">Towards basic use of</A>
+<B> Previous:</B> <A NAME="tex2html306"
+  HREF="node13.html">Multiple compartments</A>
+ &nbsp <B>  <A NAME="tex2html314"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION02200000000000000000"></A>
+<A NAME="cha:hsolve"></A>
+<BR>
+Introducing <TT>Hsolve</TT> for Single Cells
+</H1>
+
+<P>
+If you create a set of coupled compartments with Genesis, you already
+have discretized your neuron so we will not consider spatial
+discretization any further.  In this section we introduce the Genesis
+'<TT>hsolve</TT>' object.  To implement the time discretization, this
+object implements some of the previously introduced numerical methods
+and combinations thereof.
+
+<P>
+So far we have identified the backward-Euler and the Crank-Nicolson
+rules as implicit finite-difference schemes.  The explicit schemes we
+encountered are the exponential Euler and the forward-Euler.  Since we
+have to solve two types of equations (cable equation and
+Hodgkin-Huxley equations), these different time-discretization
+techniques can be applied to the different equations and combined at
+will:
+
+<P>
+
+<OL>
+<LI>Solve all equations with an explicit method (forward-Euler or
+  exponential-Euler).  This isolates all compartments to single
+  equations that can be solved independently.  Being the default
+  numerical methodology in Genesis, you are supposed to be familiar
+  with it.  See [<A
+ HREF="node59.html#bower98:_book_genes">2</A>] for more details.
+</LI>
+<LI>Solve the cable equation with an explicit method, solve the
+  Hodgkin-Huxley channel equations with an implicit method.  This is
+  rather uncommon and will not be treated either.
+</LI>
+<LI>Solve the cable equation with an implicit method, solve the
+  Hodgkin-Huxley channel equations with an explicit method at the same
+  time points.
+</LI>
+<LI>Solve the cable equation with an implicit method and solve the
+  Hodgkin-Huxley channel equations with an implicit method at halve
+  time points.
+</LI>
+</OL>
+
+<P>
+The implicit solver of Genesis, '<TT>hsolve</TT>', implements the last
+two points in the above enumeration.  We cover the use of
+<TT>hsolve</TT> in the following sections.
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html317"
+  HREF="node15.html">Basic Use: A short overview</A>
+<LI><A NAME="tex2html318"
+  HREF="node16.html">The <TT>chanmode</TT> Field: Modes of Operation</A>
+<LI><A NAME="tex2html319"
+  HREF="node17.html">Tabulated Calculations</A>
+<UL>
+<LI><A NAME="tex2html320"
+  HREF="node18.html">The <TT>calc_mode</TT> field.</A>
+<LI><A NAME="tex2html321"
+  HREF="node19.html">The Table Properties.</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html322"
+  HREF="node20.html">Interpreting the Mode of Operation</A>
+<LI><A NAME="tex2html323"
+  HREF="node21.html">Exercise: Speed Comparison</A>
+<LI><A NAME="tex2html324"
+  HREF="node22.html">Communication with Other Elements</A>
+<UL>
+<LI><A NAME="tex2html325"
+  HREF="node23.html">Messages from and to external objects</A>
+<LI><A NAME="tex2html326"
+  HREF="node24.html">The '<TT>findsolvefield</TT>' command</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html327"
+  HREF="node25.html">A Practical Example 1: <TT>Hsolve</TT> and the <TT>efield</TT>
+  Object</A>
+<LI><A NAME="tex2html328"
+  HREF="node26.html">A Practical Example 2: Experimental Setups with <TT>Hsolve</TT></A>
+<UL>
+<LI><A NAME="tex2html329"
+  HREF="node27.html">Chronology of Commands</A>
+<LI><A NAME="tex2html330"
+  HREF="node28.html">Setup of Experiments</A>
+<UL>
+<LI><A NAME="tex2html331"
+  HREF="node29.html">Current Injection</A>
+<LI><A NAME="tex2html332"
+  HREF="node30.html">Input to Synaptic Channels</A>
+</UL></UL></UL>
+<!--End of Table of Child-Links-->
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html315"
+  HREF="node15.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html311"
+  HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html305"
+  HREF="node13.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html313"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html316"
+  HREF="node15.html">Basic Use: A short</A>
+<B> Up:</B> <A NAME="tex2html312"
+  HREF="node2.html">Towards basic use of</A>
+<B> Previous:</B> <A NAME="tex2html306"
+  HREF="node13.html">Multiple compartments</A>
+ &nbsp <B>  <A NAME="tex2html314"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+
+2002-11-15
+</ADDRESS>
+</BODY>
+</HTML>

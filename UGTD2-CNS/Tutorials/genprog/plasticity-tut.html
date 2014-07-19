@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>Implementing synaptic plasticity</TITLE>
+<META NAME="generator" CONTENT="txt2html v1.28">
+</HEAD>
+<BODY BGCOLOR="#ffffff" TEXT="#000000">
+<!-- Return from a Detour -->
+Back to <A HREF="synchan-tut.html">Making synaptic connections</A><BR>
+Back to <A HREF="net-tut.html">Creating large networks with GENESIS</A><BR>
+Up: <A HREF="genprog.html">Table of Contents</A>
+<HR>
+
+<H1><A NAME="section-1.">Implementing synaptic plasticity</A></H1>
+
+<P>
+<A HREF="synchan-tut.html">Making synaptic connections</A> briefly
+mentioned the synapse substructure of of the syhchan. Each synaptic
+connection to a synchan (established with a SPIKE message) has fields
+for the synaptic weight, and for a delay.  The delay field is used in
+network models to represent axonal conduction delays that typically
+depend on distance. The effect of this field is to impose a delay on
+the arrival of spikes from a synapse.
+
+<P>
+
+<B>Example:</B>
+
+<PRE>
+  addmsg /cell1/soma/spike /cell2/dend/Ex_channel SPIKE
+  setfield /cell2/dend/Ex_channel synapse[0].weight 10 synapse[0].delay 0.005
+</PRE>
+<P>
+
+Similar statements would be used for additional synaptic connections
+synapse[1], synapse[2], etc. The key to implementing synaptic plasticity
+is to modify the value of the synapse weight field while the simulation
+is running, according to some model of synaptic plasticity.
+
+<P>
+
+One way to do this is with variants of the synchan object that have
+the plasticity mechanism built in to them. This is the case with the
+hebbsynchan and facsynchan objects, or custom objects created
+according to 
+<A HREF="../Hyperdoc/Manual-21.html#ss21.3"> Creating New Synaptic
+Objects</A>.  However, these objects are not hsolvable, and cannot be
+used in cells that have been taken over by hsolve. The VAnet2
+simulation in <A HREF="../networks/VAnet2/README.html">networks/VAnet2</A>
+illustrates how the use of hsolve can increase the speed of a large
+network simulation as much as a factor of 20.
+
+<P>
+The alternative that is consistent with hsolve is to perform the
+weight changes with a clocked object or function that is external to
+the hsolved network. This can be done by either
+
+<UL>
+  <LI>writing a script function that performs the weight change, and is called
+with a "../Doc/script_out.txt" script_out element
+
+  <LI>using a compiled GENESIS object, such as the stdp_rules object to
+  perform the update.
+
+</UL>
+<P>
+For details of the implementation, see the GENESIS 2.4 documentation
+<A HREF= "../Hyperdoc/Manual-21.html#ss21.4"> Creating New Synaptic Plasticity
+Objects</A>. There is also a tutorial with example scripts in
+<A HREF="htmlScripts/stdp_rules/README.html">Scripts/stdp_rules</A>.
+This tutorial illustrates both methods as applied to the the Song,
+Miller, and Abbott (SMA) model for Spike Timing Dependent Plasticity
+(STDP).
+
+There are further examples in
+ <A HREF= "../exercises/course-tutorials.html">course-tutorials.html</A>
+and in  <A HREF= "../exercises/Gtut5.html">Gtut5.html</A>
+in the <I>exercises</I> directory
+
+<H1><A NAME="section-2.">References</A></H1>
+
+<P>
+Brette et al. (2007) Simulation of networks of spiking neurons: A
+review of tools and strategies.  J. Comput. Neurosci. 23: 349-398.
+
+<P>
+Dan Y and Poo M (2004) Spike timing-dependent plasticity of neural
+circuits. Neuron, 44:232-330 .
+
+<P>
+Song S, Miller KD, Abbott LF (2000) Competitive Hebbian learning
+through spike-timing-dependent synaptic plasticity.
+Nat. Neurosci. 3: 919&acirc;€“926.
+
+<P>
+Vogels TP, Abbott LF. (2005) Signal propagation and logic gating in
+networks of integrate-and-fire neurons. J. Neurosci. 25: 10786-10795.
+
+<HR>
+<!-- Return from a Detour -->
+Back to <A HREF="synchan-tut.html">Making synaptic connections</A><BR>
+Back to <A HREF="net-tut.html">Creating large networks with GENESIS</A><BR>
+Up: <A HREF="genprog.html">Table of Contents</A>
+
+</BODY>
+</HTML>

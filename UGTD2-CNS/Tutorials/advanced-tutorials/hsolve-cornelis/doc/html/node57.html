@@ -1,0 +1,194 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002 (1.62) JA patch-1.4
+patched version by:  Kenshi Muto, Debian Project.
+LaTeX2HTML 2002 (1.62),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Solution of The Cable Equation.</TITLE>
+<META NAME="description" CONTENT="Solution of The Cable Equation.">
+<META NAME="keywords" CONTENT="tutorial2">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002 JA patch-1.4">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutorial2.css">
+
+<LINK REL="next" HREF="node58.html">
+<LINK REL="previous" HREF="node56.html">
+<LINK REL="up" HREF="node56.html">
+<LINK REL="next" HREF="node58.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html879"
+  HREF="node58.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html875"
+  HREF="node56.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html869"
+  HREF="node56.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html877"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html880"
+  HREF="node58.html">Solution of Conductance Equations.</A>
+<B> Up:</B> <A NAME="tex2html876"
+  HREF="node56.html">Hsolve as a Virtual</A>
+<B> Previous:</B> <A NAME="tex2html870"
+  HREF="node56.html">Hsolve as a Virtual</A>
+ &nbsp <B>  <A NAME="tex2html878"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION04221000000000000000">
+Solution of The Cable Equation.</A>
+</H2>
+
+<P>
+The solution of the matrix that emerges from the spatial
+discretization of the cable equation is done by looping over the
+byte-code in an array called <TT>funcs</TT>.  The number of entries in
+this array is given by the field <TT>nfuncs</TT>:
+
+<P>
+<PRE>
+    genesis &gt; showfield solve nfuncs
+    [ /Purkinje/solve ]
+    nfuncs               = 25810
+</PRE>
+
+<P>
+The <TT>funcs</TT> array contains the actual code to be executed and
+also encodes the structure of the matrix (which corresponds to the
+morphology of the neuron).  Remember that this matrix is inverted in
+two phases that are known as forward elimination and backward
+substitution.  If we <I>disassemble</I> a small part of the
+<TT>funcs</TT> array, we get something like the following:
+
+<P>
+<PRE>
+    genesis &gt; printfuncs solve 0 20
+    00000 :: 0    0             FOBA_ELIM    0
+    00002 :: 1                  SET_DIAG
+    00003 :: 0    2             FOBA_ELIM    2
+    00005 :: 2                  SKIP_DIAG
+    00006 :: 0    6             FOBA_ELIM    6
+    00008 :: 1                  SET_DIAG
+    00009 :: 0    4             FOBA_ELIM    4
+    00011 :: 0    8             FOBA_ELIM    8
+    00013 :: 2                  SKIP_DIAG
+    00014 :: 0   12             FOBA_ELIM   12
+    00016 :: 1                  SET_DIAG
+    00017 :: 0   10             FOBA_ELIM   10
+    00019 :: 0   14             FOBA_ELIM   14
+</PRE>
+
+<P>
+The first <TT>FOBA_ELIM</TT> opcode tells that the coefficient at
+offset <TT>0</TT> should be eliminated from the matrix.  Since we are
+at the start of the <TT>funcs</TT> array, <TT>hsolve</TT> knows that
+it is in the process of forward elimination (the opcode
+<TT>FOBA_ELIM</TT> encodes forward elimination as well as backward
+substitution).
+
+<P>
+Second the <TT>SET_DIAG</TT> opcode calculates a new value for the
+coefficient on the diagonal of the matrix.
+
+<P>
+The <TT>SKIP_DIAG</TT> opcode calculates a new value for the
+coefficient on the diagonal of the matrix, but then skips on to the
+next row in the matrix.  This means that we are dealing with a tip of
+a dendrite.  At positions 9 and 11 we encounter two consecutive
+elimination steps.  This a witness of a branch point in the morphology
+of the neuron.
+
+<P>
+Note that the coefficients to be eliminated, are found in the
+<TT>ravals</TT> and <TT>results</TT> arrays.  When walking over the
+<TT>funcs</TT> array, <TT>hsolve</TT> also automatically sweeps
+through these two data arrays.
+
+<P>
+The separation between forward elimination and backward substitution
+is done with a <TT>FINISH</TT> opcode:
+
+<P>
+<PRE>
+    genesis &gt; printfuncs solve 12164 12171
+    12164 :: 1                  SET_DIAG
+    12165 :: 0 9092             FOBA_ELIM 9092
+    12167 :: 7                  FINISH
+    12168 :: 0 9094             FOBA_ELIM 9094
+    12170 :: 6                  CALC_RESULTS
+    12171 :: 0 9092             FOBA_ELIM 9092
+</PRE>
+
+<P>
+After the <TT>FINISH</TT> opcode, <TT>hsolve</TT> starts the backward
+substitution cycle (so from then on the <TT>FOBA_ELIM</TT> opcode
+encodes a backward substitution operation.  Finally the
+<TT>CALC_RESULTS</TT> operation tells that all coefficients from the
+current row have been eliminated and that the final result for that
+row can be calculated.  There are yet some other opcodes that are used
+for symmetric compartments.  These are not discussed.
+
+<P>
+<BR>
+<BR>
+The emulation of this byte-code is done in the source file
+<TT>hines_solve.c</TT>.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html879"
+  HREF="node58.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html875"
+  HREF="node56.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html869"
+  HREF="node56.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html877"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html880"
+  HREF="node58.html">Solution of Conductance Equations.</A>
+<B> Up:</B> <A NAME="tex2html876"
+  HREF="node56.html">Hsolve as a Virtual</A>
+<B> Previous:</B> <A NAME="tex2html870"
+  HREF="node56.html">Hsolve as a Virtual</A>
+ &nbsp <B>  <A NAME="tex2html878"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+
+2002-11-15
+</ADDRESS>
+</BODY>
+</HTML>

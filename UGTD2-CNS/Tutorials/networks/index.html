@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>Network models</TITLE>
+<META NAME="generator" CONTENT="txt2html v1.28">
+</HEAD>
+<BODY>
+<P>
+<H2>Tutorials/networks</H2>
+<P>
+This directory contains the documented GENESIS network model simulations:
+
+<P> <A HREF="RSnet/index.html">RSnet/</A> - RSnet is a demonstration of a
+    simple network, consisting of a grid of simplified neocortical regular
+    spiking pyramidal cells, each one coupled with excitory synaptic
+    connections to its four nearest neighbors.  It is described and
+    analyzed in the GENESIS Modeling Tutorial section
+<A HREF="../genprog/net-tut.html">"Creating large networks with
+GENESIS"</A>.
+
+<P> <A HREF="par-RSnet/index.html">par-RSnet/</A> - par-RSnet is the version of
+RSNet for parallel GENESIS, and can be run with PGENESIS on PCs with
+multicore processors.  It is described and analyzed in the GENESIS Modeling
+Tutorial section <A HREF="../genprog/par-net-tut.html">"Converting large
+network simulations to PGENESIS" </A>.
+
+<P>
+<A HREF="synfirenet/index.html">synfirenet/</A> - Contains an example of a
+    more abstract type of network connectivity, the synfire chain.  These
+    scripts were developed by Dieter Jaeger as as an exercise in script
+    programming of networks, and the scripts were designed to be easily
+    modified.  The network model also allows Hebbian learning.  The main
+    script is netsim.g.  The GUI lets you experiment with the model, and
+    the HELP menu offers suggestions on ways to modify the model.  The
+    README file explains about synfire chains and the details of this
+    model.
+
+<P>
+<A HREF="Vogels-Abbott_net/index.html">Vogels-Abbott_net/</A>
+ - Contains the GENESIS implementations of the Vogels and Abbott (2005)
+ model using single compartment neurons with Hodgkin-Huxley dynamics.  This
+ was used as a benchmark for neural simulators in the review by Brette et
+ al.  (2007).
+
+<P>
+<H3>Additional networks for this extended version of the Tutorials
+package:</H3>
+
+<P>
+<A HREF="VAnet2/README.html"> VAnet2 model</A> - An
+efficient hsolved GENESIS version of the Vogels and
+Abbott (2005) model.  It serves as a tutorial on the use of hsolve to
+achieve at least a factor of 10 speedup, in the context of a very
+simple model.  The 'VAnet2-batch.g' script is intended to be extended
+for testing GENESIS spike timing dependent plasticity (STDP)
+implementations with hsolve. This script would be a good starting
+point for models that use more realistic cells and connections.
+
+<P><A HREF="ACnet2-GENESIS/README.html">ACnet2</A>
+is an auditory cortex model that also serves as a tutorial and template
+for creating neocortical network models.
+<P>
+
+The fMRInet model, which is available at
+<A HREF="http://genesis-sim.org/GENESIS/fMRInet">
+http://genesis-sim.org/GENESIS/fMRInet</A> illusrates how to provide
+unusual stimuli, such as the effects of electromagnetic fields, by
+using a 'script_out' object to provide the stimulus at clocked intervals.
+
+<P>
+
+<A HREF="hippo2/index.html">hippo2/</A> - This is a small hippocampal
+network model consisting of 72 pyramidal cells (Traub 1994 model) and
+18 interneurons (Traub 1995 model), developed and submitted to BABEL,
+the GENESIS Users Group, by Kerstin Menne (Menne et al., 2002) It
+contains papers and a thesis with detailed documentation of the model.
+
+<P>
+<A HREF="TurtleVisCortex/README.html">TurtleVisCortex/</A>
+ - This is the Nenadic et al. (2003) large scale model of
+turtle visual cortex.  It contains 368 lateral neurons, 311 medial neurons,
+20 horizontal, 45 stellate neurons, and 44 subpial neurons in a simulated
+1.6 x 1.6 mm piece of cortex.  There are also 201 LGN input neurons.
+
+<H1><A NAME="section-1.">References</A></H1>
+
+<P>
+
+
+<P>
+
+Brette R, Rudolph M, Carnevale T, Hines M, Beeman D, Bower JM, Diesmann M,
+Morrison A, Goodman PH, Harris Jr FC, Zirpe M, Natschlager T, Pecevski D,
+Ermentrout B, Djurfeldt M, Lansner A, Rochel O, Vieville T, Muller E,
+Davison AP, El Boustani S, and Destexhe A (2007)
+Simulation of networks of spiking neurons: a review of tools and
+strategies. J. Comput. Neurosci. 23: 349-398.
+
+<P>
+Menne, K.M.L., Folkers, A., Malina, T., Maex, R. and Hofmann, U. G. (2002)
+Test of spike sorting algorithms on the basis of simulated network data.
+Neurocomputing 44-46:1119-1126.
+
+<P>
+Nenadic, Z., Ghosh, B.K. and Ulinski. P. (2003)
+Propagating Waves in Visual Cortex: A Large Scale Model of Turtle Visual
+Cortex", J. Computational Neuroscience 14:161-184.
+
+<P>
+Vogels TP, Abbott LF. (2005) Signal propagation and logic gating in
+networks of integrate-and-fire neurons. J. Neurosci. 25: 10786-10795.
+
+<HR>
+<P>
+<a href="../index.html"><img src="../back2.gif" align="middle"
+ hspace=12>Return to the GENESIS Neural Modeling Tutorials main index</a>
+<P>
+
+</BODY>
+</HTML>

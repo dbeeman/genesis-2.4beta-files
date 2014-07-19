@@ -1,0 +1,304 @@
+My Scripts/mitral_granule directory has some selected files from Upi's
+jneurophys.jun93.tar file in the babel cells directory.
+
+(Scripts/mitral_granule/new_mit has my new scripts and some of Upi's converted
+to GENESIS 2.)
+
+READE - original README file
+mitral_granule.July3 - 1997 babelnews posting with my response
+
+mit_curr_inj/ has sims, and figs for Figure 4 - mitral cell current clamp
+  inj.g is a standalone script, using bulbchan2.g and mit.p
+  composite.ps is a "proto" figure 4.
+
+defaults.g is an earlier version of the standard GENESIS 1
+neurokit/defaults.g.  It doesn't seem to be specific to the simulation.
+
+There is no userprefs.g in the main directory.
+chan_kinetics/userprefs.g - uses bulbchan3 and pg.p, neither exist in this
+dir.  (main dir has bulbchan and bulbchan2)
+
+chan_kinetics/smit.p - simplified model of mit cell with experimental
+    averages for cell geometry.
+
+mit_chdens - mit.p is same as mit_curr_inj, also has dmit.p, tmit.p,  tuft.p
+    inj.g has a few differences.  chdens.g uses a view to show channel
+    densities (I think). regions.g  thick.g are somewhat similar.
+
+mit_classes (Fig 5) - compares injection for 4 varieties of cells
+  inj.g is same as mit_chdens.  bwshape.g   hpol.g oldshape.g  shape.g seem
+  to do something similar.
+
+antidrom - Fig 11 - mit_trode1.p is only model file - different from mit.p.
+  The scripts use bulbchan, not bulbchan2.g,  and create xwd files.
+
+-------------------------------------------------------------------------
+newbulbchan.g (bulbchan2.g) has:
+make_LCa3_mit_usb - Adjusted LCa channel
+make_Na_rat_smsnn - I-Current (Na)
+make_Na2_rat_smsnn - seems to modify Na_rat_smsnn after rename to Na2_rat_smsnn
+make_KA_bsg_yka - from yamadachan.g
+make_KM_bsg_upi - Muscarinic K current
+make_K_mit_usb - Mitral K current
+make_K2_mit_usb - renames K_mit_usb and modifies it by scaling A and B by 20.
+make_K_slow_usb - not used in mitral cell?
+make_Na_mit_usb - Tabchan Na Mitral cell channel
+make_Na2_mit_usb
+(all the above use tabchannels)
+make_Kca_mit_usb - vdep_channel/table/tabgate
+make_Ca_mit_conc - Ca_concen
+
+make_glu_mit_usb - channelC2 - not used in inject
+make_GABA_1_mit_usb - ddsyn - not used in inject
+make_GABA_2_mit_usb, make_glu_gran_usb, make_glu_pg_usb - also ddsyn
+various receptors
+
+Channels actually used in the model:
+LCa3_mit_usb
+K_mit_usb
+KA_bsg_yka
+Na_mit_usb
+K2_mit_usb  - Kfast
+Ca_mit_conc
+KCa_mit_usb
+
+---------------------------------------------------------------------------
+contents of directories (before deletions):
+antidrom/
+all3.g        frame2.Z      glom14.Z      glom7.Z       sec4.Z
+antidrom.g    frame3.Z      glom15.Z      glom8.Z       sec5.Z
+antiglom.g    frame4.Z      glom16.Z      glom9.Z       sec6.Z
+antisec.g     frame5.Z      glom17.Z      label.Z       show3
+bak.frame0    frame6.Z      glom18.Z      mitVm         showall
+ch1.1.Z       glom0.Z       glom19.Z      mit_trode1.p  showframes
+ch2.1.Z       glom1.Z       glom2.Z       movie.g       showgloms
+colorscale.g  glom10.Z      glom3.Z       sec0.Z        shows
+colscale.Z    glom11.Z      glom4.Z       sec1.Z        showsec
+frame0.Z      glom12.Z      glom5.Z       sec2.Z
+frame1.Z      glom13.Z      glom6.Z       sec3.Z
+
+chan_kinetics/
+K2_X.ps.Z       K2_Y_minf       K_Y_m.ps.Z      Nas_Y_minf      lagends
+K2_X_A          K2_Y_t.ps.Z     K_Y_t.ps.Z      Nas_Y_t.ps.Z    smit.p
+K2_X_m.ps.Z     K2_Y_tau        Nas_X_m.ps.Z    Nas_Y_tau       userprefs.g
+K2_X_minf       K2_minf.ps.Z    Nas_X_minf      Nas_minf.ps.Z   x.ps.Z
+K2_X_t.ps.Z     K2_tau.ps.Z     Nas_X_t.ps.Z    Nas_tau.ps.Z
+K2_X_tau        K_X_m.ps.Z      Nas_X_tau       chops
+K2_Y_m.ps.Z     K_X_t.ps.Z      Nas_Y_m.ps.Z    composite.ps.Z
+
+mit_chdens/
+allps       dmit.p      inj.g       ps.out2     scdump.Z    y.ps.Z
+bub.ps.Z    foo.ps.Z    j1.ps.Z     ps.out3     thick.g
+bung.ps.Z   fu.ps.Z     mit.p       ps.out4     tmit.p
+chdens.g    fub.ps.Z    ps.out0     ps.out5     tuft.p
+chdens.old  grey.ps.Z   ps.out1     regions.g   x.ps.Z
+
+mit_classes/
+2               dmitVm          inj.g           plotcomm        tmitVm.ps.Z
+Params.out      dmitVm.ps.Z     labels          scd2.Z          tuft.p
+all2.ps.Z       expplot         labels.backup   scd3.Z          tuft.ps.Z
+allVm.Z         foo.ps.Z        labels.ps.Z     scd4.Z          tuftVm
+bwshape.g       hdmitVm         mit.p           scdump.Z        tuftVm.ps.Z
+chops           hm.fmt1         mit.ps.Z        shape.g         vplot
+composite.ps.Z  hmitVm          mitVm           templateVm
+diffplot        hpol.g          mitVm.ps.Z      tmit.p
+dmit.p          htmitVm         oldshape.g      tmit.ps.Z
+dmit.ps.Z       htuftVm         plotall         tmitVm
+
+mit_curr_inj/
+P53.p            bplot            labels.backup    noleakVm.N14.Z
+P57.p            chops            labels.ps.Z      noleakVm.Z
+allblock.Z       composite.ps.Z   mit.p            nplot
+allblock.ps.Z    correct.block    mitVm.N14.Z      plotall
+allnob.Z         correct.noblock  mitVm.Z          plotall2
+allnob.ps.Z      edit3.block      mit_slice.p      plotall3
+blockVm.N14.Z    fu.ps.Z          n14.g            sliceinj.g
+blockVm.Z        inj.g            nocaVm.N14.Z     tailinj.g
+block_trode.p    labels           nocaVm.Z
+---------------------------------------------------------------------------
+Wed Apr 22 21:33:52 MDT 1998 - more about mit_curr_inj
+
+mit_curr_inj/ has sims, and figs for Figure 4 - mitral cell current clamp
+  inj.g is a standalone script, using bulbchan2.g and mit.p
+  composite.ps is a "proto" figure 4.
+
+allnob is a file for xplot with the 3 plots:
+Experimental (tmax = 0.325), simulated (yoffset = -0.12, tmax = 0.49),
+NoLeak (yoffset -0.25, tmax = 0.49) I'm guessing that experimental is for Fig.
+4D.  Fig 4F is "simulated results w/o modeled electrode damage" - i.e. NoLeak.
+Fig 4E is the standard model with a lower somatic RM to account for electode
+damage.  I bet that noLeak uses the same for soma and dendrite.
+
+correct.block is a pure x,y data file that is the same as the Experimental
+xplot file in alnob.   Presumeably, the allblock and correct.noblock
+files have the corresponding channel blocked plots from Fig 4.
+
+sliceinj.g is very similar to inj.g, but reads mit_slice.p instead of mit,p.
+It also has simtime = 0.5, instead of 0.32.
+
+mit_slice.p is just like mit.p, except that EREST_ACT = -0.080 instead of
+-0.065, and the soma does not have the channel entry "Rm 120e6". I wasn't
+even aware that readcell could deal with specifying Rm as a "channel" and
+"density" - it isn't documented.
+
+Eventually, I'll cut parts out of inj.g that I don't want (like the xplot
+part), and then run it through convert (call it inj2.g).  First I'll try
+Neurokit.  I'll copy in the default camit userprefs and edit it from things
+in inj.g.
+
+I run it, and discover bugs in newbulbchan.g that have been unreported since
+my conversion to 2.0!
+
+mit.p read: 286 compartments, 712 channels, 0 shells, 19 others
+
+took 300 sec to do 230 msec of simulation with method 11 and dt = 10e-6.
+inj.g uses 50e-6 with the old chanmode 3.
+With 0.5 nA injection this was about 6 spikes.  The xcell view is quite good,
+showing dendritic hot spots but i'll have to speed it up.
+
+The soma has Rm = 120000000 (120e6) and RM = 10.  inj.g makes the noleak model
+by copying /mit and then setting the soma Rm to RM/(PI*32e-6*32e-6) =
+3108.5e6.  This means that for the leak model RM for the soma is effectively
+0.386.  (The paper says that the soma Rm is set to 120e6 to take electrode
+damage into account.  This could have been done with a separate RM for the
+soma, instead of an "Rm" entry in mit.p.)
+
+chan_kinetics has a userprefs and smit.p (simplified model of mit cell).
+userprefs uses bulbchan3, but I'll try newbulbchan and make any other changes
+needed for GENESIS 2.  
+
+smit.p read: 53 compartments, 196 channels, 0 shells, 11 other
+took 105 sec to do 230 msec of simulation with method 11 and dt = 10e-6.
+With 0.5 nA injection this was about 8 spikes.  The default user_fatrange1
+of 1e-6 gave a soma that was undetectable and skinny dendrites.  I changed it
+to -20.
+
+I should try to runing inj2.g and also note any differences with the one in
+mit_chdens.
+mit_chdens/inj.g uses:
+mitnoblock="N14.p"
+set /noleak/soma inject {1.5*injnoblock*mit_input_res/noleak_input_res}
+instead of
+set /noleak/soma inject {1.6*injnoblock*mit_input_res/noleak_input_res}
+
+For the normal leaky model, the only difference is the use of n14.p.
+ni4.g in mit_chdens/ also wants to read n14,g, but it isn't in this directory.
+I don't see it anywhere.
+
+I converted inj.g to inj2.g and it brings up a form with graphs for block,
+mit, noca, and noleak.  It takes about 200 sec to do 230 msec of sim of the 4
+models.  This indicates that Neurokit is *really* slow. (or xcell)
+Snooping  the soma compartments I find that
+/mit/soma Rm = 120000000
+/noleak/soma Rm = 3108497664 = 3108e6.
+/noleak/soma inject = 1.562128538e-09 (NOT 0.4 nA, as claimed in the paper.)
+It also produeces very fast spiking.  If I set inject to 0.4e9, reset and step
+for 0.3 sec, I get something a lot more like the leak (mit) version, and like
+the paper (or composite.ps). I saved this as inj2.gif/ps.  If I use the "nleak"
+model, I should find out why inject is not being properly set.
+
+The last thing to try is to grab the experimental plot from composite.ps
+as a gif, taken from a zoom. --> experiment.gif.  I need to put on an
+x-axis with scale, but first wait to see if Jenny wants to use the data file.
+
+To make it simpler to move back and forth between dogstar and chuck, I'm
+going to put all the new stuff in a new_mit directory to use on both chuck
+and dogstar.  new_mit has the full mitral cell simulations (inj2.g and the
+userprefs.g to use with Neurokit), and new_mit/chan_kinetics has the
+userprefs.g and smit.p file needed for the simple 53 compartment model.
+---------------------------------------------------------------------------
+Fri Apr 24 - Mon Apr 27
+
+copied:
+ mit_curr_inj/correct.noblock --> new_mit/Fig4D.data
+ mit_curr_inj/correct.block --> new_mit/Fig4A.data
+
+(1) Make injtut.g in the style of server_scripts/simtut.g (version with
+graphics). Try to make as modular as possible, so it can either be very basic
+like the pure server version, or be full featured, with xcell.
+
+DONE  - uses these defaults (defined in protodefs):
+user_pfile = "mit.p"
+user_cell = "/cell"
+comptname = "soma"
+user_intmethod = 11
+user_dt = 50e-6
+user_runtime = 0.32
+user_inject = 0.5e-9
+user_refresh = 10.0
+user_filename = "mit_somaVm"
+
+For 0.32 sec run it takes 42 seconds with output to a graph
+36 seconds with no output
+36 seconds with only file output
+
+
+(1a) Change mit.p to set the soma RM to 0.386 instead of using an Rm entry.
+DONE - old one is mit.p.orig - results are the same
+
+(2) make cellview.g to work as a function to be used in inj3.g.
+DONE - defines make_xcell and set_drawrange
+84 sec with plot and xcell
+
+(3) experiment with output of all Vm's to a file.
+Using an asc_file, it takes 47 sec with plot and "cell_Vm" file (about 2 MB!)
+44 sec with only "cell_Vm" file.
+
+This uses an asc_file object to write Vm of all compartments to "cell_Vm".
+reset is done with "sim_reset", which deletes "cell_Vm" and starts a new one
+with a list of all the compartment names as a header.  The function
+get_cellVm_compts also returns this list as a string, but it is likely to be
+much longer than the maximum length return string permitted by the server
+(100 characters).  (I need to check this.  The limitation may be only on the
+command string.  See the code in src/sim/sim_server.c.)
+
+To write the file in a binary format, I could use disk_out instead of an
+asc_file (with the same field settings), but I wouldn't be able to prepend the
+header of compartment names.  I'd need to either write them to a separate
+ascii file, or increase the length of the server return string, so it can EXEC
+get_cellVm_compts.  (see disk_out.doc for details of the bianry format.)
+
+smit2.p is the simple 53 compartment model, with the synaptically activated
+channels removed, and the soma RM set to 0.386, like mit.p.  It takes only
+27 seconds to run with plot, xcell, and all compartment Vm's sent to a file.
+
+-----------------------------------------------------------------------------
+Mon Apr 27 13:41:36 MDT 1998  - channel blocking.
+
+To produce Fig. 4B, to simulate blocking of Na and Kfast (K2_mit_usb) and
+partial blocking of K channels, inj.g/inj2.g uses:
+
+scaleparms /block /mit #[]/Na_mit_usb Gbar 0.0 #[]/K2_mit_usb Gbar 0.0  \
+    #[]/K_mit_usb Gbar {1.0/1.3}
+
+This sets Gbar to zero in all the Na_mit_usb and K2_mit_usb channels, and
+reduces it by 1.0/1.3 in all the K_mit_usb channels.
+
+I've added a script "add_block.g" that defines a function "do_blocking" to do
+this.  As it is very specific to the mitral models, I didn't add it to
+injtut.g.  To produce Fig. 4B, give the commands (to the genesis prompt, or
+sent to the server):
+
+include add_block.g
+do_blocking
+
+(also set the injection to 0.62e-9, to agree with the injection used in
+Fig. 4B.)
+
+To unblock, you must reload the simulation.
+
+setfield {user_cell}/#[]/Na_mit_usb Gbar 0.0
+setfield {user_cell}/#[]/K2_mit_usb Gbar 0.0
+
+scaling the K_mit_usb Gbar will be a little trickier, and can't be done in a
+single command.
+
+    foreach chan ( {el {user_cell}/#[]/K_mit_usb} )
+        Gbar = {getfield {chan} Gbar}
+        setfield {chan} Gbar {Gbar/1.3}
+    end
+
+This may be a little harder when done as a command to the server, as the loop
+over the elements must be done on the client side (unless ee upload a script
+to do this on he server side.)
+------------------------------------------------------------------------------

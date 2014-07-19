@@ -1,0 +1,226 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002 (1.62) JA patch-1.4
+patched version by:  Kenshi Muto, Debian Project.
+LaTeX2HTML 2002 (1.62),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>The calc_mode field.</TITLE>
+<META NAME="description" CONTENT="The calc_mode field.">
+<META NAME="keywords" CONTENT="tutorial2">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002 JA patch-1.4">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutorial2.css">
+
+<LINK REL="next" HREF="node19.html">
+<LINK REL="previous" HREF="node17.html">
+<LINK REL="up" HREF="node17.html">
+<LINK REL="next" HREF="node19.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html381"
+  HREF="node19.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html377"
+  HREF="node17.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html371"
+  HREF="node17.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html379"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html382"
+  HREF="node19.html">The Table Properties.</A>
+<B> Up:</B> <A NAME="tex2html378"
+  HREF="node17.html">Tabulated Calculations</A>
+<B> Previous:</B> <A NAME="tex2html372"
+  HREF="node17.html">Tabulated Calculations</A>
+ &nbsp <B>  <A NAME="tex2html380"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H4><A NAME="SECTION02230010000000000000"></A>
+<A NAME="sec:calc-mode"></A>
+<BR>
+The <TT>calc_mode</TT> field.
+</H4>
+Genesis makes extensive use of precomputed tables to model conductance
+that depend on the membrane potential.  The <TT>tabchannel</TT>
+element is an example.  The tables are a simple discretization along
+the V-axis of the function they model, so they 'export' a set of
+<IMG
+ WIDTH="51" HEIGHT="31" ALIGN="MIDDLE" BORDER="0"
+ SRC="img58.png"
+ ALT="$ (V_i,y_i)$"> tuples, <!-- MATH
+ $V_i = \mathrm{V_0} + i \cdot \Delta\mathrm{V}$
+ -->
+<IMG
+ WIDTH="121" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img59.png"
+ ALT="$ V_i = \mathrm{V_0} + i \cdot \Delta\mathrm{V}$">, <!-- MATH
+ $0 \leq i \leq
+\mathrm{N}$
+ -->
+<IMG
+ WIDTH="72" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img60.png"
+ ALT="$ 0 \leq i \leq
+\mathrm{N}$">.  Since the membrane potential <IMG
+ WIDTH="17" HEIGHT="15" ALIGN="BOTTOM" BORDER="0"
+ SRC="img28.png"
+ ALT="$ V$"> is a computed variable,
+there is no guarantee that it will be equal to one of the <IMG
+ WIDTH="19" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img61.png"
+ ALT="$ V_i$">'s at
+any point in simulation time.  The tabulated elements in Genesis know
+about two basic modes of calculating a value <IMG
+ WIDTH="12" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img5.png"
+ ALT="$ y$"> for a given value
+<IMG
+ WIDTH="17" HEIGHT="15" ALIGN="BOTTOM" BORDER="0"
+ SRC="img28.png"
+ ALT="$ V$">:
+
+<P>
+
+<OL>
+<LI>Truncation: for a given value <IMG
+ WIDTH="17" HEIGHT="15" ALIGN="BOTTOM" BORDER="0"
+ SRC="img28.png"
+ ALT="$ V$">, <!-- MATH
+ $V_i \leq V < V_{i+1}$
+ -->
+<IMG
+ WIDTH="105" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img62.png"
+ ALT="$ V_i \leq V &lt; V_{i+1}$">, the
+  value <IMG
+ WIDTH="17" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img63.png"
+ ALT="$ y_i$"> is returned.  Since the value <IMG
+ WIDTH="17" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img63.png"
+ ALT="$ y_i$"> is directly stored
+  in the table, no additional calculations have to be performed.
+</LI>
+<LI>Linear interpolation: for a given value <IMG
+ WIDTH="17" HEIGHT="15" ALIGN="BOTTOM" BORDER="0"
+ SRC="img28.png"
+ ALT="$ V$">, <!-- MATH
+ $V_i \leq V <
+V_{i+1}$
+ -->
+<IMG
+ WIDTH="105" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img62.png"
+ ALT="$ V_i \leq V &lt; V_{i+1}$">, the value <!-- MATH
+ $y = y_i + (V - V_i) \cdot \frac{(y_{i+1} - y_i)}
+{(V_{i+1} - V_i)}$
+ -->
+<IMG
+ WIDTH="199" HEIGHT="40" ALIGN="MIDDLE" BORDER="0"
+ SRC="img64.png"
+ ALT="$ y = y_i + (V - V_i) \cdot \frac{(y_{i+1} - y_i)}
+{(V_{i+1} - V_i)}$"> is returned.  The value <IMG
+ WIDTH="12" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img5.png"
+ ALT="$ y$"> is the result of a
+  linear interpolation between two tuples stored in the table.
+</LI>
+</OL>
+
+<P>
+The distinction between these two modes of operation is made by the
+<TT>calc_mode</TT> field.  If this field is set to <IMG
+ WIDTH="12" HEIGHT="13" ALIGN="BOTTOM" BORDER="0"
+ SRC="img11.png"
+ ALT="$ 1$">, linear
+interpolation is used, if the field is set to 0, truncation is used.
+
+<P>
+For most tabulated elements of genesis the <TT>calc_mode</TT> field is
+found in the <TT>interpol struct</TT>s that reside in the element
+fields.  However <TT>hsolve</TT> has its own <TT>calcmode</TT> field
+- note the small difference in name - which is applied to all
+tabulated calculations.  The granularity provided by the Genesis
+elements is much higher than provided by <TT>hsolve</TT>.  That is why
+you always have to set the field manually.
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<TABLE  WIDTH="635">
+<TR><TD>
+  <FONT SIZE="-1"><B>NOTE:</B> Never forget to set the <TT>calcmode</TT>
+    field and to check if it is equal to the calculation mode of all
+    tabulated elements.  If you don't, your results will be almost
+    right, but not exactly.
+</FONT></TD></TR>
+</TABLE>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html381"
+  HREF="node19.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html377"
+  HREF="node17.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html371"
+  HREF="node17.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html379"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html382"
+  HREF="node19.html">The Table Properties.</A>
+<B> Up:</B> <A NAME="tex2html378"
+  HREF="node17.html">Tabulated Calculations</A>
+<B> Previous:</B> <A NAME="tex2html372"
+  HREF="node17.html">Tabulated Calculations</A>
+ &nbsp <B>  <A NAME="tex2html380"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+
+2002-11-15
+</ADDRESS>
+</BODY>
+</HTML>

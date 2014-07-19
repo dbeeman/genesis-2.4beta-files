@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<HTML>
+<HEAD>
+</HEAD>
+<BODY BGCOLOR="#fffff3" TEXT="#000000">
+<p align=center><IMG SRC="images/tux128.png">
+
+<H1>Some suggestions for installing Linux on a PC</H1>
+<P>
+
+
+<P>
+This is an outline of what you need to do to install Linux, and some sources
+of information to help you.
+For detailed information about Linux, see the web site for The Linux
+Documentation Project, <A HREF="http://www.tldp.org/">http://www.tldp.org/</A>.
+
+
+<A NAME="section-1"><H2>Prepare a place for Linux on your hard drive</H2></A>
+
+<P>
+If you have a desktop computer, the easiest solution is to add another disk
+drive to devote to Linux, rather than sharing the existing drive with
+Windows.  This minimizes the chances of making a mistake that will mess up
+your Windows disk.  Buy whatever hard drive your local office supply or
+computer store has on sale for less than $100, and you will have plenty of
+disk space for a Linux installation.  Installing it in your computer will be
+straightforward, following the instructions that come with the drive.
+
+<P> If you have a laptop, or you would rather wrestle with software than
+hardware, you can install Linux on the same drive that holds Windows.
+Initially, the entire disk will be formatted as a Windows file system, or
+there may be other partitions for backup and system files.  You will need
+to shrink the Windows partition to make room for a Linux partition and a
+Linux swap partition.  This may be done with the free utility QTParted (a
+clone of the commercial program Partition Magic).  It may be found at
+http://qtparted.sourceforge.net/.  It may also be included in some
+Linux distributions.  The Knoppix Live Linux CD, which can be obtained
+http://www.knoppix.net/, contains QTParted, and allows you to boot a version
+of Debian Linux without making any changes to your hard drive.  This is
+useful for trying out Linux and setting up your drive before installing
+Linux.
+
+<A NAME="section-2"><H2>Get a Linux distribution</H2></A>
+
+<P> There are several choices of Linux distributions, and they are all
+quite similar in terms of what they provide.  Red Hat Fedora Linux
+(http://www.redhat.com/fedora) is one of the most popular.  
+Ubuntu Linux (http://www.ubuntu.com/) and its variations such as Kbuntu
+(which uses the KDE desktop) is another popular distrubution.  SuSE Linux
+(http://www.novell.com/linux/) is also very highly regarded, as is Gentoo
+Linux (http://www.gentoo.org/).  All of these are available for free
+download from their web sites, along with the necessary documentation.
+But, if you are new to Linux, it may be best to buy a Linux distribution
+set with CDROMs, an installation manual, and an introduction to using
+Linux.  You will find many choices at a bookstore or computer store.
+
+<A NAME="section-3"><H1>Decide on a partitioning scheme</H1></A>
+
+<P> The instructions for installing whatever Linux distribution you choose
+will require you to understand somthing about disk partitioning and the unix
+device names for disk partions. For example, the primary master drive on a PC
+is called <i>/dev/hda</i>, and the primary slave <i>/dev/hdb</i>.  The Windows
+"C:" drive is normally the first and only partion on <i>/dev/hda</i>, and is
+called <i>/dev/hda1</i>.  You will need to select which other partitions on
+which drives you will devote to Linux and to the swap partition.  A mistake at
+this point could ruin your Windows installation, so you should read these
+instructions carefully.
+
+<A NAME="section-4"><H2>Finallly</H2></A>
+
+<P> Install Linux following the instructions that came with the
+distribution package.  These will include instructions for setting up the
+computer to give you a choice of whether to boot Windows or Linux.  Be sure
+to install the various programming tools and development libraries, which
+are not always installed by default in a minimal installation.  Start Linux
+and then use a browser to read any provided HTML documentation for using
+Linux.  You will find lots of help at the The Linux Documentation Project,
+<A HREF="http://www.tldp.org/">http://www.tldp.org/</A>, and a short guide
+on this CDROM in <A HREF="unixhelp.html">Introduction to
+UNIX or Linux and the graphical desktop</A>.
+
+<P>Then, install GENESIS and start playing with the tutorials and
+demonstration scripts!
+
+</BODY>
+</HTML>

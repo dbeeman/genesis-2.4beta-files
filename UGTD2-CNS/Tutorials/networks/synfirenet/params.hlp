@@ -1,0 +1,11 @@
+
+  MODEL DESCRIPTION
+  -----------------
+  
+  Each of the 100 cells has Na and K channels as well as an excitatory and
+  inhibitory synapse.  The cells are connected to each other by columns, 
+  where 10 cells make one column and make input onto the next column of
+  10 cells.
+
+  The parameters used in the model can be seen and modified by editing the
+  scripts netsim.g, cell.g, and connections.g.

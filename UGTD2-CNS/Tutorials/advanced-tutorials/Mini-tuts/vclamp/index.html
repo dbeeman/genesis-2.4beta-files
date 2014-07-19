@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE></TITLE>
+<META NAME="generator" CONTENT="txt2html v1.28">
+</HEAD>
+<BODY>
+<H1><A NAME="section-1.">Mini-Tutorial on Voltage Clamp Circuitry Tuning</A></H1>
+
+<P>
+The GENESIS Scripts/squid simulation, by Mark Nelson, uses simulated
+voltage clamp circuitry constructed from a combination of the RC,
+diffamp and PID objects.  Further information is given in the
+documention for these objects, and for PID in particular.  The GENESIS
+commands to implement this are in the file squid_electronics.g.
+Neurokit also provides a voltage clamp for any compartment, although the
+code (in xout_funcs.g) is more complicated and will be harder to follow.
+Scripts/vclamp has a demonstration of how to use Neurokit to do a series
+of voltage clamp experiments.
+
+<P>
+When this circuitry is used on small cells with the default values,
+integration errors may occur during the nearly instantaneous change of
+the membrane potential as it attempts to follow changes in the clamp
+command voltage.  These notes, which were provided by Mark Nelson,
+suggest strategies for "tuning" the circuitry parameters to achieve a
+balance of the quality of the voltage clamp against the size of the
+integration time step.
+
+<H1><A NAME="section-2.">Notes on Vclamp problems and PID controller tuning</A></H1>
+
+<P>
+Here are a few things to be aware of when setting up voltage clamp
+circuitry ala the Squid model:
+
+<OL>
+  <LI>diffamp elements and the PID element have a "saturation" field that
+    limits the absolute magnitude of their output.  Unfortunately this
+    field defaults to 0, which isn't very useful.  Be sure to set it to
+    some large value (in the squid scripts it's set to 999, but you may
+    have to use a larger value if you're using some other set of units).
+
+  <LI>The tuning of the PID (proportional-integral-derivative) controller
+    involves balancing the quality of the voltage clamp against the size
+    of the integration time step.  Basically, higher gain gives a better
+    clamp, but requires a smaller integration time step to avoid numerical
+    instability.  (For more info on PID controllers see: Franklin, Powel,
+    Emami-Naeini (1986) "Feedback Control of Dynamic Systems",
+Addison-Wesley,
+<P>
+    pp. 99-106)  I'll outline a strategy for tuning the controller below.
+
+  <LI>the abrupt step change in voltage at the beginning of the clamp can
+    also give rise to numerical instabilities, hence the need to lowpass
+    filter the command signal with an "RC" element.
+
+</OL>
+<P>
+Here's the strategy I suggest for tuning the voltage clamp circuitry:
+
+<OL>
+  <LI>decide what rise time you are willing to accept on the leading edge
+       of the step and set the time constant of the "lowpass" element
+       accordingly (watch out for units - the value "0.1" in the squid
+       script is in units of msec.  If your simulation uses units
+       of seconds, you'd want "0.0001" for a 100 usec time constant.)
+
+  <LI>set the integration time step, DT, to be 4-5 times smaller than the
+       lowpass time constant.
+
+  <LI>set the PID integration time constant, tau_i, equal to the
+integration
+<P>
+       time step DT
+
+  <LI>set the PID derivative time constant, tau_d, equal to DT/4
+
+  <LI>empirically determine the value of PID gain where things go unstable
+       and set the gain just below that point
+
+</OL>
+
+<P> The three plots below show the Squid tutorial voltage clamp with the
+lowpass time RC time constant set to 0.003, 0.03, and 0.3 msec.  Note that
+with the slowest (largest) time constant, Vm follows the command voltage
+well, but the rise time is slow.  With RC = 0.003, there is more overshoot
+than with 0.03.
+
+<P>
+<IMG SRC="squid_vclamp_RC.gif">
+<P>
+<HR>
+<P>
+<A HREF="../../index.html"><img src="../../tutorial.gif" align="middle"></A>
+<A HREF="../../index.html">Back to the index of tutorials
+</A><P>
+
+
+</BODY>
+</HTML>

@@ -1,0 +1,190 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002 (1.62) JA patch-1.4
+patched version by:  Kenshi Muto, Debian Project.
+LaTeX2HTML 2002 (1.62),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Chronology of Commands</TITLE>
+<META NAME="description" CONTENT="Chronology of Commands">
+<META NAME="keywords" CONTENT="tutorial2">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002 JA patch-1.4">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutorial2.css">
+
+<LINK REL="next" HREF="node28.html">
+<LINK REL="previous" HREF="node26.html">
+<LINK REL="up" HREF="node26.html">
+<LINK REL="next" HREF="node28.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html489"
+  HREF="node28.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html485"
+  HREF="node26.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html479"
+  HREF="node26.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html487"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html490"
+  HREF="node28.html">Setup of Experiments</A>
+<B> Up:</B> <A NAME="tex2html486"
+  HREF="node26.html">A Practical Example 2:</A>
+<B> Previous:</B> <A NAME="tex2html480"
+  HREF="node26.html">A Practical Example 2:</A>
+ &nbsp <B>  <A NAME="tex2html488"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION02281000000000000000"></A>
+<A NAME="sec:chrono-commands"></A>
+<BR>
+Chronology of Commands
+</H2>
+
+<P>
+First we give a short guideline how to setup <TT>hsolve</TT>:
+
+<P>
+
+<OL>
+<LI>First create all compartments with their channels.
+</LI>
+<LI>Do a <TT>reset</TT> and check the simulation schedule with the
+  <TT>showsched</TT> command.  You will see that all compartments and
+  channels are scheduled for simulation.
+</LI>
+<LI>Then create <TT>hsolve</TT>, configure <TT>hsolve</TT> by
+  setting the appropriate fields (<TT>chanmode</TT> 4) and method of
+  integration, call <TT>SETUP</TT>, then do a '<TT>reset</TT>'.
+</LI>
+<LI>Again check the simulation schedule with the <TT>showsched</TT>
+  command.  The compartments and channels are removed from the
+  simulation schedule.  Instead, <TT>hsolve</TT> has been scheduled.
+</LI>
+<LI>Messages for compartmental voltage can be created in two ways:
+  before the <TT>SETUP</TT> messages can be created coming from the
+  compartments (the modeling elements), after <TT>SETUP</TT>, messages
+  that come from the <TT>hsolve</TT> element must be created with use
+  of the <TT>findsolvefield</TT> command.  We will shortly show why
+  the latter approach is not always possible.
+</LI>
+</OL>
+
+<P>
+We indicate points of interest with a marker of the form '<TT>//
+  point &lt;n&gt;</TT>' such that we can refer to it later on.  Here is the
+complete script:
+
+<P>
+<PRE>
+    genesis &gt; include ht_compartments.g
+    genesis &gt; make_compartments
+    genesis &gt; setclock 0 0.000010
+    genesis &gt; readcell main.p /main -hsolve
+    genesis &gt; setmethod main 11
+    genesis &gt; setfield main chanmode 4
+    genesis &gt; // point 1
+    genesis &gt; call main SETUP
+    genesis &gt; create xform /cell [200,350,300,300]
+    genesis &gt; create xdraw /cell/draw [0,0,100%,100%]
+    genesis &gt; setfield /cell/draw xmin -0.00005 xmax 0.00005 \
+    genesis &gt;         ymin -1e-5 ymax 4e-5 \
+    genesis &gt;         zmin -1e-5 zmax 1e-5
+    genesis &gt; create xcell /cell/draw/xcell
+    genesis &gt; setfield /cell/draw/xcell colmin -0.1 colmax 0.05 \
+    genesis &gt;     path /main/##[TYPE=compartment]
+    genesis &gt; str element
+    genesis &gt; foreach element ( { el /main/##[TYPE=compartment] } )
+    genesis &gt;         addmsg /main /cell/draw/xcell \
+    genesis &gt;                 COLOR {findsolvefield /main {element} Vm}
+    genesis &gt; end
+    genesis &gt; setfield /cell/draw/xcell \
+    genesis &gt;         nfield {countelementlist /main/##[TYPE=compartment]}
+    genesis &gt; xshow /cell
+    genesis &gt; reset
+    genesis &gt; // point 2
+</PRE>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<TABLE  WIDTH="635">
+<TR><TD>
+  <FONT SIZE="-1"><B>NOTE:</B> The <TT>xcell</TT> element assumes that you
+    have it setup the right messages with the <TT>path</TT> field of
+    the element.  If you setup the messages manually as we do here,
+    you must set the <TT>nfield</TT> field with the number of messages
+    going to the <TT>xcell</TT> element, otherwise it will not display
+    anything.  The <TT>nfield</TT> field of <TT>xcell</TT> is not
+    documented.
+</FONT></TD></TR>
+</TABLE>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html489"
+  HREF="node28.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html485"
+  HREF="node26.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html479"
+  HREF="node26.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html487"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html490"
+  HREF="node28.html">Setup of Experiments</A>
+<B> Up:</B> <A NAME="tex2html486"
+  HREF="node26.html">A Practical Example 2:</A>
+<B> Previous:</B> <A NAME="tex2html480"
+  HREF="node26.html">A Practical Example 2:</A>
+ &nbsp <B>  <A NAME="tex2html488"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+
+2002-11-15
+</ADDRESS>
+</BODY>
+</HTML>

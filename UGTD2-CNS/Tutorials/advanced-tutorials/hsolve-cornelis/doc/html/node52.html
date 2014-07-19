@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002 (1.62) JA patch-1.4
+patched version by:  Kenshi Muto, Debian Project.
+LaTeX2HTML 2002 (1.62),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>New Incoming Events</TITLE>
+<META NAME="description" CONTENT="New Incoming Events">
+<META NAME="keywords" CONTENT="tutorial2">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002 JA patch-1.4">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutorial2.css">
+
+<LINK REL="previous" HREF="node51.html">
+<LINK REL="up" HREF="node50.html">
+<LINK REL="next" HREF="node53.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html817"
+  HREF="node53.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html813"
+  HREF="node50.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html809"
+  HREF="node51.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html815"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html818"
+  HREF="node53.html">Byte-codes</A>
+<B> Up:</B> <A NAME="tex2html814"
+  HREF="node50.html">Implementation</A>
+<B> Previous:</B> <A NAME="tex2html810"
+  HREF="node51.html">Synchan event handling</A>
+ &nbsp <B>  <A NAME="tex2html816"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION04122000000000000000">
+New Incoming Events</A>
+</H2>
+
+<P>
+When new events arrive on a synaptic channel that has been taken over
+by <TT>hsolve</TT>, there is a possibility that the event must be
+scheduled before any other pending event i.e. the new event is the
+first one in the sorted list of events.  As a consequence the internal
+counter that tracks the occurrence of the next synaptic event for that
+channel must be updated.  A synaptic channel receiving a new first
+event, notifies <TT>hsolve</TT> of this situation by calling the
+<TT>hsolve</TT> element with an <TT>HSEVENT</TT> action.  The
+arguments to this action describe the synaptic channel at which the
+event arrives with a unique identifier and the time when the event
+will be scheduled.  <TT>Hsolve</TT> uses this information to update
+the internal counter for the synaptic channel.  The unique identifier
+is determined by <TT>hsolve</TT> during <TT>SETUP</TT> time and can be
+found in the <TT>solve_index</TT> field of the synaptic channel.  The
+<TT>hsolve</TT> element that has taken over the synaptic channel is
+found in the <TT>hsolve</TT> field of the channel.
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<TABLE  WIDTH="635">
+<TR><TD>
+  <FONT SIZE="-1"><B>NOTE:</B> For the outgoing spike events
+    <TT>hsolve</TT> uses a message loop on the messages of the
+    <TT>spikegen</TT> element that produces the spikes.  There is
+    nothing really fancy about this except for the fact that
+    <TT>hsolve</TT> uses memory that is supposed to be private to the
+    <TT>spikegen</TT> element.  This way the events arrive
+    automatically at the wright <TT>synchan</TT> element, and that
+    element will in turn notify an <TT>hsolve</TT> element if needed
+    by means of an <TT>HSEVENT</TT> action.  This also guarantees that
+    there is no interference with <TT>pgenesis</TT>.
+</FONT></TD></TR>
+</TABLE>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html817"
+  HREF="node53.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html813"
+  HREF="node50.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html809"
+  HREF="node51.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html815"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html818"
+  HREF="node53.html">Byte-codes</A>
+<B> Up:</B> <A NAME="tex2html814"
+  HREF="node50.html">Implementation</A>
+<B> Previous:</B> <A NAME="tex2html810"
+  HREF="node51.html">Synchan event handling</A>
+ &nbsp <B>  <A NAME="tex2html816"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+
+2002-11-15
+</ADDRESS>
+</BODY>
+</HTML>

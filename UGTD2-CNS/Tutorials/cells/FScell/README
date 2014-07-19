@@ -1,0 +1,58 @@
+Main simulation script:  FScell.g
+
+Model description:
+
+This simplified neuron model could be used to represent a fast spiking
+interneuron in a cortical network.  However, the model was created to
+provide an example of GENESIS scripting, rather than to fit the current
+clamp firing patterns of typical cortical inhibitory interneurons.  Some
+parameter adjustments are likely to be necessary before it is used in a
+realistic cortical network model.  The single-compartment RScell model with
+the muscarinic current removed would also be a good starting point for a
+parameter search over passive cell parameters and the conductance densities
+for the Na and K currents.
+
+The main script FScell.g uses the cell reader to create a simple
+two-compartment neuron with a dendrite compartment, a soma, and an axon.
+The dendrite contains synaptically activated excitatory and inhibitory
+channels and the soma contains "squid-like" voltage-activated
+Hodgkin-Huxley sodium and potassium channels, plus a spikegen element that
+acts like the intial part of an axon.  This may be used to provide synaptic
+input to another cell.
+
+The simulation is based on an example script to create a neuron from a
+specified cell parameter file, with channels taken from the prototypes
+created by the file protodefs.g.  It can be customized for another cell by
+changing strings that are defined in the main script, providing a cell
+parameter file for the new cell, and providing a modified protodefs.g file
+to create the necessary prototype elements.  When used with the GUI
+functions defined in graphics.g, it allows a an injection current and a
+variety of synaptic inputs to be applied.
+
+The CONTROL PANEL of the GUI (defined in graphics.g) allows a steady
+injection current to be applied to the cell, and/or synaptic activation to
+be applied to the synchan that is specified in the string variable
+'synpath'.  If the value of synpath is '' (empty), then the synaptic input
+form does not appear. 
+
+In the synaptic input form, 'gmax' is used to set the gmax field of the
+specied synchan.  Poisson-distributed background activation can be applied
+to the synchan by setting the 'Frequency' (the average activation
+frequency) to a non-zero value.  This sets the frequency field of the
+synchan to that value.  The 'Spike input ON/OFF' toggle turns on and off
+the application of trains of spikes at the specified 'Spike interval'.
+
+The scripts in this directory are:
+
+README          This file.
+
+FScell.g	The main simulation script to start the simulation.
+
+cell.p          The cell parameter file for the model
+
+protodefs.f     File to create the library of prototype channels and other
+		elements used by the cell parameter file.
+
+graphics.g	A generic GUI to control the simulation. It can be somewhat
+		customized by setting the value of parameters and strings
+		the main simulation script.

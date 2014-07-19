@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE></TITLE>
+<META NAME="generator" CONTENT="txt2html v1.28">
+</HEAD>
+<BODY>
+<H1><A NAME="section-1.">Installing GENESIS with Cygwin under Windows</A></H1>
+
+
+<P>
+This Mini-Tutorial on installing GENESIS with Cygwin under Windows was
+contributed by Avrama Blackwell at George Mason University.
+
+<P>
+Both the full GENESIS source distribution (genesis-2.3-src.tar.gz) and the
+binary distrubution for use with Cygwin (genesis-2.3-Cygwin-bin.tar.gz)
+contain a file "README.bindist".  This has a section on installing GENESIS
+under Windows, using Cygwin to provide a UNIX-like environment to run
+GENESIS and other UNIX programs that have been compiled to run under
+Cygwin.  The source distribution also contains the file "README.cygwin"
+with additional information on compiling GENESIS for Cygwin, and some other
+notes regarding the use of Cygwin.  The Mini-Tutorial below gives a concise
+description of the steps required, and has been updated to reflect changes
+in packaging since the original README files were written.
+
+
+<UL>
+  <LI>with Firefox or IE under Windows XP or Vista, go to http://www.cygwin.com
+
+  <LI>click on install or update now to download setup.exe
+
+  <LI>double click on setup.exe when it appears on the desktop, or run it
+if given the option by the browser
+
+  <LI>click next
+
+  <LI>click install from internet
+
+  <LI>accept root directory of c:\cygwin or change it
+
+  <LI>install for "all users", default text file type "unix/binary"
+
+  <LI>local package directory: accept default or change it
+
+  <LI>on next screen acept "direct connection"
+
+  <LI>next, choose mirror site, e.g. gatech
+
+  <LI>select additional packages:
+
+  <UL>
+    <LI>from editors:
+    <UL>
+      <LI>emacs
+      <LI>emacs-X11
+
+    </UL>
+    <LI>from X11:
+    <UL>
+      <LI>cygwin-x-doc
+      <LI>font-adobe-dpi100
+      <LI>nedit
+      <LI>xinit
+      <LI>X-start-menu-icons
+
+    </UL>
+  </UL>
+  <LI>click next.  If it lists files that are required, but not selected,
+  accept them and click next.
+
+  <LI>do something while it installs, then click finish
+
+  <LI>To test, double click on the Cygwin icon on the desktop.  This will bring
+up a bare console window for entering Windows and most UNIX bash commands.
+From within the Cygwin window, type "startxwin.bat".  This will bring up an
+xterm terminal window that is fancier than the the Cygwin console, and can
+be used for running GENESIS.
+
+</UL>
+<P>
+OR
+
+<P>
+from the Windows Start menu, click on Cygwin-X, then on xterm.  This will
+bring up the xterm window, without the plain Cygwin window.
+
+<H1><A NAME="section-2.">Installing GENESIS</A></H1>
+
+<P>
+Open a web browser in Windows and go to http://genesis-sim.org.
+
+<P>
+From the "Get GENESIS" link at the left, choose "View all releases" and
+then download genesis-2.3-Cygwin-bin.tar.gz.
+
+<P>
+Put it into /usr/local (name of unix directory), or c:\cygwin\usr\local (if
+working in Windows and c:\cygwin was specified above as the root directory)
+
+<P>
+Start cygwin by clicking on the desktop icon.
+
+<P>
+Working in the xterm, type:
+
+<PRE>
+    cd /usr/local
+    tar -xvzf genesis-2.3-Cygwin-bin.tar.gz
+</PRE>
+
+<P>
+To test the installation, open an xterm window (not the Cygwin window) as
+described above, and type:
+
+<PRE>
+    cd /usr/local/genesis-2.3/genesis
+    ./binsetup
+    cp .simrc ~
+    cd Scripts/Squid
+    ../../genesis Squid
+</PRE>
+
+<P>
+If you see the monitor filled with graphs and multi-color panels, then it is
+working!
+
+<P>Please report any problems or experiences using GENESIS 2.3 under Cygwin
+to the user forums at http://genesis-sim.org, or to the genesis-sim-users
+mailing list.
+
+
+</BODY>
+</HTML>

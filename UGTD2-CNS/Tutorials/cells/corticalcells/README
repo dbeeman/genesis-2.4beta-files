@@ -1,0 +1,56 @@
+Reduced neocortical pyramidal cells suitable for use in network models
+----------------------------------------------------------------------
+
+GENESIS implementation by D. Beeman, January 1998.
+
+The passive cell model parameter files layer5.p and layer2.p describe
+the reduced neocortical pyramidal cell models of Bush and Sejnowski (1993).
+
+These are simplified (8-9 compartment) models of much larger (about
+400 compartment) models of pyramidal cells from area 17 of cat visual
+cortex (Koch, Douglas and Wehmeier 1990; Bernander, Douglas, Martin
+and Koch 1991).  A collapsing method was used that conserves the axial
+resistance and makes some adjustments in the passive membrane
+parameters in order to faithfully reproduce the electrical responses
+of the larger models.
+
+layer5.p has 9 compartments and represents a layer 5 pyramidal cell.
+
+layer2.p has 8 compartments and represents the more compact layer 2/3
+spiny stellate cell (modified superficial pyramidal cell).
+
+The reduced Bernander model
+---------------------------
+
+The files layer5BDK.p and layer2BDK.p use the layer5.p and layer2.p
+morphologies to implement smaller versions of the Bernander et al.
+(1991) models.  These use active channel model descriptions taken from
+Bernander, Douglas and Koch (1992).  With these channels, the firing
+patterns under current clamp are very close to those of the larger
+models, with the spike adaptation typical of regular-firing pyramidal
+cells.  Slightly different sets of channels have been used with these
+reduced morphologies by Bush and Sejnowski (1996) to model cortical
+networks.
+
+The channels are defined and described in the file BDKchan.g.
+A userprefs.g file is included for use with Neurokit.
+
+References:
+
+O. Bernander, R. J. Douglas, K. A. C. Martin and C. Koch, Synaptic
+background activity influences spatiotemporal integration in single
+pyramidal cells, Proc. Natl. Acad. Sci. 88:11569-11573 (1991).
+
+O. Bernander, R. J. Douglas and C. Koch, A model of regular-firing
+cortical pyramidal neurons, CNS Memo 16, Caltech (1992).
+
+P. C. Bush and T. J. Sejnowski, Reduced compartmental models of
+neocortical pyramidal cells, J. Neurosci. Methods 46:159-166 (1993).
+
+P. C. Bush and T. J. Sejnowski, Inhibition synchronizes sparsely
+connected cortical neurons within and between columns in realistic
+network models, J. Comput. Neurosci. 3:91-110 (1996).
+
+C. Koch, R. J. Douglas and U. Wehmeier, Visibility of synaptically
+induced conductance changes: theory and simulations of anatomically
+characterized cortical pyramidal cells, J. Neurosci. 10:1728-1744.

@@ -1,0 +1,354 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>Getting Started With Realistic Neural Modeling</TITLE>
+<META NAME="generator" CONTENT="txt2html v1.28">
+</HEAD>
+<BODY BGCOLOR="#ffffff" TEXT="#000000">
+<P>
+<a href="../index.html"><img src="../images/back2.gif" align="middle"
+ hspace=12>Return to the Ultimate GENESIS Tutorial Distribution main index</a>
+<P>
+<HR>
+<P>
+<CENTER>
+<H1><A NAME="section-1.">Getting Started With Realistic Neural Modeling</A></H1>
+
+<p align=center><IMG SRC="bog1-modelers.jpg">
+
+<P>
+<H3>Some suggestions for self-paced study or use in a course</H3>
+
+</CENTER>
+<P>
+
+<H2>Getting Started with GENESIS</H2>
+<P>
+<OL>
+
+  <LI>You have probably already downloaded the "The Ultimate GENESIS 2.4
+    Tutorial Distribution" from <A HREF="http://genesis-sim.org/GENESIS/UGTD.html">
+    genesis-sim.org/GENESIS/UGTD.html</A>
+
+  <LI> Unpack it into a location of your choice and set some browser bookmarks:
+  <UL> 
+
+<LI><B>This file:</B><A HREF="getting_started.html">Getting Started
+With Realistic Neural Modeling</A> - This is a guide to using this extended
+version of the Tutorials package, with suggested exercises.  It also has some
+suggestions for using the material in this package for self-paced study.
+
+<LI><A HREF="exercises/course-tutorials.html">exercises/course-tutorials.html</A>
+Recommended exercises and study topics for a short neural modeling course
+
+<LI><A HREF="index.html">The GENESIS Neural Modeling Tutorials
+package</A>.  This version has been expanded to include additional
+material.
+
+<LI><A HREF="genprog/index.html">The GENESIS Modeling
+Tutorial</A> is the main tutorial of the package, and is intended to be a
+"quick start" to creating simulations with GENESIS.
+
+<LI><A HREF="gpython-tools/index.html">GENESIS Python tools</A>
+contains a a collection of stand-alone Python-based graphical
+utilities for plotting, visualizing, and analyzing the output of
+simulations produced by GENESIS or other simulators.
+
+</UL>
+  
+
+<LI> <B>Install Linux</B> - If you are using this in a course, the tutors will
+be your best source of information and help for installing Linux on a Windows
+laptop or the local computer lab. There are good tutorials on installing Linux
+at <A HREF="http://www.linux.org/">http://www.linux.org/</A>, and in the
+documentation with your chosen Linux distribution.  Mac users should be familiar
+with using command line unix commands under MacOS. For some rather outdated Linux
+information see:
+<P>
+
+<A HREF= "unixhelp/linux-install.html">Some suggestions for installing Linux on a PC
+</A>.  This has information on repartitioning Windows disks and
+installing Linux.  Any modern Linux distribution will have tools and
+documentation for doing this.
+
+<P>
+<A HREF= "unixhelp/unixhelp.html">Introduction to UNIX or
+Linux and the graphical desktop</A> This gives basic information on
+command line unix commands for the beginner.
+<P>
+
+<P> 
+
+   <LI> <B>Install GENESIS</B> following the instructions in
+    <A HREF="../distributions/index.html">distributions/</A> for
+    compiling and installing genesis-2.4beta-src.tar.gz.  The Makefile
+    has options for PC Linux and MacOS platforms as well as many older
+    Unix Machines.  The included binary versions for GENESIS 2.3 were
+    compiled on old 32 bit processors but may work on modern PCs with
+    32 bit libraries installed. Cygwin32 offers a way to experience
+    GENESIS under MS windows, but for serious work it is not a
+    satisfactory substitute for installing GENESIS in a Linux
+    partition.  Modern "virtual machine" environments such as VMware
+    or VirtualBox are an alternative to using Cygwin.
+
+<P>
+GENESIS usually installs without problems under modern versions of
+Linux. Most questions related to installation have been answered in
+the archives of the 'genesis-sim-users' mailing list, which are
+available from the GENESIS 2 Sourceforge page at
+<A HREF="http://sourceforge.net/projects/genesis-sim/">
+http://sourceforge.net/projects/genesis-sim/.
+</OL>
+<P>
+
+<H1><A NAME="section-2.">Creating Realistic Neural Models with GENESIS</A></H1>
+
+<H2><A NAME="section-2.1.">The GENESIS Modeling Tutorial</A></H2>
+
+<P>
+The multi-part hands-on <A HREF="genprog/index.html">GENESIS Modeling
+Tutorial</A> is the main tutorial of the package, and is intended to be a
+"quick start" to creating simulations with GENESIS. It should give you the
+tools and enough information to let you quickly begin creating cells and
+networks with GENESIS, making use of the provided example simulations.  You
+will find that the modular object-oriented nature of GENESIS makes it easy
+to create new simulations using parts taken from existing simulations, such
+as the example scripts in the Tutorials directories 
+<A HREF="cells/index.html">cells</A> and 
+<A HREF="networks/index.html">networks</A> .
+
+<P>
+
+<H2><A NAME="section-1.2.">Introductory Background (no programming or knowledge of GENESIS needed)</A></H2>
+
+<P>
+
+The genesis/Scripts directory in any of the unpacked GENESIS distribution
+archive files contains several tutorial simulations (squid, cable, neuron,
+burster, traub91, purkinje, piriform), described in Part I of "The BoG".
+<P>
+
+The expanded Tutorials directory in this package contains:
+
+<UL>
+  <LI>The PDF version of <A HREF="iBoGpdf/index.html">"The Book
+of GENESIS"</A> (the "BoG"; Bower and Beeman, 1998).
+Chapters 4, 5, 7, and 9 cover the basics of realistic neural modeling.
+<P>
+
+  <LI><A HREF="genesis-intro/genesis-intro.html">Introduction to Realistic
+Neural Modeling with GENESIS</A> -- The section "Brief Overview of
+Realistic Neural Modeling Techniques" is a general overview and
+introduction to compartmental cell modeling and realistic network
+simulation for the beginner. Although examples are drawn from GENESIS
+simulations, the tutorial emphasizes the general modeling approach, rather
+than the details of using any particular simulator.  It is followed by a
+quick overview of how GENESIS is used to create these models.
+
+<P> <LI><A HREF="cnslecs/cnslecs.html">Introduction to Computational
+Neuroscience</A> -- HTML version of introductory lectures on neural modeling
+  for an introductory biomedical engineering course.  It has sections on
+  the Hodgkin-Huxley model and compartmental modeling that might be useful
+  to those who are studying them for the first time, or who need some
+  review.
+
+<P>
+  <LI><A HREF="unixhelp/unixhelp.html">Introduction to UNIX or Linux</A>
+   -- This is a short guide to getting around
+  in the UNIX command line environment for Windows and Mac users.
+<P>
+  <LI><A HREF="README.html">README</A> -- This README file tells you how to
+obtain and install GENESIS and the Tutorials package, and how to run
+GENESIS simulations.
+
+</UL>
+<H2><A NAME="section-1.3.">Some Simulation Exercises (non-programming)</A></H2>
+
+<OL>
+  <LI>Introduction to the Hodgkin-Huxley model.  Chapter 4 of the
+BoG provides the theoretical background and describes the use
+of the genesis/Scripts/squid simulation.  Try exercises 7 and 8
+in this chapter.  These will help you to understand the process
+by which action potentials are generated, and the basis for
+effects such as refractory period and post-hyperpolarization
+rebound (anode-break).  For help (or to peek at the answers),
+see the Lectures on Computational Neuroscience section on
+the Hodgkin Huxley model.
+<P>
+  <LI>The effect of active channels in the dendrites on burst
+firing.  The genesis/Scripts/traub91 directory contains a
+simulation based on a 19-compartment hippocampal pyramidal
+cell model.  Run the simulation, following the instructions
+in the README file, and bring up the HELP form.  Perform
+the suggested experiments in order to understand how calcium
+channels and calcium-dependent potassium channels in the dendrites
+produce burst firing.  Chapter 7 of the BoG provides the background for
+understanding the types of ionic conductances that lead to this behavior
+in pyramidal cells.  This simulation is also described in the
+Lectures on Computational Neuroscience.
+<P>
+  <LI>The De Schutter and Bower Purkinje cell model.
+The full De Schutter and Bower (1994) detailed Purkinje cell model is
+available as a tutorial in the genesis/Scripts/purkinje directory.
+The file help.txt (which can be viewed with the HELP button) describes
+the model and the various types of synaptic input that you can apply.
+<P>
+  <LI>The Wilson and Bower piriform (olfactory) cortex model.
+Run the simulation in the genesis/Scripts/piriform directory, following
+the instructions in the README.1st file, after reading BoG Chapter 9.
+Try some of the suggestions in the "help" window and the exercises at the
+end of the chapter.
+
+</OL>
+
+<H2><A NAME="section-2.2.">The GENESIS Reference Manual</A></H2>
+
+<P>
+The Tutorials directory also contains a copy of the hypertext 
+<A HREF="Hyperdoc/Manual.html">Reference Manual</A>
+for GENESIS commands and simulation object types (classes).
+
+<H2><A NAME="section-2.3.">Exercises in GENESIS programming:</A></H2>
+
+<P>
+
+There are exercises throughout the multipart GENESIS Modeling Tutorial.
+The <A HREF="exercises/index.html">exercises directory</A> of this expanded
+Tutorials package has additional GENESIS exercises from past neural modeling
+courses.  Here are some more suggestions:
+
+<OL>
+  <LI>A simple network model.  To get started with network modeling, work
+through enough of the tutorial to understand the section on 
+<A HREF="genprog/net-tut.html">"Creating large
+networks with GENESIS"</A>.This section describes the construction of the
+model in <A HREF="networks/RSnet/index.html">networks/RSnet</A>.
+This is a simple network, consisting of a grid of simplified neocortical
+regular spiking pyramidal cells, each one coupled with excitatory synaptic
+connections to its four nearest neighbors.  This might model the
+connections due to local association fibers in a cortical network.  The
+example simulation was designed to be easily modified to allow you to use
+other cell models, implement other patterns of connectivity, or to augment
+with a population of inhibitory interneurons and the several other types of
+connections in a cortical network. Try some of the modifications suggested
+at the end of the tutorial section.
+
+<P>
+  <LI>Extending the RSNet model to include inhibitory interneurons.
+This "extended version" of the Tutorials package has three extra
+network models included in Tutorials/networks.
+<P>
+<P>
+The <A HREF="networks/Vogels-Abbott_net/index.html">networks/Vogels-Abbott_net</A>
+directory contains a GENESIS implementation of a 4000 neuron version of
+Vogels and Abbott (2005) model, using neurons with Hodgkin-Huxley dynamics,
+instead of integrate-and-fire neurons.  This was used as a benchmark for a
+review of neural simulators in a paper in preparation by Brette et al.
+(2007).  The <A HREF="networks/Vogels-Abbott_net/README.html">README</A>
+file describes how to run the dualexpVA-HHnet.g
+simulation, and some of the experiments that can be performed with the GUI.
+<P>
+
+From the standpoint of realistic network modeling with GENESIS, this is
+not a very interesting simulation.  The single compartment neurons have
+only fast Na and delayed rectifier K conductances, and fire tonically,
+much like the original integrate-and-fire neurons.  The behavior of
+the simulation is similar to the original, but runs much more slowly.
+There is little point in using GENESIS for such a model.
+
+<P>
+However, this well-documented simulation is offered as a useful starting
+point for those who would like to perform some "GENESIS script hacking" and
+try some simple modifications to the script, to use more realistic neuron
+models and to experiment with modifications of the network connectivity.
+The README file also lists some small modeling projects that could be carried
+out with modifications to this simulation.
+
+<P>
+
+<B>Be sure to read the description of the</B> 
+<A HREF="networks/VAnet2/README.html">
+VAnet2 model</A> in the <I>networks</I> directory. This illustrates
+how the use of hsolve in a large network model can speed simulation
+times by factors of ten to twenty.
+
+<P>
+<LI> Understanding a detailed network model.
+The <A HREF="networks/hippo2/index.html">networks/hippo2/</A> directory
+contains a small hippocampal network model consisting of 72 pyramidal cells
+(Traub 1994 model) and 18 interneurons (Traub 1995 model) with realistic
+patterns of connections.  The directory contains detailed documentation and
+papers describing the model, but this is not a tutorial simulation, and
+will take some work to understand.  It runs without a GUI and writes data
+(a lot!) to files. 
+<P>
+<P>
+
+<LI>The <A HREF="networks/TurtleVisCortex/README.html">networks/TurtleVisCortex</A> 
+directory contains a large research simulation, the Nenadic, Ghosh
+and Ulinsky large scale model of turtle visual cortex.  Although it was not
+intended to be a tutorial, it is very well documented, with modular code.
+In this simulation, cells are not located on a regular grid, but are placed
+according to coordinates that are read from files.  In addition to the
+documentation provided with the model, there is a description of the model
+and a video clip of the simulation in the final section of the <A
+HREF="cnslecs/cnslecs.html">Lectures on Computional Neuroscience</A>.
+<P>
+
+As a simple excercise, follow the instructions in the documentation or the
+comments in the main simulation script to make the simple edits needed to
+vary the type of stimulus that is presented to the model. As an more
+advanced exercise, or the start of a different cortical modeling proect,
+the simulation could be generalized by using the cell reader to create cell
+prototypes of any specified type, instead of creating cells "the hard way",
+as in BoG Chapters 13-15.
+<P>
+
+<LI> The <A HREF="networks/index.html">networks</A> directory has new
+cortical network models, including the
+ <A HREF="networks/ACnet2-GENESIS/README.html">ACnet2</A>
+and <A HREF="networks/VAnet2/README.html">VAnet2</A> models and
+tutorials with suggested exercises and projects.
+
+<P>
+<LI> The <A HREF="exercises/course-tutorials.html">GENESIS
+Exercises</A> collection contains many new exercises and project suggestions.
+<P>
+</OL>
+
+<H2><A NAME="section-2.4.">Other resources for realistic neural modeling</A></H2>
+
+<P>
+The latest edition of the classic "Synaptic Organization of the Brain"
+contains multi-authored reviews of our current understanding of the "wiring
+diagrams" of different portions of the brain.  It should be the starting place
+for any modeling study of brain regions.
+
+<P>
+Shepherd, GM (2003) "The Synaptic Organization of the Brain", 5th ed,
+edition, Oxford University Press, NY
+
+<P>
+The November 2005 special issue on Realistic Neural Modeling in the
+electronic journal Brains, Minds, and Media contains published versions of
+the modeling tutorials that were presented at the 2005 WAM-BAMM conference
+and GENESIS users meeting.  The Table of Contents for this issue with links
+to view or download the articles can be found at
+http://www.brains-minds-media.org/237/.  Those who are interested in
+learning the details of creating realistic single cell models using
+experimental data may want to read the advanced tutorial by Dieter Jaeger
+in this issue.
+<P>
+<HR>
+<P>
+<a href="../index.html"><img src="../images/back2.gif" align="middle"
+ hspace=12>Return to the Ultimate GENESIS Tutorial Distribution main index</a>
+<P>
+<I>Last updated on:</I> Fri Jul 18 22:55:36 MDT 2014
+
+<P>
+<HR>
+<P>
+
+</BODY>
+</HTML>

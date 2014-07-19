@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE></TITLE>
+<META NAME="generator" CONTENT="txt2html v1.28">
+</HEAD>
+<BODY>
+<H1><A NAME="section-1.">Exercise: Simple GENESIS scripting exercises</A></H1>
+
+<P>
+These exercises were created by Upi Bhalla for the December 1999
+modeling course in Bangalore.
+
+<OL>
+  <LI>Go to Chapter 13 of BoG (Page 215.) You have alredy played around with 
+something like the example script. Figure out how to use functions and
+variables. If you work through the chapter you will get a decent feel for
+a lot of the script language.
+
+  <LI>Using functions.
+
+<P>
+If your script is more than a few lines long you should probably
+use functions in it. You will also need functions if you want
+to execute even a slightly complicated operation from a button
+or dialog.
+
+<UL>
+
+<LI>Write a function to create a new dialog. You will need to check if a dialog
+  already exists with the same name, so that you don't overwrite an old
+  dialog.
+
+  <LI>Assign this function to the new dialog, so that you can use the
+dialog itself to create new ones.
+
+</UL>
+
+<P>
+This is illustrated in <a href="ex2.g">ex2.g</a>
+
+<P>
+<LI>Messaging is a critical concept in GENESIS. It is the means by which
+objects exchange information. To get an idea of how it works, create
+a form and put a graph widget in it. Type showobject xgraph. This lists
+a lot of stuff, including the legal messages for the graph. You will 
+normally only use message 0, which is named PLOT. 
+Now create a dialog, and send a message from this dialog to the graph.
+In order to run and display the results, create a button for RUN and
+RESET as well, just like you did earlier. Set the RUN button to go only
+10 steps, so that you can fiddle with the dialog value in between.
+You will need to put in a reset command after adding any message, to 
+ensure that the simulator has been properly initialised.
+Now run this little model. Turn the dialog value up and down, and click
+on RUN each time to see how it controls the graph value.
+
+This is illustrated in <a href="ex3.g">ex3.g</a>.
+
+<P>
+<LI> (Fun for 1:00 AM)<BR>
+Take any of the previous examples, and start to fiddle with the 
+graphical elements. There are a bunch of fields relating to the
+geometry and positioning of buttons etc. These are
+<P>
+
+xgeom : x coordinate of top right<BR>
+ygeom : y coordinate of top right<BR>
+wgeom : width<BR>
+hgeom : height
+
+<P>
+Each of these fields can be set directly either as pixels, or as percentages.
+
+<PRE>
+    // This will move the graph to 20 pixels from the top.
+    setfield /form/graph ygeom 20
+
+    // This will set the height of the graph to 40% of the parent xform.
+    setfield /form/graph hgeom 40%
+</PRE>
+
+<P>
+You can also set foreground and background colours.
+
+<P><PRE>
+     setfield /form/RUN offbg yellow offfg pink
+</PRE>
+ Ugh!!
+
+<P>
+You can even set labels on most graphical widgets
+<P><PRE>
+    setfield /form/RUN offlabel "Run really fast now"
+</PRE>
+
+<P>
+Note that buttons make a distinction between on and off states, so you have
+a proliferation of fgs and labels.
+
+</OL>
+
+<HR>
+<P>
+<h2><a href="../index.html">Back to the index of exercises</a></h2>
+
+</BODY>
+</HTML>

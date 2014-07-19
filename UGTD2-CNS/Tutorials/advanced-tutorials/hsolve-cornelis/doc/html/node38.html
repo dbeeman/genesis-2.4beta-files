@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002 (1.62) JA patch-1.4
+patched version by:  Kenshi Muto, Debian Project.
+LaTeX2HTML 2002 (1.62),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Setting/Getting Fields for Individual Elements</TITLE>
+<META NAME="description" CONTENT="Setting/Getting Fields for Individual Elements">
+<META NAME="keywords" CONTENT="tutorial2">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002 JA patch-1.4">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutorial2.css">
+
+<LINK REL="next" HREF="node39.html">
+<LINK REL="previous" HREF="node37.html">
+<LINK REL="up" HREF="node37.html">
+<LINK REL="next" HREF="node39.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html639"
+  HREF="node39.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html635"
+  HREF="node37.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html629"
+  HREF="node37.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html637"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html640"
+  HREF="node39.html">Setting all Computed Fields</A>
+<B> Up:</B> <A NAME="tex2html636"
+  HREF="node37.html">Advanced Actions</A>
+<B> Previous:</B> <A NAME="tex2html630"
+  HREF="node37.html">Advanced Actions</A>
+ &nbsp <B>  <A NAME="tex2html638"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION03111000000000000000">
+Setting/Getting Fields for Individual Elements</A>
+</H2>
+
+<P>
+Sometimes it might be useful to set a field or property of a modeling
+element that is not accessible via <TT>findsolvefield</TT>.
+<TT>Hsolve</TT> allows you to do this with two actions that are called
+with the following syntax:
+
+<P>
+
+<DIV ALIGN="LEFT">
+<TT>
+ &nbsp;&nbsp;&nbsp;&nbsp;genesis &gt; call <I>solver</I> <I>&lt;action&gt;</I> <I>&lt;path&gt;</I>
+<BR></TT>
+</DIV>
+
+<P>
+The <I>solver</I> is a path leading to an <TT>hsolve</TT> element.
+The <I>path</I> should be replaced with the pathname leading to the
+element for which you are modifying a property or field value.  It is
+expressed relative to the current working element (not relative to the
+<TT>hsolve</TT> element as the <TT>path</TT> field of
+<TT>hsolve</TT>).  The <I>action</I> is one of the following two:
+
+<P>
+
+<OL>
+<LI><TT>HPUT</TT>: copies field values from a modeling element to
+  <TT>hsolve</TT>'s internal data structures.  This action will only
+  copy descriptive values to the <TT>hsolve</TT> element.
+
+<P>
+</LI>
+<LI><TT>HGET</TT>: copies field values from <TT>hsolve</TT>'s
+  internal data structures to the fields of a modeling element.  This
+  action will only copy computed values to the modeling element.
+</LI>
+</OL>
+
+<P>
+Since these actions only work after a <TT>SETUP</TT> and
+<TT>RESET</TT>, it is important that your modifications to the
+modeling elements do not change the structure of the model.  You must
+not remove or add any messages between the elements, you must not add
+or change tables from tabulated channels etc.
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<TABLE  WIDTH="635">
+<TR><TD>
+  <FONT SIZE="-1"><B>NOTE:</B> Sometimes these actions may have
+    side-effects: for example in chanmode 3, the <TT>HGET</TT>
+    action will initialize the conductance (<TT>Gk</TT>) and the
+    current (<TT>Ik</TT>) of the original modeling element to zero if
+    it is a channel like element.  These values are not available in
+    <TT>hsolve</TT>'s internal data structures in chanmode 3.
+    However, in chanmode 4 these computed variables are available in
+    <TT>hsolve</TT>'s internal data structures and will be filled in
+    in the fields of the modeling element.
+</FONT></TD></TR>
+</TABLE>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<TABLE  WIDTH="635">
+<TR><TD>
+  <FONT SIZE="-1"><B>NOTE:</B> In combination with the <TT>script_out</TT>
+    object, the <TT>HPUT</TT> and <TT>HGET</TT> actions give you yet a
+    third way to interface <TT>hsolve</TT> to other elements.
+</FONT></TD></TR>
+</TABLE>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html639"
+  HREF="node39.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html635"
+  HREF="node37.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html629"
+  HREF="node37.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html637"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html640"
+  HREF="node39.html">Setting all Computed Fields</A>
+<B> Up:</B> <A NAME="tex2html636"
+  HREF="node37.html">Advanced Actions</A>
+<B> Previous:</B> <A NAME="tex2html630"
+  HREF="node37.html">Advanced Actions</A>
+ &nbsp <B>  <A NAME="tex2html638"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+
+2002-11-15
+</ADDRESS>
+</BODY>
+</HTML>

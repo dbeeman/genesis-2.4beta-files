@@ -1,0 +1,194 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002 (1.62) JA patch-1.4
+patched version by:  Kenshi Muto, Debian Project.
+LaTeX2HTML 2002 (1.62),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>The 'findsolvefield' command</TITLE>
+<META NAME="description" CONTENT="The 'findsolvefield' command">
+<META NAME="keywords" CONTENT="tutorial2">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002 JA patch-1.4">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutorial2.css">
+
+<LINK REL="previous" HREF="node23.html">
+<LINK REL="up" HREF="node22.html">
+<LINK REL="next" HREF="node25.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html451"
+  HREF="node25.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html447"
+  HREF="node22.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html443"
+  HREF="node23.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html449"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html452"
+  HREF="node25.html">A Practical Example 1:</A>
+<B> Up:</B> <A NAME="tex2html448"
+  HREF="node22.html">Communication with Other Elements</A>
+<B> Previous:</B> <A NAME="tex2html444"
+  HREF="node23.html">Messages from and to</A>
+ &nbsp <B>  <A NAME="tex2html450"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H4><A NAME="SECTION02260020000000000000">
+The '<TT>findsolvefield</TT>' command</A>
+</H4>
+The '<TT>findsolvefield</TT>' command gives access to
+<TT>hsolve</TT>'s internal data structures.  <TT>Hsolve</TT> only
+keeps these data structures after it has examined the structure and
+stored the properties of the model it has to compute.  This means that
+the <TT>findsolvefield</TT> command can only be used after a valid
+<TT>SETUP</TT> and <TT>RESET</TT> call.  The command has the following
+syntax:
+
+<P>
+<PRE>
+  genesis &gt; findsolvefield &lt;hsolve-element&gt; &lt;computed-element&gt; &lt;computed-field&gt;
+</PRE>
+
+<P>
+The following code shows both approaches at the same time: two
+messages are setup to a graph, plotting both the membrane potential of
+the same compartment.  If you run this example, the two plots will be
+completely overlapping.  To be able to run this demo, you must have
+access to the tutorial scripts that come alone with this document.
+
+<P>
+<PRE>
+    genesis &gt; include ht_compartments.g
+    genesis &gt; make_compartments
+    genesis &gt; setclock 0 0.000010
+    genesis &gt; readcell main.p /main -hsolve
+    genesis &gt; setmethod main 11
+    genesis &gt; setfield main chanmode 4
+    genesis &gt; create xform /out [200,50,300,300]
+    genesis &gt; create xgraph /out/voltage [0,0,100%,100%]
+    genesis &gt; setfield ^ xmax 2 ymin -0.1 ymax 0.05
+    genesis &gt; xshow /out
+    genesis &gt; addmsg /main/main /out/voltage PLOT Vm *cmp *red
+    genesis &gt; call main SETUP
+    genesis &gt; addmsg /main /out/voltage \
+    genesis &gt;         PLOT {findsolvefield /main /main/main Vm} *fsf *blue
+    genesis &gt; reset
+</PRE>
+
+<P>
+As you can notice the <TT>hsolve</TT> element is created with the
+<TT>-hsolve</TT> option of the <TT>readcell</TT> command.  The
+numerical method is set to 11 (Crank-Nicolson) and the
+<TT>chanmode</TT> is set to 4 (<TT>hsolve</TT> integrates compartments
+i.e.  cable equations, and channels on a staggered time grid).  The
+graphics are created (see the <TT>Xodus</TT> documentation for
+details) and messages are created between the fields of interest and
+the graphical output widgets.  As you see, <I>before</I> the
+<TT>SETUP</TT> call a regular message from a compartment is created.
+<I>After</I> the <TT>SETUP</TT> call, <TT>findsolvefield</TT> is
+used to create the same message from the <TT>hsolve</TT> element.
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<TABLE  WIDTH="635">
+<TR><TD>
+  <FONT SIZE="-1"><B>NOTE:</B> Internally <TT>hsolve</TT> restores all
+    computed fields in the original element for every element that has
+    a single outgoing messages during the <TT>SETUP</TT> call.  This
+    incurs a small performance penalty.  For this reason it is better
+    to use the <TT>findsolvefield</TT> command whenever possible.
+</FONT></TD></TR>
+</TABLE>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<TABLE  WIDTH="635">
+<TR><TD>
+  <FONT SIZE="-1"><B>NOTE:</B> The implementation of
+    <TT>findsolvefield</TT> uses a small name space of elements that
+    is private to <TT>hsolve</TT>.  Since <TT>hsolve</TT> looks at all
+    elements from the viewpoint of numerical solution, this name space
+    is flattened out.  An example of this flattened name space are
+    compartments that are contained within another compartment in the
+    Genesis element name space.  From solution viewpoint, all
+    compartments are equally important for the solution matrix so such
+    a hierarchical arrangement must be addressed without any prefix
+    when using <TT>findsolvefield</TT>.
+</FONT></TD></TR>
+</TABLE>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html451"
+  HREF="node25.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html447"
+  HREF="node22.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html443"
+  HREF="node23.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html449"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html452"
+  HREF="node25.html">A Practical Example 1:</A>
+<B> Up:</B> <A NAME="tex2html448"
+  HREF="node22.html">Communication with Other Elements</A>
+<B> Previous:</B> <A NAME="tex2html444"
+  HREF="node23.html">Messages from and to</A>
+ &nbsp <B>  <A NAME="tex2html450"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+
+2002-11-15
+</ADDRESS>
+</BODY>
+</HTML>

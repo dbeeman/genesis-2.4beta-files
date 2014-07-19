@@ -1,0 +1,6 @@
+The textDoc directory contains copies of plain text documentation files
+from the genesis/Doc directory that have been renamed to add the extension
+".txt".  This is to allow them to be viewed with web browsers that expect
+files ending with ".doc" to be in some obscure proprietary word processor
+format.
+

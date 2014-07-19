@@ -1,0 +1,595 @@
+This is TeX, Version 3.14159 (Web2C 7.3.1) (format=latex 2002.4.12)  15 NOV 2002 19:04
+**./images.tex
+(./images.tex
+LaTeX2e <2000/06/01>
+Babel <v3.7h> and hyphenation patterns for american, french, german, ngerman, i
+talian, nohyphenation, loaded.
+
+(/usr/share/texmf/tex/latex/base/report.cls
+Document Class: report 2000/05/19 v1.4b Standard LaTeX document class
+(/usr/share/texmf/tex/latex/base/size10.clo
+File: size10.clo 2000/05/19 v1.4b Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@chapter=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+) (/usr/share/texmf/tex/latex/base/ifthen.sty
+Package: ifthen 1999/09/10 v1.1b Standard LaTeX ifthen package (DPC)
+) (/usr/share/texmf/tex/latex/base/alltt.sty
+Package: alltt 1997/06/16 v2.0g defines alltt environment
+) (/usr/share/texmf/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 1997/09/17 v2.2e
+\@emptytoks=\toks14
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 133.
+) (/usr/share/texmf/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2000/07/18 v2.13 AMS math features
+\@mathmargin=\skip43
+For additional information on amsmath, use the `?' option.
+(/usr/share/texmf/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01
+(/usr/share/texmf/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks15
+\ex@=\dimen103
+)) (/usr/share/texmf/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen104
+) (/usr/share/texmf/tex/latex/amsmath/amsopn.sty
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count88
+LaTeX Info: Redefining \frac on input line 211.
+\uproot@=\count89
+\leftroot@=\count90
+LaTeX Info: Redefining \overline on input line 307.
+\classnum@=\count91
+\DOTSCASE@=\count92
+LaTeX Info: Redefining \ldots on input line 379.
+LaTeX Info: Redefining \dots on input line 382.
+LaTeX Info: Redefining \cdots on input line 467.
+\Mathstrutbox@=\box26
+\strutbox@=\box27
+\big@size=\dimen105
+LaTeX Font Info:    Redeclaring font encoding OML on input line 567.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
+\macc@depth=\count93
+\c@MaxMatrixCols=\count94
+\dotsspace@=\muskip10
+\c@parentequation=\count95
+\dspbrk@lvl=\count96
+\tag@help=\toks16
+\row@=\count97
+\column@=\count98
+\maxfields@=\count99
+\andhelp@=\toks17
+\eqnshift@=\dimen106
+\alignsep@=\dimen107
+\tagshift@=\dimen108
+\tagwidth@=\dimen109
+\totwidth@=\dimen110
+\lineht@=\dimen111
+\@envbody=\toks18
+\multlinegap=\skip44
+\multlinetaggap=\skip45
+\mathdisplay@stack=\toks19
+LaTeX Info: Redefining \[ on input line 2666.
+LaTeX Info: Redefining \] on input line 2667.
+) (/usr/share/texmf/tex/latex/amscls/amsthm.sty
+Package: amsthm 2000/10/26 v2.08
+\thm@style=\toks20
+\thm@bodyfont=\toks21
+\thm@headfont=\toks22
+\thm@notefont=\toks23
+\thm@headpunct=\toks24
+\thm@preskip=\skip46
+\thm@postskip=\skip47
+\thm@headsep=\skip48
+\dth@everypar=\toks25
+) (/usr/share/texmf/tex/latex/misc/boxedminipage.sty) (/usr/share/texmf/tex/lat
+ex/tools/calc.sty
+Package: calc 1998/07/07 v4.1b Infix arithmetic (KKT,FJ)
+\calc@Acount=\count100
+\calc@Bcount=\count101
+\calc@Adimen=\dimen112
+\calc@Bdimen=\dimen113
+\calc@Askip=\skip49
+\calc@Bskip=\skip50
+LaTeX Info: Redefining \setlength on input line 59.
+LaTeX Info: Redefining \addtolength on input line 60.
+\calc@denominator=\count102
+) (/usr/share/texmf/tex/latex/graphics/color.sty
+Package: color 1999/02/16 v1.0i Standard LaTeX Color (DPC)
+(/usr/share/texmf/tex/latex/config/color.cfg)
+Package color Info: Driver file: dvips.def on input line 125.
+(/usr/share/texmf/tex/latex/graphics/dvips.def
+File: dvips.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
+) (/usr/share/texmf/tex/latex/graphics/dvipsnam.def
+File: dvipsnam.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
+)) (/usr/share/texmf/tex/latex/misc/endnotes.sty
+\c@endnote=\count103
+\endnotesep=\dimen114
+\@enotes=\write3
+) (/usr/share/texmf/tex/latex/tools/enumerate.sty
+Package: enumerate 1999/03/05 v3.00 enumerate extensions (DPC)
+\@enLab=\toks26
+) (/home/hugo/genesis/doc/hsolve_tutorial/graphs.sty
+Package: graphs 2000/12/19
+
+LaTeX2e package `graphs', version 1.53
+Frank Drewes, University of Bremen, 19.12.2000
+
+(/home/hugo/genesis/doc/hsolve_tutorial/graphs_ps.tex) (/home/hugo/genesis/doc/
+hsolve_tutorial/graphs_config.tex)
+\g@oldunitlength=\dimen115
+\g@xpos=\count104
+\g@ypos=\count105
+\g@x=\dimen116
+\g@y=\dimen117
+\g@aux=\dimen118
+\g@heightplusdepth=\dimen119
+\g@width=\dimen120
+\g@xsizeA=\count106
+\g@xsizeB=\count107
+\g@ysizeA=\count108
+\g@ysizeB=\count109
+\g@help=\count110
+\g@helpB=\dimen121
+\g@xunitlength=\dimen122
+\g@yunitlength=\dimen123
+) (/usr/share/texmf/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+(/usr/share/texmf/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks27
+) (/usr/share/texmf/tex/latex/graphics/graphics.sty
+Package: graphics 1999/02/16 v1.0l Standard LaTeX Graphics (DPC,SPQR)
+(/usr/share/texmf/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+) (/usr/share/texmf/tex/latex/config/graphics.cfg)
+Package graphics Info: Driver file: dvips.def on input line 80.
+)
+\Gin@req@height=\dimen124
+\Gin@req@width=\dimen125
+) (/usr/share/texmf/tex/latex/tools/indentfirst.sty
+Package: indentfirst 1995/11/23 v1.03 Indent first paragraph (DPC)
+) (/home/hugo/emacs/installed/ite-2_15/tex/ite.sty
+Package: ite 1998/12/15
+ITEKEYVERSION 2_15 
+\ITEunit=\dimen126
+\iTeW=\dimen127
+\iTeU=\dimen128
+\iTeH=\dimen129
+\iTeD=\dimen130
+\iTeBlockBox=\box28
+\iTeObjectBox=\box29
+\iTeBlockCount=\count111
+\everyite=\toks28
+) (/usr/share/texmf/tex/latex/base/inputenc.sty
+Package: inputenc 2000/07/01 v0.996 Input encoding file 
+)
+\sizebox=\box30
+\lthtmlwrite=\write4
+(images.aux)
+\openout1 = `images.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 150.
+LaTeX Font Info:    ... okay on input line 150.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 150.
+LaTeX Font Info:    ... okay on input line 150.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 150.
+LaTeX Font Info:    ... okay on input line 150.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 150.
+LaTeX Font Info:    ... okay on input line 150.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 150.
+LaTeX Font Info:    ... okay on input line 150.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 150.
+LaTeX Font Info:    ... okay on input line 150.
+
+latex2htmlLength hsize=349.0pt
+
+latex2htmlLength vsize=761.2357pt
+
+latex2htmlLength hoffset=0.0pt
+
+latex2htmlLength voffset=0.0pt
+
+latex2htmlLength topmargin=0.0pt
+
+latex2htmlLength topskip=0.00003pt
+
+latex2htmlLength headheight=0.0pt
+
+latex2htmlLength headsep=0.0pt
+
+latex2htmlLength parskip=0.0pt plus 1.0pt
+
+latex2htmlLength oddsidemargin=0.0pt
+
+latex2htmlLength evensidemargin=0.0pt
+
+LaTeX Font Info:    Try loading font information for U+msa on input line 174.
+(/usr/share/texmf/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 1995/01/05 v2.2e AMS font definitions
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 174.
+(/usr/share/texmf/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 1995/01/05 v2.2e AMS font definitions
+)
+l2hSize :tex2html_wrap_inline2996:6.45831pt::0.0pt::8.27783pt.
+[1
+
+
+
+]
+l2hSize :tex2html_wrap_inline3008:9.37892pt::9.37892pt::28.8439pt.
+[2
+
+
+]
+l2hSize :tex2html_wrap_inline3010:6.45831pt::0.0pt::4.11115pt.
+[3
+
+
+]
+l2hSize :tex2html_wrap_inline3012:6.45831pt::0.0pt::6.50238pt.
+[4
+
+
+]
+l2hSize :tex2html_wrap_inline3014:6.95831pt::6.95831pt::5.76163pt.
+[5
+
+
+]
+l2hSize :tex2html_wrap_indisplay3020:13.70952pt::13.70952pt::342.9522pt.
+[6
+
+
+]
+l2hSize :tex2html_wrap_inline3022:6.94444pt::0.0pt::6.26161pt.
+[7
+
+
+]
+l2hSize :tex2html_wrap_inline3024:6.88889pt::0.0pt::7.72226pt.
+[8
+
+
+]
+l2hSize :tex2html_wrap_inline3027:8.0pt::8.0pt::18.53944pt.
+[9
+
+
+]
+l2hSize :tex2html_wrap_inline3029:8.0pt::8.0pt::18.53944pt.
+[10
+
+
+]
+l2hSize :tex2html_wrap_inline3033:6.45831pt::0.0pt::5.50005pt.
+[11
+
+
+]
+l2hSize :tex2html_wrap_inline3035:6.83331pt::0.0pt::9.625pt.
+[12
+
+
+]
+l2hSize :tex2html_wrap_inline3037:7.33331pt::7.33331pt::26.84715pt.
+[13
+
+
+]
+l2hSize :tex2html_wrap_inline3039:8.41226pt::0.0pt::13.84634pt.
+[14
+
+
+]
+l2hSize :tex2html_wrap_inline3041:8.0pt::8.0pt::87.25238pt.
+[15
+
+
+]
+l2hSize :tex2html_wrap_indisplay3050:9.87892pt::9.87892pt::110.48839pt.
+[16
+
+
+]
+l2hSize :tex2html_wrap_inline3054:7.44444pt::7.44444pt::22.09486pt.
+[17
+
+
+]
+l2hSize :tex2html_wrap_inline3056:8.14003pt::0.0pt::10.74774pt.
+[18
+
+
+]
+File: figures/feuler.eps Graphic file (type eps)
+<figures/feuler.eps>
+l2hSize :tex2html_wrap3060:228.85732pt::0.0pt::349.0pt.
+[19
+
+
+]
+l2hSize :tex2html_wrap_indisplay3067:9.87892pt::9.87892pt::128.4721pt.
+[20
+
+
+]
+File: figures/beuler.eps Graphic file (type eps)
+<figures/beuler.eps>
+l2hSize :tex2html_wrap3081:228.85732pt::0.0pt::349.0pt.
+[21
+
+
+]
+l2hSize :tex2html_wrap_indisplay3084:14.20952pt::14.20952pt::60.12097pt.
+[22
+
+
+]
+l2hSize :tex2html_wrap_indisplay3086:14.09839pt::14.09839pt::167.16243pt.
+[23
+
+
+]
+l2hSize :tex2html_wrap_inline3089:8.14003pt::0.0pt::10.74774pt.
+[24
+
+
+]
+l2hSize :tex2html_wrap_indisplay3091:16.144pt::16.144pt::185.48083pt.
+[25
+
+
+]
+l2hSize :tex2html_wrap_inline3093:6.94444pt::0.0pt::5.47226pt.
+[26
+
+
+]
+File: figures/trapez.eps Graphic file (type eps)
+<figures/trapez.eps>
+l2hSize :tex2html_wrap3097:228.85732pt::0.0pt::349.0pt.
+[27
+
+
+]
+l2hSize :tex2html_wrap_inline3115:6.83331pt::0.0pt::8.55559pt.
+[28
+
+
+]
+l2hSize :tex2html_wrap_indisplay3117:15.4051pt::15.4051pt::157.48523pt.
+[29
+
+
+]
+l2hSize :tex2html_wrap_indisplay3119:15.4051pt::15.4051pt::114.45714pt.
+[30
+
+
+]
+l2hSize :tex2html_wrap_indisplay3121:9.14003pt::9.14003pt::250.01971pt.
+[31
+
+
+]
+l2hSize :tex2html_wrap_inline3123:6.45831pt::0.0pt::9.28017pt.
+[32
+
+
+]
+l2hSize :tex2html_wrap_indisplay3129:14.20952pt::14.20952pt::154.25179pt.
+[33
+
+
+]
+l2hSize :tex2html_wrap_indisplay3133:8.0pt::8.0pt::35.13426pt.
+[34
+
+
+]
+l2hSize :tex2html_wrap_indisplay3135:6.95831pt::6.95831pt::8.27783pt.
+[35
+
+
+]
+l2hSize :tex2html_wrap_indisplay3137:13.70952pt::13.70952pt::312.76208pt.
+[36
+
+
+]
+l2hSize :tex2html_wrap_indisplay3139:8.0pt::8.0pt::35.13426pt.
+[37
+
+
+]
+l2hSize :tex2html_wrap_indisplay3143:13.70952pt::13.70952pt::320.98369pt.
+[38
+
+
+]
+l2hSize :tex2html_wrap_indisplay3146:8.0pt::8.0pt::81.99063pt.
+[39
+
+
+]
+l2hSize :tex2html_wrap_indisplay3150:13.70952pt::13.70952pt::232.93874pt.
+[40
+
+
+]
+l2hSize :tex2html_wrap_indisplay3152:6.95831pt::6.95831pt::8.27783pt.
+[41
+
+
+]
+l2hSize :tex2html_wrap_indisplay3154:9.87892pt::9.87892pt::38.6483pt.
+[42
+
+
+]
+l2hSize :tex2html_wrap_indisplay3156:14.76508pt::14.76508pt::130.8721pt.
+[43
+
+
+]
+l2hSize :tex2html_wrap_inline3158:8.0pt::8.0pt::35.13426pt.
+[44
+
+
+]
+l2hSize :tex2html_wrap_inline3160:8.0pt::8.0pt::35.13426pt.
+[45
+
+
+]
+l2hSize :tex2html_wrap_inline3162:9.37892pt::9.37892pt::27.8867pt.
+[46
+
+
+]
+l2hSize :tex2html_wrap_inline3168:8.0pt::8.0pt::40.13428pt.
+[47
+
+
+]
+l2hSize :tex2html_wrap_inline3170:8.0pt::8.0pt::17.15054pt.
+[48
+
+
+]
+File: figures/mstep.eps Graphic file (type eps)
+<figures/mstep.eps>
+l2hSize :tex2html_wrap3177:196.93774pt::0.0pt::349.0pt.
+[49
+
+
+]
+l2hSize :tex2html_wrap_indisplay3180:15.4051pt::15.4051pt::327.3519pt.
+[50
+
+
+]
+l2hSize :tex2html_wrap_inline3182:8.0pt::8.0pt::48.31943pt.
+[51
+
+
+]
+l2hSize :tex2html_wrap_inline3184:8.0pt::8.0pt::48.31943pt.
+[52
+
+
+]
+l2hSize :tex2html_wrap_inline3188:63.0006pt::63.0006pt::240.30319pt.
+[53
+
+
+]
+l2hSize :graph1372:99.5846pt::0.0pt::349.0pt.
+[54
+
+
+]
+File: figures/hsolve1.eps Graphic file (type eps)
+<figures/hsolve1.eps>
+l2hSize :tex2html_wrap3199:151.36407pt::0.0pt::349.0pt.
+[55
+
+
+]
+File: figures/hsolve2.eps Graphic file (type eps)
+<figures/hsolve2.eps>
+l2hSize :tex2html_wrap3200:192.46724pt::0.0pt::349.0pt.
+[56
+
+
+]
+File: figures/hsolve3.eps Graphic file (type eps)
+<figures/hsolve3.eps>
+l2hSize :tex2html_wrap3201:196.38182pt::0.0pt::349.0pt.
+[57
+
+
+]
+l2hSize :tex2html_wrap_inline3210:8.0pt::8.0pt::30.11696pt.
+[58
+
+
+]
+l2hSize :tex2html_wrap_inline3212:7.33331pt::7.33331pt::73.84364pt.
+[59
+
+
+]
+l2hSize :tex2html_wrap_inline3214:7.33331pt::7.33331pt::43.11163pt.
+[60
+
+
+]
+l2hSize :tex2html_wrap_inline3218:7.33331pt::7.33331pt::9.66264pt.
+[61
+
+
+]
+l2hSize :tex2html_wrap_inline3226:7.33331pt::7.33331pt::63.6723pt.
+[62
+
+
+]
+l2hSize :tex2html_wrap_inline3228:6.95831pt::6.95831pt::8.73213pt.
+[63
+
+
+]
+l2hSize :tex2html_wrap_inline3236:10.68333pt::10.68333pt::123.21135pt.
+[64
+
+
+]
+l2hSize :tex2html_wrap_inline3349:8.87222pt::0.0pt::23.34732pt.
+[65
+
+
+]
+File: figures/compile1.eps Graphic file (type eps)
+<figures/compile1.eps>
+Overfull \hbox (95.70505pt too wide) detected at line 678
+ [] 
+ []
+
+l2hSize :tex2html_wrap3383:341.3581pt::0.0pt::349.0pt.
+[66
+
+
+]
+l2hSize :tex2html_wrap_inline3389:6.45831pt::0.0pt::5.50005pt.
+[67
+
+
+] ITEKEYOPEN (images.aux) ITEKEYCLOSE ) 
+Here is how much of TeX's memory you used:
+ 2067 strings out of 20887
+ 24440 string characters out of 196274
+ 82402 words of memory out of 350001
+ 4998 multiletter control sequences out of 10000+15000
+ 5339 words of font info for 22 fonts, out of 400000 for 1000
+ 14 hyphenation exceptions out of 10000
+ 27i,8n,22p,1010b,231s stack positions out of 3000i,100n,1500p,50000b,4000s
+
+Output written on images.dvi (67 pages, 22728 bytes).

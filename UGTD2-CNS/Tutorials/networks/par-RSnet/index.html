@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE></TITLE>
+<META NAME="generator" CONTENT="txt2html v1.28">
+</HEAD>
+<BODY>
+<H1><A NAME="section-1.">par-RSnet - a version of RSnet for parallel GENESIS</A></H1>
+
+<P>
+RSnet is a demonstration of a simple network, consisting of a grid of
+simplified neocortical regular spiking pyramidal cells, each one coupled with
+excitory synaptic connections to its four nearest neighbors.  This might model
+the connections due to local association fibers in a cortical network.
+
+<P>
+The example RSnet simulation was designed to be easily modified to allow
+you to use other cell models, implement other patterns of connectivity, or
+to augment with a population of inhibitory interneurons and the several
+other types of connections in a cortical network.  Details of running the
+simulation and understanding the scripts are in the "Creating large
+networks with GENESIS" section of the GENESIS Modeling Tutorial,
+Tutorials/genprog/net-tut.html.
+
+<P>
+The serial genesis version may be run from the networks/RSnet directory
+with the command "<tt>genesis RSnet.g</tt>".
+
+<P>
+par-RSnet.g is the main script of the parallel version, which was written
+as an example for the GENESIS Modeling Tutorial "Converting large network
+simulations to PGENESIS".  It may be run in its default configuration from
+the networks/par-RSnet directory with the command
+
+<P>
+<PRE>
+    pgenesis -nodes 4 par-RSnet.g
+</PRE>
+<P>
+after installing MPI and PGENESIS. The Mini-tutorial "Using Parallel
+GENESIS on PCs with Multicore Processors" gives further details.  This
+version of the script has been tested on a PC with a 2.4 GHz Intel Q6600
+quad core processor, running GENESIS 2.3 and PGENESIS 2.3.1 under Fedora
+Linux.  A typical execution time for a similarly configured version of
+RSnet.g was about 3.1 times longer than for par-RSnet.g.  Because of the
+lack of inhibition, the network fires rapdily, generating many internode
+SPIKE messages.  Thus, a speedup closer to the number of processor cores
+would likely be obtained in a network with more balanced inhibition
+and excitation.
+<P>
+
+<PRE>
+This script has the default definitions:
+int graphics = 1 // display control panel, graphs, optionally net view
+int output = 1   // send simulation output to a file
+int batch = 0    // if (batch) do a run with default params and quit
+int netview = 0  // show network activity view (very slow, but pretty)
+</PRE>
+<P>
+These may be changed to show the network view widget to visualize the
+propagation of network activity.  This can be useful for understanding the
+behavior of the network, but is much slower, due to the large number of
+messages sent to the view from remote nodes..  If the batch flag is changed
+to 1 and graphics to 0, it produces the output file Vm.dat.  This contains
+the Vm of each of the 1024 cells at 1001 time steps.  It is large - about
+11 MB, but can be compressed with bzip2 to about 12 KB.
+
+<P>
+Further details are given in the tutorial.
+
+<HR>
+<p><h3>Files:</h3></p>
+<p>
+<table>
+<tr><td><a href="DPchans.g">DPchans.g</a></td><td>5643 bytes</td><td>Thu Mar  3 23:12:16 2005
+</td>
+</tr><tr><td><a href="par-RSnet.g">par-RSnet.g</a></td><td>20843 bytes</td><td>Wed Jun 10 15:52:59 2009
+</td>
+</tr><tr><td><a href="pgraphics.g">pgraphics.g</a></td><td>8178 bytes</td><td>Wed Apr  2 22:48:58 2008
+</td>
+</tr><tr><td><a href="protodefs.g">protodefs.g</a></td><td>1351 bytes</td><td>Tue Mar 15 23:53:05 2005
+</td>
+</tr><tr><td><a href="README">README</a></td><td>2826 bytes</td><td>Wed Jun 10 16:42:44 2009
+</td>
+</tr><tr><td><a href="RScell.p">RScell.p</a></td><td>783 bytes</td><td>Tue Mar 15 22:46:22 2005
+</td>
+</tr></table>
+
+<P>
+Dave Beeman<BR>
+Wed Jun 10 16:41:07 MDT 2009
+
+</BODY>
+</HTML>

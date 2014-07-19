@@ -1,0 +1,197 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML><HEAD>
+<TITLE>GENESIS Exercises</TITLE>
+<style>
+BODY { font-family: Helvetica, Arial, Times }
+H1 { font-family: Helvetica, Arial, Times }
+H2 { font-family: Helvetica, Arial, Times }
+</style>
+</HEAD>
+<BODY BGCOLOR="#ffffff" TEXT="#000000">
+<center><H1><font COLOR="#0000ff">
+Background Material for the GENESIS Tutorials
+</font></H1></center>
+<P>
+<H3>Introduction to GENESIS - an overview of GENESIS</H3>
+<P>
+
+A series of GENESIS tutorials typically begins with a presentation that gives an
+overview of realistic neural modeling in general, followed by another that shows
+how the GENESIS simulator is used to implement these modeling paradigms.  The
+tutorial
+<A HREF="../genesis-intro/genesis-intro.html">Introduction to Realistic Neural
+Modeling with GENESIS</A> is based on similar talks at past neural modeling courses.
+
+<P>
+<H3>GENESIS Tutorial 1 - Hands-on use of GENESIS</H3>
+
+<P>
+<OL>
+
+<P>
+<LI>Take a quick look at the first two parts of the
+<A HREF="../genprog/index.html">GENESIS Modeling Tutorial</A>.
+<P>
+<LI>Run "genesis" in a console window and work through 
+<A HREF="../genprog/tutorial1.html">A basic tutorial on GENESIS</A>.
+<P>
+</OL>
+<P>
+<H3>GENESIS Tutorial 2 - Single cell modeling</H3>
+<P>
+<OL>
+
+<LI>Work through <A HREF="../genprog/simplecell-tut.html">
+Building a cell the easy way</A> and modify your own copy of simplecell.g
+to make a more interesting cell.  If you have time, do some of the exercises in
+<A HREF="Gtutorial2.html">Gtutorial2.html</A>.
+
+</OL>
+<P>
+<P>
+<H3>GENESIS Tutorial 3 - Modeling neural circuits and small networks</H3>
+<P>
+
+Study <A HREF="../genprog/synchan-tut.html">Making synaptic
+connections</A> and connect two cells in an excitatory/inhibitory
+network.  The exercise statement and initial scripts to modify are
+in <A HREF="simple-network/README.html">
+Tutorials/exercises/simple-network</A>.
+<P>
+
+<H3>GENESIS Tutorial 4 - Modeling large cortical networks</H3>
+<P>
+
+<OL>
+ 
+<LI>Study enough of the <A HREF="../genprog/index.html">
+Modeling Tutorial</A> to understand  <A HREF="../genprog/net-tut.html">
+Creating large networks with GENESIS</A>, and the example scripts
+in <i>Tutorials/networks/RSnet</i>.
+
+<P>
+<LI>Final goal: Modify the RSnet example to create a network of your own
+design. Some suggestions are at the end of the networks section, and in
+"Getting Started With Realistic Neural Modeling".
+</OL>
+<P>
+
+<B>Project suggestions</B>
+
+<P>The <A HREF="../networks/index.html"> Tutorials/networks</A>
+directory contains several network models that could be used as a
+starting point for new simulations.
+
+<P>
+Study the documentation and scripts for the
+<A HREF="../networks/ACnet2-GENESIS/README.html">ACnet2</A> auditory
+cortex model.  The tutorial for the model lists several 'Experiments to try'.
+There are a large number of parameter variations that can be made
+to modify the behavior of this model. Most of these can be
+accomplished either through the GUI or with simple changes to option
+strings in the scripts.
+
+<P>
+Change the cells, connection algorithm, or the input model to
+represent a different cortical area.  There are many cell models to
+choose from in the Tutorials/cells directory.
+<P>
+Develop an alternate input model to provide stimuli typical of that
+produced by Transcranial Magnetic Stimulation (TMS). This can be done
+using a 'script_out' object to provide the stimulus at clocked intervals.
+The procedure is illustrated with a simulation of effects of fMRI fields
+available at <A HREF="http://genesis-sim.org/GENESIS/fMRInet">
+http://genesis-sim.org/GENESIS/fMRInet</A>.
+<P>
+NEURON users who want to compare the two simulators may want to try
+converting the ACnet2 model to NEURON and comparing the performance.
+<P>
+The Open Source Brain page for the
+<A HREF="http://www.opensourcebrain.org/projects/acnet2">Primary Auditory
+Cortex network</A> has links for initial conversions of the model cells
+to neuroContruct and NeuroML.  This would be a good starting point for
+learning how to to convert models between simulators.
+<P>
+
+The Open Source Brain page for
+the <A HREF="http://www.opensourcebrain.org/projects/thalamocortical">
+Traub et al. (2005) Thalamocortical network</A> has the single cell
+models implemented in NeuroML, NEURON, GENESIS, and MOOSE.  These
+models could be used for either a simplified or full implemention of
+this popular model in GENESIS.
+
+<P>
+The documentation for the
+<A HREF="../networks/VAnet2/README.html"> VAnet2 model</A>
+describes this efficient hsolved GENESIS version of the Vogels and
+Abbott (2005) model.  It serves as a tutorial on the use of hsolve to
+achieve at least a factor of 10 speedup, in the context of a very
+simple model.  The 'VAnet2-batch.g' script is intended to be extended
+for testing GENESIS spike timing dependent plasticity (STDP)
+implementations with hsolve. This script would be a good starting
+point for models that use more realistic cells and connections.
+<P>
+
+<H3>GENESIS Tutorial 5 - Using hsolve; synaptic plasticity</H3>
+<P>
+<B>For background:</B>
+
+<OL>
+<LI>Read BoG Chapter 20  - Last part: using hsolve
+<LI>Read BoG Chapter 15  - Section 15.4 - Learning and Synaptic Plasticity
+<LI>Look at the scripts and demos in <I>genesis/Scripts/examples</I> for
+   <I>facsynchan</I> and <I>hebb</I> (the hebbsynchan).
+<LI>Study the demonstration scripts for the <I>stdp_rules</I> object
+in <I>genesis/Scripts/stdp_rules</I>, and the documentation on
+<A HREF="../Hyperdoc/NewPlasticityObjects.html"> New Plasticity Objects</A>.
+This describes a new GENESIS 2.4 object that allows spike timing
+dependent plasticity rules to be applied to synchan elements in a
+way that is compatible with hsolve.
+
+<LI>For more details on the use of <I>hsolve</I>, see the 
+documentation for the <A HREF="../Hyperdoc/Manual-26.html#ss26.34">
+hsolve object</A> and the advanced tutorial
+<A HREF="../advanced-tutorials/hsolve-cornelis/index.html">
+Simulations with GENESIS using hsolve</A>.
+
+<LI>Also see the exercise <A HREF="Gtut5.html">Gtut5.html</A>.
+</OL>
+
+<P>
+<B>After studying the ACnet2 or VAnet2 documentation and scripts</B>
+<P>
+Make an  hsolveable version of RScell and then of RSnet.
+Do some execution time comparisons with and without hsolve.
+
+<P>
+Modify RSnet to send Vm data and the Ex_channel Ik current
+to data files that may be visualized with python-tools/netview.py
+<P>
+The numerical calculations for the cells will be slightly more accurate
+when hsolve is used, and sequence of action potentials will be similar,
+but slightly different.  How will you determine if your hsolved version
+of RSnet is producing the "correct" results?
+<P>
+<B>Possible projects:</B>
+<P>
+Create an efficient hsolved two-population cortical network model
+based on either VAnet2 or ACnet2, using different cells.  Consider
+a different connection algorithm and different input models.
+
+<P>
+Implement the Song, Miller, and Abbott (2000) algorithm for spike
+timing dependent plasticity (STDP) for the VAnet2 model using the
+<I>stdp_rules</I> object. There are further suggestions in the ACnet2
+documentation under "Experiments to try" and at end of
+the <A HREF="../networks/VAnet2/README.html">README file for
+VAnet2</A>.
+
+<P>
+
+<P>
+<A HREF="../../index.html"><img src="images/back2.gif" align="middle"
+ hspace=12>Return to the Ultimate GENESIS Tutorial Distribution main index</a>
+<P>
+
+<I>Last updated on:</I> Thu Jul 17 13:57:03 MDT 2014
+</BODY></HTML>

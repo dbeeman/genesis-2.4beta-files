@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD> <TITLE> Tutorial 5 </TITLE> </HEAD>
+<BODY>
+
+<H1>Tutorial 5 - Traub91</H1>
+<P>
+
+The <A HREF="refs.html">Traub91</A> tutorial uses Neurokit to recreate the
+<A HREF="refs.html">Traub, et al. (1991)</A> multi-compartmental CA3
+pyramidal cell model, in order to investigate other mechanisms for
+producing burst firing.  The use of this tutorial and the background for
+understanding it is provided in Chapter 7 of The Book of GENESIS.
+<P>
+
+This model has 19 compartments with a soma in the center and two linear
+chains of compartments to represent the apical dendrites and the basal
+dendrites.  Like the molluscan burster, this cell has fast sodium, delayed
+potassium, transient potassium, high-threshold calcium, and
+calcium-activated (C-current) potassium conductances.  In addition, it has
+a slow potassium current (the AHP current) which depends only on the Ca2+
+concentration.  As with the molluscan burster, the burst is terminated when
+the Ca2+ concentration builds up to the point that the calcium-dependent
+potassium currents are able to hyperpolarize the cell.  However, the burst
+is maintained, not by a slow inward B-current, but by an interesting
+interaction of events in the soma and the dendrites.  
+
+<P>
+The figure below shows part of the Neurokit display for the <A
+HREF="refs.html">Traub91</A> tutorial. The cell diagram at the top shows a
+current injection electrode in the soma, and recording electrodes in the
+soma and an apical dendrite compartment.  This snapshot, using bright
+colors to represent regions of high membrane potential, shows how action
+potentials in the soma (lower plot) initiate broad Ca action potentials in
+the intermediate dendrite regions (upper plot).
+<P> <img src="traub.gif">
+
+
+<P> Although there are no sodium channels in the middle and distal
+dendrites, the concentration of calcium channels is much higher than in the
+soma.  These have a high activation threshold and a long time constant, so
+that broad action potentials may be triggered in the dendrites by passive
+propagation of soma action potentials.  In turn, the calcium action
+potentials propagate back to the soma to maintain the depolarization and
+maintain the burst until it is quenched by the increasing C and AHP
+currents.  The tutorial allows one to examine this process in detail, by
+injecting recording electrodes in the soma and dendrites, while injecting
+current to the soma.
+<P>
+
+<HR>
+<P>
+<a href="../index.html"><img src="../images/back2.gif" align="middle"
+ hspace=12>Return to the main page</a>
+
+<P>
+
+</BODY>
+</HTML>

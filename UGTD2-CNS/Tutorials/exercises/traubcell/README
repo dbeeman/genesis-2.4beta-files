@@ -1,0 +1,35 @@
+This directory has a very simple script (traubcell.g) to create the 1991
+Traub model from the CA3.p cell parameter file and the channel prototypes
+file traub91proto.g. The documentation for readcell and Chapter 16 of the
+BoG give further information about the use of cell parameter files with the
+cell reader and the use of channel prototype files.
+
+If you run the traubcell script with GENESIS, using the empty graphics.g
+file in this directory, it will create the cell, but not much will happen.
+You can use the "showfield" and "showmsg" commands to examine the the
+element fields and messages, and can step the simulation by issuing "step"
+commands to the genesis prompt, and see the effect with commands such as:
+
+showfield /cell/soma Vm
+step 0.05 -time
+showfield /cell/soma Vm
+
+Your task is to provide the graphical interface to step the simulation and
+plot the results.
+
+Suggested exercise: Copy these three files into a directory of your own, and
+implement the necessary graphics.g file by modifying code from tutorial3.g
+(in genesis/Scripts/tutorials). To see a fancier version which uses the
+xcell display widget, look at genesis/Scripts/traub91/traub91.g, after you
+have made your own attempt to provide the graphical interface to the
+simulation.
+
+Other variations:  Look in the babel/cells directory for other cell models:
+
+corticalcells - some simplified visual cortex pyramidal cells
+new_mit - olfactory bulb mitral cells
+THALMODES - a thalamic relay cell
+traub94 - A 64 compartment CA3 hippocampal pyramidal cell
+traub95  Traaub's CA3 hippocampal granule cell model
+
+Modify your simulation to create one of these cells.

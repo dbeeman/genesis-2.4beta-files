@@ -1,0 +1,49 @@
+A simple two-neuron network
+
+The goal of this exercise is to create a simple network of two cells that
+fire in alternate bursts.  To make it easy to get started, you have been
+given all of the scripts to create a simulation with a single cell:
+
+simplecell.g - creates a simple cell with a soma and a dendritic compartment
+cell.p  - the cell parameter file for the cell, used by the readcell command
+protodefs.g - makes the prototypes for the channels, compartments, and spike
+    generator that readcell creates from the cell parameter file
+graphics.g - provides the GUI for the simulation
+xtools.g - defines some script functions that are usefull for making GUIs
+
+The main script simplecell.g uses the readcell command to create the cell
+"cell1" from the cell parameter file, cell.p.  Chapter 16 of the Book of
+GENESIS (BoG) and the documentation for the readcell command explain the
+details of creating a cell from a cell parameter file.  The file
+protodefs.g, which is included by simplecell.g, includes files that are in
+the Scripts/neurokit/prototypes directory.  This is possible because your
+.simrc file gives a path to that location.  These files define the
+functions used by protodefs.g to create the elements that are named in the
+cell.p file.  Finally, the graphical user interface is provided by the file
+grpahics.g.  Most of the XODUS commands used in this file are explained in
+BoG chapters 13 and 14.  The "scale" button in the upper left corner of the
+graph is made with the "makegraphscale" function that is defined in
+xtools.g.
+
+The resulting cell has a soma compartment with squid-like Na and K
+channels, and a dendrite compartment with both an excitatory and an
+inhibitory synaptically activated channel, implemented with synchans.  The
+soma receives a default injection current of 0.5 nA, and fires a regular
+train of spikes, much like the single compartment example in BoG chapter
+14.
+
+Spend some time running the simplecell simulation and understanding enough
+of the simulation scripts until you feel that you are ready to modify
+simplecell.g to make two coupled cells.  Then, copy these files into your
+own directory, and make the changes necessary to create a second cell with
+no current injection, and plot its Vm on the graph in a different color.
+Of course, the plot will be a flat line, as it is receiving no stimulus.
+Now, use the information in BoG chapter 15 or the docmentation for synchan
+to connect the spike output of cell1 to the excitatory synchan of cell2,
+and the spike output of cell2 to the inhibitory input of cell1.  Use an
+axonal propagation delay of 0.005 seconds for each connection.  Finally,
+experiment with the synaptic weights for each synapse until you can achieve
+a pattern of alternate bursts of action potentials.  To make it easy to
+change the weights, you may wish to add dialog boxes for entering weights
+to the control panel.
+

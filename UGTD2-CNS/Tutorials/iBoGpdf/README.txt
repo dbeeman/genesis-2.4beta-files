@@ -1,0 +1,24 @@
+These are the Portable Document Format (PDF) files for "The Book of GENESIS".
+They may be viewed with either Adobe Acrobat Reader or xpdf, although Acrobat
+Reader seems to do a better job of rendering the equations.  If one of the
+equations doesn't look right, try zooming in on it.
+
+List of files:
+
+titlepage.pdf - The "Book of GENESIS" title page containing the copyright
+      notice, which should be included with any printed or electronic
+      copies.
+preface.pdf -  Preface to the Internet Edition, with updated information
+frontmatter.pdf - Contains the original preface, contributors, and table
+      of contents
+chapt1.pdf - chapt22.ps  The 22 chapters
+fin.pdf - Includes appendices, bibliography and indices
+
+(C) 2003 James M. Bower and David Beeman
+
+Permission to use, copy, and distribute this material in printed or electronic
+form, for any purpose and without fee, is hereby granted, provided that this
+copyright notice appears with all copies.
+
+email: genesis@genesis-sim.org
+GENESIS WWW site: http://www.genesis-sim.org/GENESIS/

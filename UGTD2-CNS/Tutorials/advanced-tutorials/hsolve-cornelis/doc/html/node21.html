@@ -1,0 +1,212 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002 (1.62) JA patch-1.4
+patched version by:  Kenshi Muto, Debian Project.
+LaTeX2HTML 2002 (1.62),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Exercise: Speed Comparison</TITLE>
+<META NAME="description" CONTENT="Exercise: Speed Comparison">
+<META NAME="keywords" CONTENT="tutorial2">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002 JA patch-1.4">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutorial2.css">
+
+<LINK REL="next" HREF="node22.html">
+<LINK REL="previous" HREF="node20.html">
+<LINK REL="up" HREF="node14.html">
+<LINK REL="next" HREF="node22.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html415"
+  HREF="node22.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html411"
+  HREF="node14.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html405"
+  HREF="node20.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html413"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html416"
+  HREF="node22.html">Communication with Other Elements</A>
+<B> Up:</B> <A NAME="tex2html412"
+  HREF="node14.html">Introducing Hsolve for Single</A>
+<B> Previous:</B> <A NAME="tex2html406"
+  HREF="node20.html">Interpreting the Mode of</A>
+ &nbsp <B>  <A NAME="tex2html414"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION02250000000000000000">
+Exercise: Speed Comparison</A>
+</H1>
+
+<P>
+The numerical advantage of implicit methods is that you can use a much
+larger time step in order to compute the same neuronal model (this is
+due to the stiffness of the system, see
+[<A
+ HREF="node59.html#koch98:_method_neuron_model_from_ions_networ">8</A>]).  In order to
+examine the dependence of the results on the time step you can run a
+simulation with and without <TT>hsolve</TT> while varying the time
+step.  However In this exercise we are concerned about something
+completely different: hsolve optimizes the calculations such that it
+runs faster than the original compartments.  The speed advantage by
+using <TT>hsolve</TT> is given in table
+<A HREF="node21.html#tab:simulating-purkinje-speed">2.1</A>.
+
+<P>
+<BR><P></P>
+<DIV ALIGN="CENTER"><A NAME="1338"></A>
+<TABLE>
+<CAPTION><STRONG>Table:</STRONG>
+Simulating a Purkinje cell containing <IMG
+ WIDTH="16" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$ \sim $">4000 compartments 
+    without and with <TT>hsolve</TT> in 
+    the different chanmodes.
+    The table lists two times three trials: the first set of
+    trials is done without any output.  The second set is obtained
+    while plotting the membrane potential of the soma.  All numbers 
+    give the total CPU time needed to simulate 1000 steps, all 
+    simulations used the same time step.</CAPTION>
+<TR><TD>  <DIV ALIGN="CENTER">  <TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=4>no Xodus output</TD>
+</TR>
+<TR><TD ALIGN="CENTER">original</TD>
+<TD ALIGN="RIGHT">66.30</TD>
+<TD ALIGN="RIGHT">66.44</TD>
+<TD ALIGN="RIGHT">66.41</TD>
+</TR>
+<TR><TD ALIGN="CENTER">chanmode 0</TD>
+<TD ALIGN="RIGHT">56.79</TD>
+<TD ALIGN="RIGHT">56.76</TD>
+<TD ALIGN="RIGHT">56.81</TD>
+</TR>
+<TR><TD ALIGN="CENTER">chanmode 1</TD>
+<TD ALIGN="RIGHT">40.26</TD>
+<TD ALIGN="RIGHT">40.27</TD>
+<TD ALIGN="RIGHT">40.34</TD>
+</TR>
+<TR><TD ALIGN="CENTER">chanmode 2</TD>
+<TD ALIGN="RIGHT">15.45</TD>
+<TD ALIGN="RIGHT">15.27</TD>
+<TD ALIGN="RIGHT">15.31</TD>
+</TR>
+<TR><TD ALIGN="CENTER">chanmode 3</TD>
+<TD ALIGN="RIGHT">14.02</TD>
+<TD ALIGN="RIGHT">13.90</TD>
+<TD ALIGN="RIGHT">13.90</TD>
+</TR>
+<TR><TD ALIGN="CENTER">chanmode 4</TD>
+<TD ALIGN="RIGHT">16.47</TD>
+<TD ALIGN="RIGHT">15.96</TD>
+<TD ALIGN="RIGHT">16.05</TD>
+</TR>
+<TR><TD ALIGN="CENTER">chanmode 5</TD>
+<TD ALIGN="RIGHT">16.99</TD>
+<TD ALIGN="RIGHT">16.55</TD>
+<TD ALIGN="RIGHT">16.49</TD>
+</TR>
+<TR><TD ALIGN="CENTER" COLSPAN=4><P>
+Xodus output</TD>
+</TR>
+<TR><TD ALIGN="CENTER">original</TD>
+<TD ALIGN="RIGHT">66.55</TD>
+<TD ALIGN="RIGHT">66.60</TD>
+<TD ALIGN="RIGHT">66.63</TD>
+</TR>
+<TR><TD ALIGN="CENTER">chanmode 0</TD>
+<TD ALIGN="RIGHT">57.14</TD>
+<TD ALIGN="RIGHT">57.05</TD>
+<TD ALIGN="RIGHT">57.05</TD>
+</TR>
+<TR><TD ALIGN="CENTER">chanmode 1</TD>
+<TD ALIGN="RIGHT">40.60</TD>
+<TD ALIGN="RIGHT">40.67</TD>
+<TD ALIGN="RIGHT">40.64</TD>
+</TR>
+<TR><TD ALIGN="CENTER">chanmode 2</TD>
+<TD ALIGN="RIGHT">15.29</TD>
+<TD ALIGN="RIGHT">15.51</TD>
+<TD ALIGN="RIGHT">15.41</TD>
+</TR>
+<TR><TD ALIGN="CENTER">chanmode 3</TD>
+<TD ALIGN="RIGHT">14.08</TD>
+<TD ALIGN="RIGHT">14.08</TD>
+<TD ALIGN="RIGHT">14.20</TD>
+</TR>
+<TR><TD ALIGN="CENTER">chanmode 4</TD>
+<TD ALIGN="RIGHT">16.34</TD>
+<TD ALIGN="RIGHT">16.32</TD>
+<TD ALIGN="RIGHT">16.36</TD>
+</TR>
+<TR><TD ALIGN="CENTER">chanmode 5</TD>
+<TD ALIGN="RIGHT">16.63</TD>
+<TD ALIGN="RIGHT">16.85</TD>
+<TD ALIGN="RIGHT">16.81</TD>
+</TR>
+</TABLE>
+  
+  <A NAME="tab:simulating-purkinje-speed"></A></DIV></TD></TR>
+</TABLE>
+</DIV><P></P>
+<BR>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html415"
+  HREF="node22.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html411"
+  HREF="node14.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html405"
+  HREF="node20.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html413"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html416"
+  HREF="node22.html">Communication with Other Elements</A>
+<B> Up:</B> <A NAME="tex2html412"
+  HREF="node14.html">Introducing Hsolve for Single</A>
+<B> Previous:</B> <A NAME="tex2html406"
+  HREF="node20.html">Interpreting the Mode of</A>
+ &nbsp <B>  <A NAME="tex2html414"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+
+2002-11-15
+</ADDRESS>
+</BODY>
+</HTML>

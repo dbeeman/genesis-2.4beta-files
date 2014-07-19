@@ -1,0 +1,28 @@
+
+Things to Try
+-------------
+
+This simulation is meant as an exercise in script programming. Things to
+try involve editing the connections.g and addvgchan.g and cell.g files. One
+can add/change synaptic connections, change passive cell parameters, or add
+some other voltage gated channels from the channel library.
+
+Some interesting projects are:
+
+  * Add inhibitory connections using the premade isyn synapse present on
+    each soma.
+
+  * Connect column 10 back to column 1 to make a cylindrical net.
+
+  * Make feedback connections back from column n+1 to column n.
+
+  * Add CaT and KM channels to make bursting neurons.
+
+  * Provide short injection pulses, instead of steady current injection.
+
+  * Reduce the connectivity by making connections only to the three
+    nearest cells on the chain to the right.
+
+  * Add Hebbian learning by typing "learnon" to the genesis prompt, or
+    "learnoff" to remove it.  The learning parameters may be modified by
+    editing hebbsyn.g.

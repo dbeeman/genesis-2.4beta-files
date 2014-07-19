@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002 (1.62) JA patch-1.4
+patched version by:  Kenshi Muto, Debian Project.
+LaTeX2HTML 2002 (1.62),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Communication with Other Elements</TITLE>
+<META NAME="description" CONTENT="Communication with Other Elements">
+<META NAME="keywords" CONTENT="tutorial2">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002 JA patch-1.4">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutorial2.css">
+
+<LINK REL="next" HREF="node25.html">
+<LINK REL="previous" HREF="node21.html">
+<LINK REL="up" HREF="node14.html">
+<LINK REL="next" HREF="node23.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html427"
+  HREF="node23.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html423"
+  HREF="node14.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html417"
+  HREF="node21.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html425"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html428"
+  HREF="node23.html">Messages from and to</A>
+<B> Up:</B> <A NAME="tex2html424"
+  HREF="node14.html">Introducing Hsolve for Single</A>
+<B> Previous:</B> <A NAME="tex2html418"
+  HREF="node21.html">Exercise: Speed Comparison</A>
+ &nbsp <B>  <A NAME="tex2html426"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION02260000000000000000">
+Communication with Other Elements</A>
+</H1>
+
+<P>
+Knowing how to use <TT>hsolve</TT> can only be interesting when you
+also know how to setup experiments and how to save the output.
+Interfacing <TT>hsolve</TT> to other elements is not always trivial
+and deserves a special paragraph of attention.
+
+<P>
+A distinction can again be made between the lower and the higher
+chanmodes.  When using the lower chanmodes - the 'compatibility'
+chanmodes - everything behaves almost as without <TT>hsolve</TT>.  In
+chanmode 0, under no circumstance you will experience problems when
+interfacing <TT>hsolve</TT> to other objects.  Incoming and outgoing
+messages that have been created before the <TT>SETUP</TT> action call
+are handled automatically.  In chanmode 1, <TT>hsolve</TT> puts severe
+restrictions on the messages that can be send to the tabulated
+channels.  Since <TT>hsolve</TT> will not always give an appropriate
+error message for messages that are handled or that are ignored, it is
+recommended not to use chanmode 1 unless you are sure that you do not
+have any tabulated channels with messages that are not handled by
+<TT>hsolve</TT> (these messages include <TT>DOMAINCONC</TT> and
+<TT>ADD_GBAR</TT>).
+
+<P>
+<BR>
+
+<P>
+The higher chanmodes are the more interesting modes of operation
+because of their excellent performance.  We will concentrate on them
+from now on and explain how to use them correctly.
+
+<P>
+As already said, when using the higher chanmodes, <TT>hsolve</TT>
+compiles your model into optimized byte-codes.  During the simulation
+these byte-codes are interpreted at each time step.  They instruct
+<TT>hsolve</TT> to compute the conductances and evaluate the cable
+equations.  To be able to compile a model into byte-codes,
+<TT>hsolve</TT> must know the object type.  The object types
+<TT>hsolve</TT> is currently supporting are <TT>compartment</TT>,
+<TT>tabchannel</TT>, <TT>tab2Dchannel</TT>, <TT>tabcurrent</TT>,
+<TT>Ca_concen</TT>, <TT>concpool</TT>, <TT>difshell</TT>,
+<TT>taupump</TT>, <TT>mmpump</TT>, <TT>hillpump</TT>,
+<TT>fixbuffer</TT>, <TT>difbuffer</TT>, <TT>dif2buffer</TT>,
+<TT>fura2</TT>, <TT>nernst</TT>, <TT>ghk</TT>, <TT>channelC2</TT>,
+<TT>channelC3</TT>, <TT>synchan</TT>, <TT>synchan2</TT>,
+<TT>Mg_block</TT>, <TT>spikegen</TT>, <TT>neutral</TT>.
+
+<P>
+When using these objects in a model, be sure to create them beneath
+the subtree of the compartments they reside in.  Then you link them
+together with messages as usual.  Afterwards you create
+<TT>hsolve</TT>, set the <TT>path</TT> field (point it to the
+compartments only), and perform a <TT>SETUP</TT> and <TT>RESET</TT>
+call.  If anything is wrong with the model structure, e.g. if a
+message incoming to a channel is not handled by <TT>hsolve</TT>,
+<TT>hsolve</TT> will give an appropriate error message.  If all is
+right, <TT>hsolve</TT> is setup correctly.  This means that (1) all
+computations normally done by the modeling elements, are now done by
+<TT>hsolve</TT> in a more efficient way and (2) the message passing
+between these elements is done by <TT>hsolve</TT>'s internal
+communication facilities.  This is all made transparent for a user
+except ......that the computed values are not stored anymore in the
+original elements, but they are stored in <TT>hsolve</TT>'s internal
+data arrays.  How to communicate with these data arrays will be
+explained shortly.
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<TABLE  WIDTH="635">
+<TR><TD>
+  <FONT SIZE="-1"><B>NOTE:</B> <TT>Hsolve</TT> implicitly assumes that you
+    are not doing fancy things like sending an <TT>AXIAL</TT> message
+    from a channel to a compartment.  Genesis's flexibility allows you
+    to construct absurd and unrealistic models.  It could be that you
+    do not get any error message if you try to have <TT>hsolve</TT>
+    compute such models.
+</FONT></TD></TR>
+</TABLE>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><UL>
+<LI><UL>
+<LI><A NAME="tex2html429"
+  HREF="node23.html">Messages from and to external objects</A>
+<LI><A NAME="tex2html430"
+  HREF="node24.html">The '<TT>findsolvefield</TT>' command</A>
+</UL></UL></UL>
+<!--End of Table of Child-Links-->
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html427"
+  HREF="node23.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html423"
+  HREF="node14.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html417"
+  HREF="node21.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html425"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html428"
+  HREF="node23.html">Messages from and to</A>
+<B> Up:</B> <A NAME="tex2html424"
+  HREF="node14.html">Introducing Hsolve for Single</A>
+<B> Previous:</B> <A NAME="tex2html418"
+  HREF="node21.html">Exercise: Speed Comparison</A>
+ &nbsp <B>  <A NAME="tex2html426"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+
+2002-11-15
+</ADDRESS>
+</BODY>
+</HTML>

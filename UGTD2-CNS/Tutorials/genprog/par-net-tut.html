@@ -1,0 +1,716 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE></TITLE>
+<META NAME="generator" CONTENT="txt2html v1.28">
+</HEAD>
+<BODY>
+
+<P>
+<!-- Go to Next/Previous tutorial or Index -->
+Next: <A HREF="whatnext.html">Where do we go from here?</A>
+Previous: <A HREF="net-tut.html">Creating large networks with GENESIS</A>
+Up: <A HREF="genprog.html">Table of Contents</A>
+<HR>
+
+
+<H1><A NAME="section-1.">Converting large network simulations to PGENESIS</A></H1>
+
+<H2><A NAME="section-1.1.">Introduction</A></H2>
+
+<P>
+
+The purpose of this tutorial is to show how to convert a network simulation
+that was developed for serial GENESIS to PGENESIS, in order to take
+advantage of the processing power offered by PCs with multicore or multiple
+processors.  It uses the script
+<A HREF="textScripts/networks/RSnet/RSnet.g.txt">RSnet.g</A> from
+<A HREF="../networks/RSnet/index.html">Tutorials/networks/RSnet simulation</A>
+as the example network implemented with serial GENESIS, and 
+<A HREF="textScripts/networks/par-RSnet/par-RSnet.g.txt">par-RSnet.g</A> from
+<A HREF="../networks/par-RSnet/index.html">Tutorials/networks/par-RSnet simulation</A>
+as the example of the parallelized version.
+
+<P> RSnet is a demonstration of a simple network, consisting of a grid of
+simplified neocortical regular spiking pyramidal cells, each one coupled
+with excitory synaptic connections to its four nearest neighbors.  This
+might model the connections due to local association fibers in a cortical
+network.  The RSnet example simulation was designed to be easily modified
+to allow you to use other cell models, implement other patterns of
+connectivity, or to augment by adding a population of inhibitory
+interneurons and the several other types of connections in a cortical
+network.  Details of running the simulation and understanding the scripts
+are in the "Creating large networks with GENESIS" section of the GENESIS
+Modeling Tutorial.
+
+<P>
+The serial GENESIS version may be run from the networks/RSnet directory
+with the command "<tt>genesis RSnet.g</tt>".
+
+<P>
+The parallel version may be run in its default configuration from the
+networks/par-RSnet directory with "<tt>pgenesis -nodes 4 par-RSnet.g</tt>".
+In order to do this, PGENESIS and MPI should have been installed and
+tested.  The Mini-tutorial on 
+<A HREF="../advanced-tutorials/Mini-tuts/pgenesis/index.html">
+Using Parallel GENESIS on PCs with Multicore Processors</A> gives further
+details.
+
+<P>
+This version of the script has been tested on a PC with a 2.4 GHz Intel
+Q6600 quad core processor, running GENESIS 2.3 and PGENESIS 2.3.1 under
+Fedora Linux.  A typical execution time for a similarly configured version
+of RSnet.g was about 3.1 times longer than for par-RSnet.g.  Because of the
+lack of inhibition, the network fires rapdily, generating many internode
+SPIKE messages.  Thus, a speedup closer to the number of processor cores
+would likely be obtained in a network with more balanced inhibition and
+excitation.
+
+<P> Before continuing with this tutorial, it is important to have read <A
+HREF="../iBoGpdf/index.html">BoG</A> Chapter 21, Sections 21.4 - 21.6.
+These sections describe the use of nodes, zones, the syntax for executing
+commands on other nodes (e.g.  "<tt>echo@0 {mynode}</tt>"), and the use of
+barriers.  Note that zone identifiers are not needed here, because network
+simulations usually have only one zone per node.  The network model example
+used in the BoG is based on the serial GENESIS
+<i>genesis/Scripts/orient_tut</i> simulation.  The network used here is
+somewhat more typical of cortical network simulations, and doesn't have the
+complications of sweeping an input pattern across the retina.
+
+<P>
+At this point, it would be useful to open separate browser windows or tabs
+to view the two files
+<A HREF="textScripts/networks/RSnet/RSnet.g.txt">RSnet.g</A> and
+<A HREF="textScripts/networks/par-RSnet/par-RSnet.g.txt">par-RSnet.g</A>.
+At times, you may also want to consult the
+<A HREF="../pgenesis-hyperdoc/index.html">main index to the PGENESIS
+documentation</A>, which has been installed in
+<i>Tutorials/pgenesis-hyperdoc</i>.   The
+<A HREF="../pgenesis-hyperdoc/refman.html">PGENESIS Reference Manual</A>
+gives a summary of commands and variables specific to PGENESIS with links
+to their documentation files in <i>Tutorials/pgenesis-hyperdoc/ref</i>.
+
+<P>
+The main difference between a network simulation for serial GENESIS and one
+for PGENESIS is that the parallelized network is divided into slices that
+are distributed over multiple nodes.  In order to understand how this is
+done in order to parallelize RSnet, it is useful to compare an outline of
+the logic of these two scripts.
+
+<H2><A NAME="section-1.2.">Outline of <i>RSnet.g</i></A></H2>
+
+<OL>
+  <LI>Define global variables. These include variables to set the dimensions
+   of the network (NX = NY = 25), string variables to define the cell to be
+   used in the network and other customizeable features, and default values
+   of various parameters that can be modified from the control panel.
+
+  <LI>Define the functions to be used.
+
+  <LI>Main simulation section
+
+  <UL>
+    <LI>Step 1: Assemble the components to build the prototype cell under the
+           neutral element <i>/library</i>.
+
+    <LI>Step 2: Create the prototype cell specified in 'cellfile' in
+	   <i>/library/cell</i>, using the <i>readcell</i> command.  Then, set up
+	   the excitatory synchan in the appropriate compartment, and the
+	   spikegen attached to the soma.
+
+    <LI>Step 3: Use <i>createmap</i> to make a 2D array of cells from
+           copies of <i>/library/cell</i>.
+
+    <LI>Step 4: Now connect them up with planarconnect. In this case, connect
+   each source spike generator to excitatory synchans on the four nearest
+   neighbors.
+
+    <LI>Step 5: Set the axonal propagation delay and weight fields of the target
+    synchan synapses for all spikegens.  
+
+      <LI>Then, set up the circuitry to provide injection pulses to a selected
+   cell in the network.
+
+      <LI>Include the graphics functions in <i>graphics.g</i>, make the
+    control panel, and make the graph and the netview (optional) to display
+    soma Vm. Set up messages from the network cells to these graphical
+    elements.
+     </UL>
+</OL>
+<H2><A NAME="section-1.3.">Outline of <i>par-RSnet.g</i></A></H2>
+
+<OL>
+  <LI>Define the global variables used in RSnet (but with NX = NY = 32), plus
+additional Booleans variable indicating the type of output to be
+generated and definitions of the nodes to be used.
+
+  <LI>Define functions similar to those in RSnet, with some modifications, and
+add additional functions that are performed by certain nodes.
+
+</OL>
+<P>
+
+In particular, the "worker nodes" are each assigned a slice of the network,
+and each one invokes one of these additional functions to perform certain
+actions for its slice.  This is one of the significant differences between
+the two scripts.  <i>RSnet.g</i> gives the commands for steps 1-5 above in
+the "Main simulation section".  In <i>par-RSnet.g</i>, they have to be
+executed as a function call by each worker node for the cells on its slice.
+Thus, they are defined earlier as functions, and invoked in the main
+section.  Function <i>make_slice</i> performs steps 1 - 3 and function
+<i>connect_cells</i> performs steps 4 and 5.
+
+<P>
+3. Main simulation section
+
+<P>
+After setting the simulation clock, it starts the parallel processes
+with the command:
+
+<PRE>
+   paron -parallel -silent 0 -nodes {n_nodes}
+</PRE>
+<P>
+At this point, there are <i>n_nodes nodes</i>, each running a copy of this script,
+and having access to the function definitions, but having its own elements
+and variables.  In order to have the nodes execute only the functions that
+apply to them, the remainder of the script consists of a number of
+conditional statements that are executed only by appropriate nodes.
+
+<P>
+For example the conditional test "if (i_am_worker_node)" is used to cause
+each worker node to create its slice of the network, and make connections
+from each cell on the network to its specified targets.  Note that these
+destination cells may lie across a slice boundary on another node.
+
+<P>
+In the script listing, note the use of barriers to make sure that all nodes
+finish before going on to the next step.  The barrier
+(pgenesis-hyperdoc/ref/barrier.txt) command is documented in the PGENESIS
+Reference Manual.  This part of the scripting requires some care.  A
+miscounting of the barriers can cause a simulation to get stuck at a
+barrier, or to try to perform an operation on another node that isn't ready
+for it.
+
+<P>
+The ability to force other nodes to get stuck at a barrier is used in the
+final lines of the script:
+
+<PRE>
+    // All the other nodes will get stuck at this barrier
+    // and the genesis prompt will be available in Node 0
+    if (!i_am_control_node)
+       barrier 15
+    end
+</PRE>
+<P>
+Then the genesis prompt will be available within node 0, and can be used
+to issue commands on other nodes, such as
+
+<PRE>
+    showfield@3 /network/cell[0]/soma x y z io_index
+</PRE>
+<P>
+This reveals that the y coordinate of cell 0 on node 3 is not 0.0.  Instead, it
+is displaced by an amount of <i>3*SEP_Y*NY/n_slices</i>, and the added soma field
+<i>io_index = 768</i>.  Using the information further below in this tutorial,
+you should be able to verify that this would be cell 768
+on the unsliced network, and that these are the correct coordinates.
+
+<P>
+<H2>Significant details of the <i>par-RSnet.g</i> implementation:</H2>
+<P>
+
+<H2>1. Define global variables</H2>
+<P>
+
+This section of the script defines the usual global variables and default
+values.  The added variables include Boolean variables indicating the type of output
+to be performed, and the definition and assignment of the nodes to be used.
+
+<P>
+<B>Output options:</B>
+<P>
+
+Large parallel network simulations are usually run with no graphics, and
+with output of relevant variables of the network output to a file for
+post-simulation analysis.  Often, there is no output to the console so that
+the simulation can be run in batch mode.  This allows one to login to a
+remote supercomputer, start a long simulation run, and logout while the
+simulation continues to run and generate data.  When running simulations on
+a one-user PC, it can be useful to have a graphical interface for control
+of the simulation and vizualization of the results, particularly when
+adjusting network parameters.
+
+<P>
+To allow these options, the script has the default definitions:
+
+<PRE>
+    int graphics = 1 // display control panel, graphs, optionally net view
+    int output = 0   // send simulation output to a file
+    int batch = 0    // if (batch) do a run with default params and quit
+    int netview = 0  // show network activity view (very slow, but pretty)
+</PRE>
+<P>
+These may be changed to show the network view widget to visualize the
+propagation of network activity.  This can be useful for understanding the
+behavior of the network, but is much slower, due to the large number
+of messages sent to the view from remote nodes.  If the batch flag is changed
+to 1 and graphics to 0, it produces the output file Vm.dat.  This contains
+the Vm of each of the 1024 cells at 1001 time steps.  It is large - about
+11 MB, but can be compressed with bzip2 to about 12 KB.
+
+<P>
+<B>The most significant definitions involving the nodes to be used are:</B>
+
+<UL>
+  <LI>n_slices (default = 4): Each slice is assigned to a node that will do a
+  horizontal slice of the network.
+
+  <LI>n_nodes:  The total number of nodes is normally <I>n_slices</I>, but an extra
+  node is used if file output is to be performed.
+
+  <LI>control_node = 0: This is the node assigned to the terminal window
+  starting pgenesis.  Informative console output is delivered to this
+  window, and it can be used in the usual manner to issue (P)GENESIS
+  commands for debugging.
+
+  <LI>graphics_node = 0: If there is a GUI, put it in this node also.
+
+</UL>
+<P>
+
+These definitions are followed by a <i>for</i> loop that creates a
+comma-separated list called <i>workers</i>.  This lists the nodes to be
+used for computing the slices, and consists simply of <i>n_slices</i>
+numbers from 0 to <i>n_slices - 1</i>.  With <i>n_slices = 4</i>, nodes 0 -
+3 will be the worker nodes for slices 0 - 3.  This assignment means that
+terminal and graphical output will share proceesing node 0 with slice 0.
+This can be useful for debugging, but unbalances the load slightly.
+
+<P>
+You should note that in a PGENESIS simulation (or any simulation using the
+MPI or PVM environment), the number of nodes need not be equal to the
+number of physical processors.  MPI or PVM will allocate as many nodes as
+specified, even on a single core CPU, although any nodes in excess of the
+number of cores will have to share resources with other nodes.  par-RSnet
+is initially set up to divide the network computation over four nodes, with
+the assumption that there are four processors (cores on a single CPU, or
+four CPUs or networked computers).  If you have a computer with a dual core
+processor instead of a quad core, you can experiment with measuring the
+execution time with <i>n_slices</i> set to 2, after running it with the
+default value of 4.
+
+<H2><A NAME="section-1.4.">2. Details of function definitions</A></H2>
+
+<P>
+These functions to set up the network are invoked by each of the worker
+nodes:
+
+<P>
+<B>function <i>make_slice</i> performs steps 1 - 3:</B>
+
+<UL>
+  <LI>Step 1: Assemble the components to build the prototype cell to be
+      used in the worker's node.
+
+  <LI>Step 2: Create the prototype cell, using <i>readcell</i>.  Each node will
+      have its own prototype, in its own <i>/library/cell</i>.  Then, set up the
+      excitatory synchan in the appropriate compartment, and the spikegen
+      attached to the soma.
+
+  <LI>Step 3 - make a 2D array of cells for the slice with copies of
+<i>/library/cell</i>.
+
+ 
+</UL>
+<P>
+<B>function <i>connect_cells</i> performs steps 4 and 5:</B>
+
+<UL>
+  <LI>Step 4: Now connect the cells.  In <i>RSnet.g</i>, this was done with
+      planarconnect, but it could also have been done with volumeconnnect in
+      order to allow the connections to depend on the z-direction when
+      cells with extended dendritic trees are used.  In PGENESIS, the
+      <i>volumeconnect</i> command is replaced by <i>rvolumeconnect</i> "remote
+      volumeconnect", which has the same syntax as <i>volumeconnect</i>, but the
+      destination is "<tt>/network/cell[]/{synpath}@{workers}</tt>", meaning that
+      the target is the synchan of all cells on the nodes in the list
+      <i>workers</i>.  There is no rplanarconnect command.
+
+  <LI>Step 5: Set the axonal propagation delay and weight fields of the
+      target synchan synapses for all spikegens using <i>rvolumedelay</i> and
+      <i>rvolumeweight</i>, which have the same syntax as the serial versions.
+      The remote version of these commands is used because the target
+      synapse may be in a slice on another node.
+
+</UL>
+<P>
+
+The <A HREF="../pgenesis-hyperdoc/refman.html">PGENESIS Reference
+Manual</A> gives a summary of the use of the parallel network commands
+<i>rvolumeconnect, rvolumedelay, rvolumeweight, raddmsg</i>, etc. with links to
+their documentation.
+
+<H2><A NAME="section-1.5.">3. Main simulation section details</A></H2>
+
+<P>
+After the paron (pgenesis-hyperdoc/ref/paron.txt) command
+
+<PRE>
+    paron -parallel -silent 0 -nodes {n_nodes}
+</PRE>
+<P>
+is used to start the <i>n_nodes</i> parallel nodes, the command
+
+<PRE>
+    setfield /post pvm_hang_time 60
+</PRE>
+<P>
+is given.
+
+<P>
+When all nodes but the control_node are waiting at the final barrier (as
+described above), PGENESIS indicates this by printing a dot to the console
+every 3 seconds.  This can be annoying when trying to type commands to the
+console, so the time is increased to 60 seconds by setting this field, as
+described in BoG Sec.  21.9.6.  Note that this field is set in the
+<b>postmaster</b> object <i>/post</i> that "paron" created in every node.  In spite of
+its name, it is valid with MPI, as well as PVM.
+
+<P>
+<B>Here is a more detailed outline of the following conditional
+statements:</B>
+<P>
+
+<B>if (i_am_worker_node):</B>
+<UL>
+  <LI>Create prototype elements to be used by this slice.
+  <LI>Make the network for the slice with <i>make_slice</i>.
+  <LI>Make the network connection with <i>connect_cells</i>.  Note that this
+      involves connections to neighbors that may be on another slice.
+  <LI>Use <i>make_injection</i> to create an injection <b>pulsegen</b> for that node.
+      All of the pulsegens will have the same parameters, but having
+      separate ones that connect only to cells on their slice avoids the
+      need for internode messages.  This allows injection to be removed by
+      deleting INJECT messages.  Note that PGENESIS does not allow messages
+      to other nodes to be deleted.
+
+  <LI>Use "<tt>add_injection {InjCell}</tt>" to provide injection to cell
+      <i>InjCell</i>.  When the worker node invokes this function, it has
+      to determine if <i>InjCell</i> is on its slice, and then translate
+      its number into the numbering used for the slice.
+
+</UL>
+<P>
+
+<B>if (i_am_graphics_node &amp;&amp; graphics):</B>  Include the graphics functions in
+<i>pgraphics.g</i> (modified from <i>graphics.g</i>), make the control panel, and make
+the graph and the netview (optional) to display soma Vm. Set up messages
+from the network cells to these graphical elements.  See the details below
+on performing parallel I/O to graphics and files.
+
+<P>
+<B>if (i_am_output_node):</B> Set up a <b>par_asc_file</b> object for to make an output
+file <i>ofile</i> using the function call <tt>make_output {ofile}</tt>.
+
+<P>
+<B>if (i_am_worker_node):</B> Set up any requested output and graphics messages
+
+<P>
+<tt>reset  // all nodes</tt>
+
+<P>
+<B>if (batch &amp;&amp; i_am_control_node):</B> Step the simulation for
+time <i>tmax</i> and quit.
+
+<H2><A NAME="section-1.6.">Remarks on slicing and assignment of nodes</A></H2>
+
+<P>
+Most network simulations create a planar grid of points, and neurons are
+positioned relative to these points.  For the simple RSnet example, single
+compartment cells are located with the soma on these points.  For more
+realistic cortical models, the two-dimensional grid typically represents
+the midpoint of a cortical layer, and a particular population of neurons
+(e.g. layer 5 pyramidal cells) is located relative to the points.  Often,
+they are given displacements in all directions, including the z-direction
+(perpendicular to the grid), to more accurately represent the distribution
+of the neuron type in the layer.
+
+<P> For the parallel version, the network will be divided into horizontal
+slices of dimension <i>NX x NY/n_slices</i>.  In this simulation, it is
+assumed that NY is a multiple of <i>n_slices</i>.  With more effort, the
+<i>make_slice</i> function could have been written to create slices of
+unequal sizes in order to deal with a NY that is not evenly divisible by
+<i>n_slices</i>.  This would also allow the node that is shared with the
+graphical display to have fewer cells.
+
+<P> The cell numbering should be thought of as <i>cell_num = ix +
+NX*iy</i>, where cells lie on the unsliced network at points
+(<i>ix*SEP_X</i>, <i>iy*SEP_Y</i>) with <i>ix</i> from 0 to <i>NX-1</i> and
+<i>iy</i> from 0 to <i>NY-1</i>.  Thus, <i>cell_num</i> runs from 0 to
+<i>NX*NY-1</i>.  The variable <i>cell_num</i> is used to specify the cell
+to receive injection or to have its soma Vm sent to a file or plotted on a
+graph.  The function <i>make_slice</i> creates slices of the network on
+each worker node. Each worker node will then have a slice with cells
+numbered 0 to <i>NX*NY/n_slices - 1</i>.  As the cell numbering is
+different within a slice, we need to translate betweeen <i>cell_num</i> and
+the slice number and index of the cell within the slice.  The functions
+<i>cell_node</i> and <i>cell_index</i> are used to perform this
+translation.  As the cell numbers on the unsliced network are filled by
+rows, starting with <i>iy = 0</i>, the translation between <i>cell_num</i>
+and the <i>cell_index</i> within the slice is very simple when horizontal
+slices are used, requiring a simple offset to the cell number.  This
+numbering is illustrated in the figure below.
+
+<P>
+
+<P ALIGN=CENTER><img src="images/horiz-slice.gif">
+
+<P> What changes to <i>cell_node</i> and <i>cell_index</i> would be
+required if you used vertical slices, instead?  Can you see why this
+example uses horizontal slices?  Note that for a rectangular network with
+unequal NY and NY, horizontal slicing will produce fewer connections that
+cross slice boundaries if NY &gt; NX.  This should be considered when
+choosing a network orientation and slicing scheme.
+
+<P>
+With this horizontal slicing scheme, Step 3 in function <i>make_slice</i> is
+implemented with:
+
+<PRE>
+    int slice = {mynode}  // The worker node number is the slice number
+    createmap /library/cell /network {NX} {NY / n_slices} \
+        -delta {SEP_X} {SEP_Y} \
+        -origin 0 {slice * SEP_Y * NY / n_slices}
+        // Label the cell soma with the io_index. For horizontal slices,
+        // this is equal to cell_num on the unsliced network.
+        for (i = 0; i < cells_per_slice; i=i+1)
+            setfield /network/cell[{i}]/soma \
+                io_index {slice * cells_per_slice + i}
+        end
+</PRE>
+
+<P>
+Not only is an offset added to the y coordinate of the origin, but a for
+loop is used to set an added io_index field in the soma of each cell in the
+slice.  The value of io_index represents the cell number on the unsliced
+net.  Each slice node will have a set of cells cell[0] -
+cell[{cells_per_slice - 1}], but the soma io_index will be in the
+appropriate part of the range from 0 - NX*NX-1, in order to identify its
+location on the full net.  As described below, this is necesary
+for proper sorting of remote messages to output and graphical elements.
+
+<H2><A NAME="section-1.7.">Considerations when using graphics and output to files</A></H2>
+
+<P> Most of the functions involving graphics are defined in the file <A
+HREF="textScripts/networks/par-RSnet/pgraphics.g.txt"> pgraphics.g</A>. The
+functions <i>make_control</i>, <i>make_Vmgraph</i>, and <i>make_netview</i>
+are very similar to the ones used in the serial version
+<A HREF="textScripts/networks/RSnet/graphics.g.txt">graphics.g</A>,
+except for the message passing in <i>make_Vmgraph</i> and
+<i>make_netview</i>.  As the graphics elements on node 0 may not be on the
+same node as the cell sending the message, the raddmsg (link) command is
+used instead of <i>addmsg</i>.  The usage is the same, but <i>raddmsg</i>
+allows the destination element to be on a different node.
+
+<P> This usage of <i>raddmsg</i> is illustrated by the lines in
+<i>make_Vmgraph</i> that set up a message to plot the injection current on
+the graph:
+
+<PRE>
+    // All the workers have identical /injectpulse/injcurr - plot only one
+    raddmsg@{worker0} /injectpulse/injcurr \
+        /data/injection@{graphics_node} PLOT output *injection *black
+</PRE>
+
+<P>
+The graphics node, which has been assigned to node 0) is the only node that
+is executing this function.  It issues a <i>raddmsg</i> command to the node on
+which <i>worker0</i> resides.  This also happens to be node 0 in this simulation,
+but it need not be.  The source of the message is the injection current
+source on this worker node, and the destination is the <b>xgraph</b> object
+<i>/data/injection</i>, which is on the graphics node.
+
+<P>
+The serial version of <i>make_Vmgraph</i>, in <i>graphics.g</i>
+also contains the lines that
+use <i>addmsg</i> to plot the soma Vm of the three cells that have numbers
+corresponding to the middle, middle-right edge, and lower left corner.  In
+the parallel version, the <i>raddmsg</i> command to the graph has to be issued by
+the node that contains the cell with the Vm to be plotted.  The easiest way
+to do this is to define the function <i>make_graph_messages</i> in the main
+script <i>par-RSnet.g</i>, so that it can be executed by any worker node,
+and let the node decide if it contains the cell before sending
+PLOT or PLOTSCALE messages to the graph.  This is done with
+the statements such as:
+
+<P>
+<PRE>
+   if ({mynode} == {cell_node {middle_cell}})
+        raddmsg /network/cell[{cell_index {middle_cell}}]/soma \
+            /data/voltage@{graphics_node} \
+            PLOT Vm *"center "{middle_cell} *black
+    end
+</PRE>
+
+<P> The parallel messaging becomes a little more complicated when sending
+the network output to an <b>xview</b> (e.g.
+<tt>/netview/draw/view@{graphics_node}</tt>) or a <b>par_asc_file</b>
+object.  This is because the <b>xview</b> and <b>par_asc_file</b> objects
+represent the entire network, and must send the soma Vm (or other cell
+field) values in the order of the numbering for the unsliced network.
+However, there is no guarantee of the order in which the worker nodes send
+the information for their slices.  It is posssible that node 3 may send its
+output before node 0.  This is where the "io_index" is used.
+
+<P> The PGENESIS documentation section
+<A HREF="../pgenesis-hyperdoc/par_out.html">Parallel I/O Issues</A>
+describes parallel
+extensions to the GENESIS <b>xview</b> object, and the modified objects
+<b>par_asc_file</b> and <b>par_disk_out</b> that are used for output of
+data in parallel GENESIS.  This is also described in BoG Sec.  21.8, and
+illustrated in the V1.g script in the PGENESIS distribution example
+directory <i>Scripts/orient2/</i>.
+Short <A HREF="../pgenesis-hyperdoc/orient2.html">documentation for the
+example</A> can be found in the PGENESIS documentation.
+
+
+<P> The function <i>make_netview</i> in <i>pgraphics.g</i> sets up the
+<b>xview</b> widget as in <i>graphics.g</i>.  However the serial GENESIS
+version used the command:
+
+<PRE>
+    setfield /netview/draw/view path /network/cell[]/soma field Vm \
+        value_min -0.08 value_max 0.03 viewmode colorview sizescale {SEP_X}
+</PRE>
+<P>
+The documentation for <A HREF="textDoc/xview.txt">xview</A>
+describes the three ways that values are specified in the <b>xview</b>.  The
+third way, by setting the xview path field is the simplest, and is used in the serial
+version.  The parallel version uses a variation of the second way, which is
+described as:
+
+<PRE>
+        Second, one can send up to 5 messages (VAL1, VAL2, VAL3, VAL4,
+        VAL5), for each point. The points themselves must be previously
+        specified using the COORDS message. It is assumed that the order of
+        sending the COORDS messages is identical to the order of sending the
+        values.  This is guaranteed if a wildcard list is used to set up the
+        messages.  This method is recommended for all dynamic displays, as
+        it is far and away the most efficient. The use of messages also
+        enables displays on parallel machines.
+</PRE>
+   
+<P> The modification used by the parallel version is to send an IVALn
+message with an extra argument that also gives an "io_index" that specifies
+the order of the message on the xview display grid.  In the parallel
+version of the file of graphics functions <i>pgraphics.g</i>, function
+<i>make_netview</i> contains the statements
+ 
+<P>
+<PRE>
+   // Each worker node sends its network slice information to the view
+        raddmsg@{workers} /network/cell[]/soma \
+                /netview/draw/view@{graphics_node} \
+                ICOORDS io_index x y z
+        raddmsg@{workers} /network/cell[]/soma \
+                /netview/draw/view@{graphics_node} \
+                IVAL1 io_index Vm
+</PRE>
+
+<P>
+to insure that the values are displayed in the correct order in the
+netview.
+
+<P> The situation is similar when sending simulation output to a file.  The
+serial <i>RSnet.g</i> script does not provide file output.  If it were to
+do so, it would use an <b>asc_file</b> object for plain text ASCII output,
+or a <b>disk_out</b> for binary data.  The documentation for <A
+HREF="textDoc/asc_file.txt">asc_file</A> describes the use of this object,
+with examples.  The PGENESIS documentation on <A
+HREF="../pgenesis-hyperdoc/par_out.html">Parallel I/O Issues</A> adds the
+additional information that the SAVE message to a <b>par_asc_file</b> takes
+an integer index parameter for message ordering preceding the field to be
+saved to the file.
+
+<P>
+The function <i>make_output</i> is only executed on the one output node and
+consists of:
+
+<PRE>
+    function make_output(filename)
+        str filename<
+        create par_asc_file {filename}
+        setfield ^    flush 1    leave_open 1
+        setclock 1 {out_dt}
+        useclock {filename}
+    end
+</PRE>
+<P>
+The "Main simulation section" of <i>par-RSnet.g</i> has the conditional blocks:
+
+<PRE>
+    if (i_am_output_node)
+        make_output {ofile}
+    end
+    barrier // wait for output to file to be set up
+    // set up any output and graphics messages
+    if (i_am_worker_node)
+        if (output)
+            // Add a message from each cell on the net to the par_asc_file
+            raddmsg /network/cell[]/soma /{ofile}@{output_node} SAVE io_index Vm
+            echo@{control_node} Outputs from worker {mynode} to file {ofile}
+        end
+        if (graphics)
+            make_graph_messages
+            xcolorscale hot
+            echo@{control_node} setting up PLOT messages
+        end
+  end // if (i_am_worker_node)
+</PRE>
+<P>
+
+This uses <i>raddmsg</i> with the <i>io_index</i> to save data from each worker node to
+a file, with each line containing NX*NY soma membrane potential values in
+the order of the cell numbering of the full unsliced network.
+
+<H2><A NAME="section-1.8.">Exercises and Projects</A></H2>
+
+<P> As with the use of the netview display, output of simulation data will
+have to cross node boundaries to the single <B>par_asc_file</B> object on the
+<I>output_node</I>.  This cannot be avoided in the case of the netview,
+but the simulation could be speeded up by having each slice node write its
+data to a separate file using a <B>par_asc_file</B> on its own node.
+After the end of the run and the closing of the files, a script
+function running on a single node could read the files, combine
+them into a single file, and delete the separate files.  If
+you obtain a significant speedup, please submit your script
+to genesis-sim.org.
+
+<P> Try adding a layer of fast spiking inhibitory interneurons to the
+network, and make suitable excitatory connections to them from the RScells,
+and connections from them to inhibitory synchans in the RScells and other
+interneurons.  Use a more realistic spacing appropriate to a neocortical
+network.  For a reduced density model, you could begin with 100
+micrometers, which is about an order of magnitude less than typical
+neocortical neuron spacings.  Excitatory cells have a connection radius of
+around 1 mm, and inhibitory cells have a lesser range, roughly around 0.7 mm.
+When you have the serial version working, make a parallel version and begin
+to explore variations in connection weights, in order to achieve a
+realistic balance of excitation and inhibition when the network is
+timulated with an injection pulse.
+
+<P>
+<I>Last updated on: </I>Wed Jun 10 16:41:07 MDT 2009
+<P>
+<HR>
+
+<P>
+<!-- Go to Next/Previous tutorial or Index -->
+Next: <A HREF="whatnext.html">Where do we go from here?</A>
+Previous: <A HREF="net-tut.html">Creating large networks with GENESIS</A>
+Up: <A HREF="genprog.html">Table of Contents</A>
+
+</BODY>
+</HTML>

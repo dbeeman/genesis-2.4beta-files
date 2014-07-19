@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002 (1.62) JA patch-1.4
+patched version by:  Kenshi Muto, Debian Project.
+LaTeX2HTML 2002 (1.62),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Input to Synaptic Channels</TITLE>
+<META NAME="description" CONTENT="Input to Synaptic Channels">
+<META NAME="keywords" CONTENT="tutorial2">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002 JA patch-1.4">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutorial2.css">
+
+<LINK REL="previous" HREF="node29.html">
+<LINK REL="up" HREF="node28.html">
+<LINK REL="next" HREF="node31.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html523"
+  HREF="node31.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html519"
+  HREF="node28.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html515"
+  HREF="node29.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html521"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html524"
+  HREF="node31.html">Networks of Cells</A>
+<B> Up:</B> <A NAME="tex2html520"
+  HREF="node28.html">Setup of Experiments</A>
+<B> Previous:</B> <A NAME="tex2html516"
+  HREF="node29.html">Current Injection</A>
+ &nbsp <B>  <A NAME="tex2html522"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H4><A NAME="SECTION02282020000000000000">
+Input to Synaptic Channels</A>
+</H4>
+We want to set the neurotransmitter concentration that influences the
+synaptic channels for a short period of time, say just a single time
+step.  The neurotransmitter concentration is stored in the
+<TT>activation</TT> field of the synaptic channels.  However, if you
+try to find that field, <TT>hsolve</TT> gives an error message:
+<PRE>
+    genesis &gt; echo {findsolvefield /main /main/main/basket activation}
+    ** Error -  unknown or unavailable field activation for basket.
+</PRE>
+
+<P>
+This means that we cannot set that field during simulation, so we have
+to use messages created before the <TT>SETUP</TT> call instead.  A
+small trick is to set the coordinates of <TT>neutral</TT> elements,
+then have messages transport the coordinate values to the activation
+field of the synaptic channels.
+
+<P>
+<PRE>
+    genesis &gt; // point 1
+    genesis &gt; create neutral /messengers
+    genesis &gt; create neutral /messengers/n1
+    genesis &gt; setfield /messengers/n1 x 0.0 y 0.0 z 0.0
+    genesis &gt; addmsg /messengers/n1 /main/soma/basket ACTIVATION x
+    genesis &gt; addmsg /messengers/n1 /main/main[0-4]/basket ACTIVATION y
+    genesis &gt; addmsg /messengers/n1 /main/main[5-8]/basket ACTIVATION z
+</PRE>
+
+<P>
+To activate the messages, we set the coordinate values for the neutral
+element for a single step of the simulation.  <TT>Hsolve</TT>
+automatically fetches the new values and uses them to calculate the
+new conductance of the synaptic channel:
+
+<P>
+<PRE>
+    genesis &gt; // point 2
+    genesis &gt; step 0.2 -time
+    genesis &gt; setfield /messengers/n1 x 1.0 y 1.0 z 1.0
+    genesis &gt; step
+    genesis &gt; setfield /messengers/n1 x 0.0 y 0.0 z 0.0
+    genesis &gt; step 0.2 -time
+    genesis &gt; setfield /messengers/n1 x 1.0 y 1.0 z 1.0
+    genesis &gt; step
+    genesis &gt; setfield /messengers/n1 x 0.0 y 0.0 z 0.0
+    genesis &gt; step 0.2 -time
+</PRE>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<TABLE  WIDTH="635">
+<TR><TD>
+  <FONT SIZE="-1"><B>NOTE:</B> Of course <TT>hsolve</TT> does store the
+    <TT>activation</TT> field, but in an optimized and recalculated
+    form.  That is why it is not accessible with
+    <TT>findsolvefield</TT>.
+</FONT></TD></TR>
+</TABLE>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<TABLE  WIDTH="635">
+<TR><TD>
+  <FONT SIZE="-1"><B>NOTE:</B> The Purkinje cell tutorial that comes with
+    the Genesis source code contains a Purkinje cell model with 4000
+    compartments that is simulated with
+    <TT>hsolve</TT>[<A
+ HREF="node59.html#cornelis02:_purkin_cell_tutor">3</A>].  Besides
+    being a good example of graphical output using <TT>hsolve</TT>,
+    various 'experiments' are implemented with the
+    <TT>findsolvefield</TT> command and the <TT>script_out</TT>
+    object.  If you want to dig into the code of the tutorial, the
+    <TT>gctrace</TT> and <TT>gftrace</TT> commands will prove useful.
+</FONT></TD></TR>
+</TABLE>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html523"
+  HREF="node31.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html519"
+  HREF="node28.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html515"
+  HREF="node29.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html521"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html524"
+  HREF="node31.html">Networks of Cells</A>
+<B> Up:</B> <A NAME="tex2html520"
+  HREF="node28.html">Setup of Experiments</A>
+<B> Previous:</B> <A NAME="tex2html516"
+  HREF="node29.html">Current Injection</A>
+ &nbsp <B>  <A NAME="tex2html522"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+
+2002-11-15
+</ADDRESS>
+</BODY>
+</HTML>

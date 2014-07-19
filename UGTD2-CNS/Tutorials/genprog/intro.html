@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<HTML><TITLE>Introduction</TITLE>
+<HEAD>
+<META NAME="generator" CONTENT="txt2html v1.21">
+</HEAD>
+<BODY BGCOLOR="#ffffff" TEXT="#000000">
+Next: <A HREF="tut1-lite.html">Getting started with GENESIS programming</A>
+Up: <A HREF="genprog.html">Table of Contents</A>
+<HR>
+<A NAME="section-1"><H1>Introduction</H1></A>
+
+<P>
+
+This is an updated version of the multi-part GENESIS Modeling Tutorial that
+was first introduced during the 2005 WAM-BAMM
+(<A HREF="http://www.wam-bamm.org">http://www.wam-bamm.org</A>)
+meeting on realistic biological modeling in San Antonio, TX.  It was offered
+as a "take-home" hands-on tutorial to be used for self-study, following the
+<A HREF="../genesis-intro/genesis-intro.html">
+Introduction to Realistic Neural Modeling</A> tutorial.  The tutorial was
+further developed during use in the 2006 and 2008 Latin American School on Computational
+Neuroscience (LASCON), and the Frankfurt Institute of Advanced
+Studies (FIAS 2006) summer school on theoretical neuroscience and
+complex systems.  It is intended to be a "quick start" to creating simulations
+with GENESIS, and will give you enough information to let you quickly
+begin creating cells and networks with GENESIS.
+
+<P>One way to use the tutorial is to go through it at a leisurely pace,
+exploring all the links to detailed information and documentation as you
+create models and perform the exercises.  Another way is to take the most
+direct path, creating models without always understanding the details of what
+you have done.  If you opt for this path, be sure to return to pick up the
+details when your lack of understanding makes progress difficult.  Take your
+pick!
+
+<P>
+The tutorial makes frequent references and links to sections of the <A
+HREF="../Hyperdoc/Manual.html">GENESIS Reference Manual</A>.  This is
+primarily a summary of the syntax used by the GENESIS Script Language
+Interpreter, the commands which it recognizes, and of the GENESIS
+"objects" that are available for constructing simulations.  It also
+refers to chapters in <A HREF="../iBoGpdf/index.html">
+<i>The Book of GENESIS</i></A>, by James M. Bower and David Beeman.  The second edition
+of this book, familiarly called "The BoG", was originally published by
+Springer-Verlag.  As the publisher does not plan to reprint the book, the
+copyright has been reclaimed by the authors, and we are now able to offer
+it as a free "Internet Edition", with links to it in this package of
+Tutorials.
+
+<P>
+The BoG gives a detailed coverage of realistic neural modeling from the
+subcellular to the network level, and provides the detailed guide to the
+construction of GENESIS simulations that is missing from the Reference
+Manual.  This tutorial is constructed to minimize your need for the BoG.
+Nevertheless, this short tutorial can't possibly go into all the detail of a
+482 page book, so you may wish study it in some detail, if you later decide to
+do some serious work with GENESIS.  There are links to chapters in the
+BoG throughout this tutorial, in order to provide more information on some
+of the topics that we will cover.
+
+<H2>GENESIS Scripting</H2>
+
+<P> If you have read the <a href="../genesis-intro/genesis-intro.html">
+Introduction to Realistic Neural Modeling</a>, you will be familiar with the
+rich variety of graphical user interfaces (GUIs) that are possible with
+GENESIS.  In fact, it is possible to create and run GENESIS simulations with
+little or no programming, by using Neurokit (for single cells) or Kinetikit
+(for biochemical reactions).  But, sooner or later, you will want the
+flexibility of creating your own GENESIS scripts.  
+
+<P>
+The bad news is that to get the maximum benefit from
+GENESIS and from this tutorial, you will have to do some programming in the
+GENESIS scripting language.
+The good news is that the modular object-oriented nature of GENESIS makes
+it easy to modify existing scripts.  Once you have learned a few basics of
+GENESIS scripting and have some good example simulation scripts to get you
+started, you can create most of your simulations by simple "hacking" of
+existing scripts.  That is the approach taken in this tutorial, and by most
+GENESIS modelers.
+
+<H2>Some preliminaries</H2>
+
+<P>
+Before you start, you will need a little background.
+
+<UL>
+
+  <LI> You should have some basic knowledge of compartmental modeling, which
+is covered in detail in the BoG.  You can get a brief overview in parts of the
+<A HREF="../cnslecs/cnslecs.html"> Lectures on Computational Neuroscience</A>.
+The book <i>Methods in Neuronal Modeling</i>, by C. Koch and I. Segev (eds.)
+second edition, MIT Press, Cambridge, MA (1998), is another good reference.
+The <a href="../genesis-intro/genesis-intro.html"> Introduction to Realistic
+Neural Modeling</a> will also be a good background for understanding what
+follows.
+
+<P>
+  <LI> You should have GENESIS installed, and know how to start it up.  You
+will need to know <i>where</i> GENESIS is installed.  There will be a
+directory <i>genesis</i> that contains the executable program
+"<i>genesis</i>" and other directories, such as <i>Scripts</i>, which
+contains the example and tutorial simulation scripts that are distributed
+with GENESIS.  So, when we refer to <i>genesis/Scripts</i>, you will need
+to know the full path, e.g.  <i>/usr/local/genesis/Scripts</i>, in order to
+locate these files.  You will also need to know where these tutorials are
+installed, as they may refer to the "GENESIS Tutorials directory", or to a
+file within this directory such as <i>cells/simplecell/simplecell.g</i>.
+
+<P>
+The "GENESIS Tutorials directory" is an optional package that would normally
+be installed as <i>genesis/Tutorials</i>.  It contains this tutorial
+(in <i>Tutorials/genprog</i>),  other GENESIS tutorials, the <i>cells</i>
+directory (in <i>Tutorials/cells</i>),  and other directories
+used by the GENESIS tutorials.
+The procedure for obtaining, installing and running GENESIS and the
+Tutorials package is given in the <a href="../README.html">README</a> file
+in the Tutorials directory.
+
+<P>
+  <LI> You will need to know how to get around in a UNIX command-line
+environment, and how to use a text editor.  Fortunately, you only need to know
+a little.  You can learn most of what you need to know about UNIX in order
+to use GENESIS in this <a href="../unixhelp/unixhelp.html">
+Introduction to UNIX or Linux and the graphical desktop</a>.
+
+</UL>
+
+<P> The two most common UNIX editors for plain text files, such as GENESIS
+scripts, are 'vi' and 'emacs'.  If you are not familiar with either editor,
+you may find it easier to learn <a href="../unixhelp/emacs.txt">emacs</a>.
+For an even simpler text editor with built-in help, try 'pico' if it is
+installed.  If you are using Linux with the GNOME or KDE desktop, try
+'gedit', 'kedit", or 'kate'.  If you are running GENESIS under Windows
+using the Cygwin (<A
+HREF="http://www.cygwin.com/">http://www.cygwin.com/</A>) environment, use
+'nedit'.
+
+<HR>
+Next: <A HREF="tut1-lite.html">Getting started with GENESIS programming</A>
+Up: <A HREF="genprog.html">Table of Contents</A>
+
+</BODY>
+</HTML>

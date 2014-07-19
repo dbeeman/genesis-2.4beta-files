@@ -1,0 +1,15 @@
+RSnet is a demonstration of a simple network, consisting of a grid of
+simplified neocortical regular spiking pyramidal cells, each one coupled with
+excitory synaptic connections to its four nearest neighbors.  This might model
+the connections due to local association fibers in a cortical network.
+
+The example simulation was designed to be easily modified to allow you to use
+other cell models, implement other patterns of connectivity, or to augment
+with a population of inhibitory interneurons and the several other types of
+connections in a cortical network.  Details of running the simulation and
+understanding the scripts are in the "Creating large networks with GENESIS"
+section of the GENESIS Modeling Tutorial, Tutorials/genprog/net_tut.html.
+
+The cell model used in this network is described in the cells/RScell
+directory.
+

@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<HTML>
+<HEAD><title>Where do we go from here?</title>
+</HEAD>
+<BODY BGCOLOR="#ffffff" TEXT="#000000">
+Previous: <A HREF="net-tut.html">Creating large networks with GENESIS</A>
+Up: <A HREF="genprog.html">Table of Contents</A>
+<HR>
+
+<H1>Where do we go from here?</H1>
+<P>
+Here are some suggestions and resources for learning more advanced
+GENESIS programming techniques.  Also see the
+<A HREF="../advanced-tutorials/index.html">advanced tutorials</A>
+in this tutorial distribution with links to other longer tutorials
+on the GENESIS website.
+
+<H2>Using implicit numerical methods</H2>
+<P>
+The default integration method (exponential Euler) is fine for simple
+models with just a few compartments.  Models with many compartments should
+use an implicit method (e.g. Crank-Nicholson) with the Hines algorithm
+in order to avoid numerical instablilities.   This is implemented, along
+with other speedups, in the GENESIS <i>hsolve</i> object.
+This is covered in <A HREF="../iBoGpdf/index.html">BoG</A>
+Chapter 20 and the GENESIS documentation for
+<a href="textDoc/hsolve.doc.txt">hsolve</a>.  For example scripts,
+see <i>genesis/Scripts/examples/hines</i> for examples.
+The advanced tutorial by Hugo Cornelis from the 2002 GENESIS Users Meeting
+<A HREF="../advanced-tutorials/index.html">Simulations with GENESIS using
+hsolve</A> gives further examples.
+
+<H2>Spike train objects in GENESIS</H2>
+<P>
+
+To understand single neuron computation it is desirable that realistic
+input patterns be given to model neurons in the study of the input-output
+function.  Spike train objects can be used to generate input patterns in
+place of a full network model, which is often not available.  Other GENESIS
+objects can be used to generate histograms of cross-correlations,
+auto-correlations, interspike intervals, and others.  The WAM-BAMM 2005 <A
+HREF="../advanced-tutorials/index.html"> Advanced Tutorial</A> on
+"Simulating in vivo-like synaptic input patterns in multicompartmental
+models" (Edgerton, 2005) describes how realistic input patterns can be
+given to model neurons, using the tools available in GENESIS.  The
+electronically published version may be viewed or downloaded at <A
+HREF="http://www.brains-minds-media.org/archive/225">
+http://www.brains-minds-media.org/archive/225</A>.
+
+<H2>Using GENESIS on parallel computers</H2>
+<P>
+
+Parallel GENESIS (PGENESIS) is an extension of GENESIS for use on parallel
+computers and networks of workstations.  It is useful for simulations that
+must be run many times independently, such as parameter searching, and is
+used for large scale models that can benefit from the speed advantages of
+parallelism, especially large network models.  The WAM-BAMM 2005 <A
+HREF="../advanced-tutorials/index.html">Advanced Tutorial</A> on Parallel
+GENESIS presents in-depth example scripts, and discusses topics such as
+efficient network partitioning, sychronization issues, parallel I/O,
+parallel parameter searching, load balancing, scaling behavior, and
+debugging strategies.  The electronically published version (Hood, 2005) may
+be viewed or downloaded at <A
+HREF="http://www.brains-minds-media.org/archive/227">
+http://www.brains-minds-media.org/archive/227</A>.
+PGENESIS is also covered in considerable detail in <A
+HREF="../iBoGpdf/index.html">BoG</A> Chapter 21.
+The Mini-Tutorial<A HREF="../advanced-tutorials/Mini-tuts/pgenesis/index.html">
+Using Parallel GENESIS on PCs with Multicore Processors</A> gives a "quick
+start" guide to intalling PGENESIS under Linux on PCs using the MPI
+environment.
+
+<H2>Other examples and GENESIS features</H2>
+
+<P>
+
+For performing parameter searches to "tune" a model, see
+<i>genesis/Scripts/param</i>, and the documentation for the GENESIS
+Parameter Search Library given in the <A
+HREF="../Hyperdoc/Manual.html">GENESIS Reference Manual</A>.  The WAM-BAMM
+2005 Advanced Tutorial on Parameter Searching Tools in GENESIS at
+<A HREF="http://genesis-sim.org/GENESIS/WB05-advanced-tutorials">
+http://genesis-sim.org/GENESIS/WB05-advanced-tutorials</A> gives a good overview of
+parameter searching and a discussion of the issues involved, suggestions,
+hints, and pitfalls.
+
+<P> A demonstration of the use of GENESIS for modeling biochemical
+reactions such as occur in biochemical signaling pathways can be found in
+<i>genesis/Scripts/kinetikit</i>, and in the <A
+HREF="../advanced-tutorials/index.html">advanced tutorials</A> on Modeling
+Calcium and Biochemical Reactions from WAM-BAMM 2005 and LASCON 2008.  Some
+of the included example scripts use <i>chemesis</i>, a library of
+biochemical reaction objects for modeling calcium concentration, which is
+also included. The website for chemesis is  <A
+HREF="http://www.gmu.edu/departments/krasnow/CENlab/chemesis.html">
+http://www.gmu.edu/departments/krasnow/CENlab/chemesis.html</A>.
+Chapter 10 of the <A HREF="../iBoGpdf/index.html">BoG</A>
+provides an introduction to the biochemistry involved, and a tutorial on
+Kinetikit and the GENESIS kinetics library.
+
+<P> If you need to create your own new GENESIS objects and commands, see the
+documentation on Customizing GENESIS in the <A HREF="../Hyperdoc/Manual.html">
+GENESIS Reference Manual</A>.
+
+<P>
+The <i>genesis/Scripts/examples</i> directory has examples of other GENESIS
+capabilities such as hebbian and facilitating synapses, markovian channels,
+Ca diffusion in spines, and various types of device objects for input and
+output, or for applying stimuli to model neurons.
+
+<P> For a summary of all the objects that are available in GENESIS, see the
+Objects section in the <A HREF="../Hyperdoc/Manual.html">GENESIS Reference
+Manual</A>.  To simply see a list of available objects, type
+"<tt>listobjects</tt>" from within GENESIS.  To see a list of commands, type
+"<tt>listcommands</tt>".
+
+<H2>References</H2>
+
+<P>
+Blackwell KT (2005) Modeling calcium concentration and biochemical reactions
+Brains, Minds, and Media. 1: bmm224. (http://www.brains-minds-media.org/)
+
+<P>
+
+Edgerton J (2005) Simulating in vivo-like synaptic input patterns in
+multicompartmental models. Brains, Minds, and Media. 1: bmm225
+(http://www.brains-minds-media.org/)
+
+<P>
+Hood G (2005) Using P-GENESIS for parallel simulation of GENESIS models - A
+brief overview.  Brains, Minds, and Media. 1: bmm227.
+(http://www.brains-minds-media.org/)
+
+<P>
+
+
+<HR>
+Previous: <A HREF="net-tut.html">Creating large networks with GENESIS</A>
+Up: <A HREF="genprog.html">Table of Contents</A>
+
+</BODY>
+</HTML>
+

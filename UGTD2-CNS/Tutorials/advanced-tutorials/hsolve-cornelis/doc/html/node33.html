@@ -1,0 +1,318 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002 (1.62) JA patch-1.4
+patched version by:  Kenshi Muto, Debian Project.
+LaTeX2HTML 2002 (1.62),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>The DUPLICATE Action</TITLE>
+<META NAME="description" CONTENT="The DUPLICATE Action">
+<META NAME="keywords" CONTENT="tutorial2">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002 JA patch-1.4">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutorial2.css">
+
+<LINK REL="previous" HREF="node32.html">
+<LINK REL="up" HREF="node31.html">
+<LINK REL="next" HREF="node34.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html559"
+  HREF="node34.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html555"
+  HREF="node31.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html551"
+  HREF="node32.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html557"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html560"
+  HREF="node34.html">Exercises</A>
+<B> Up:</B> <A NAME="tex2html556"
+  HREF="node31.html">Networks of Cells</A>
+<B> Previous:</B> <A NAME="tex2html552"
+  HREF="node32.html">Introduction</A>
+ &nbsp <B>  <A NAME="tex2html558"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION02320000000000000000">
+The <TT>DUPLICATE</TT> Action</A>
+</H1>
+
+<P>
+To understand how to use <TT>hsolve</TT> for network simulations,
+remember for a moment how <TT>hsolve</TT> examines the model it has to
+compute:
+
+<P>
+
+<OL>
+<LI>First during the <TT>SETUP</TT> action, <TT>hsolve</TT> examines the
+  structure of the model and stores parameters that describe it.
+</LI>
+<LI>Second during a <TT>RESET</TT>, <TT>hsolve</TT> stores
+  recalculated quantitative values in its private data structures.
+</LI>
+</OL>
+
+<P>
+With the <TT>DUPLICATE</TT> action it is possible to have multiple
+<TT>hsolve</TT> elements share the structure between identical neurons
+(neurons with an identical morphology, number of channels etc.  The
+descriptive quantitative aspects like reversal potential of channels
+may differ between these neurons).
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+To use <TT>hsolve</TT> for a population of resembling cells, you have
+to:
+
+<P>
+
+<OL>
+<LI>create and use <TT>SETUP</TT> to have <TT>hsolve</TT> examine
+  the structure of the first cell.
+</LI>
+<LI>create an <TT>hsolve</TT> element for every other cell in the
+  population.  This is not done with a regular <TT>create</TT>
+  command, but by calling the <TT>DUPLICATE</TT> action on the
+  <TT>solver</TT> element for the first cell, to have the new
+  <TT>hsolve</TT> element share some of its internal data structures
+  with the first <TT>hsolve</TT> element.  The syntax for the
+  <TT>DUPLICATE</TT> action is:
+<PRE>
+    genesis &gt; call hsolve1 DUPLICATE hsolve2 &lt;path&gt;
+</PRE>
+  The <TT>&lt;path&gt;</TT> argument points to the compartments to be
+  computed by the <TT>hsolve</TT> about to be created and is (as
+  always) a wild card specification that will be expanded relative to
+  the <TT>hsolve</TT> element.
+</LI>
+<LI>call the <TT>RESET</TT> action on <I>every</I> <TT>hsolve</TT>
+  element.  This is most conveniently done with the <TT>reset</TT>
+  command.
+</LI>
+</OL>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<TABLE  WIDTH="635">
+<TR><TD>
+  <FONT SIZE="-1"><B>NOTE:</B> Never use the <TT>-hsolve</TT> option for
+    <TT>readcell</TT> for cells that you want to duplicate.  The
+    layout of the cells when using e.g. <TT>createmap</TT> assumes
+    that all cells reside in <TT>neutral</TT> elements.  Such commands
+    do not take special precautions when copying <TT>hsolve</TT>
+    elements.  The net result is that you are not allowed to use the
+    <TT>DUPLICATE</TT> action on <TT>hsolve</TT> elements created by
+    the <TT>-hsolve</TT> option of the <TT>readcell</TT>.
+</FONT></TD></TR>
+</TABLE>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+Let us examine an example:
+
+<P>
+<PRE>
+    genesis &gt; include ht_granule_compartments.g
+    genesis &gt; granule_make_compartments
+    genesis &gt; setclock 0 0.000010
+    genesis &gt; readcell granule.p /granule
+    genesis &gt; createmap \
+    genesis &gt;         /granule /granule_cell_layer 5 1 \
+    genesis &gt;         -delta 1e-4 7.5e-5 -origin 5e-5 3.75e-5
+    genesis &gt; ce /granule_cell_layer/granule[0]
+    genesis &gt; create hsolve solver
+    genesis &gt; setmethod granule 11
+    genesis &gt; setfield solver chanmode 4 path "../[][TYPE=compartment]"
+    genesis &gt; call solver SETUP
+    genesis &gt; int i
+    genesis &gt; for (i = 1 ; i &lt; 5 ; i = i + 1)
+    genesis &gt;         call solver DUPLICATE \
+    genesis &gt;                 /granule_cell_layer/granule[{i}]/solver \
+    genesis &gt;                 ../##[][TYPE=compartment]
+    genesis &gt; end
+    genesis &gt; reset
+</PRE>
+
+<P>
+As already noted, we do not use the <TT>-hsolve</TT> option for
+<TT>readcell</TT> here.  After creating a grid of cells, we manually
+create an <TT>hsolve</TT> element for the first cell in the grid and
+initialize it with <TT>SETUP</TT> after proper configuration.  Then
+comes a small for-loop that walks over the remaining cells of the
+population and calls the <TT>DUPLICATE</TT> action for each cell.
+Note that the wild card specification that points to the compartments
+to be computed is - as usual - relative to the <TT>hsolve</TT>
+element that will do the wild card expansion, it is not relative the
+current working element or the original <TT>hsolve</TT> element (that
+was initialized with <TT>SETUP</TT>).  At this point we have a
+correctly initialized set of <TT>hsolve</TT> elements regarding
+structure.  Finally we still have to initialize all data structures
+with the computed values, that is done with the '<TT>reset</TT>'
+command.
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+Although almost complete, there is still one caveat in this example
+that becomes clear if we inspect the simulation schedule:
+
+<P>
+<PRE>
+    genesis &gt; showsched
+
+    WORKING SIMULATION SCHEDULE
+
+    [1] Simulate    /##[CLASS=segment]      -action INIT    
+    [2] Simulate    /##[CLASS=segment][CLASS!=membrane][CLASS!=gate] \
+        [CLASS!=concentration][CLASS!=concbuffer]       -action PROCESS 
+    [3] Simulate    /##[CLASS=membrane]     -action PROCESS 
+    [4] Simulate    /##[CLASS=hsolver]      -action PROCESS 
+    [5] Simulate    /##[CLASS=concentration]        -action PROCESS
+</PRE>
+
+<P>
+As apparent from the simulation schedule, some compartment(s) and
+channel(s) are still scheduled to compute their internal state.
+Requesting a list of elements at the top of the element hierarchy
+makes all clear:
+
+<P>
+<PRE>
+    genesis &gt; le /
+    *proto
+    output                                  
+    *library/
+    granule/                               
+    granule_cell_layer/
+</PRE>
+
+<P>
+The original cell that was used to create the grid of cells in the
+population is still scheduled for simulation (indicated by the lacking
+asterisk '*').  Disabling it, solves the situation, only
+<TT>hsolve</TT> will be scheduled for computations.  It is necessary
+to do <TT>reset</TT> again such that Genesis recomputes the simulation
+schedule.  If the <TT>disable</TT> command is put at an appropriate
+place in the script, only one <TT>reset</TT> is necessary of course.
+
+<P>
+<PRE>
+    genesis &gt; disable /granule
+    OK
+    genesis &gt; reset
+    genesis &gt; le /
+    *proto
+    output                                  
+    *library/
+    *granule/                               
+    granule_cell_layer/                     
+    genesis &gt; showsched
+    WORKING SIMULATION SCHEDULE
+    [1] Simulate        /##[CLASS=hsolver]      -action PROCESS
+</PRE>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<TABLE  WIDTH="635">
+<TR><TD>
+  <FONT SIZE="-1"><B>NOTE:</B> The way to setup input or output for
+    <TT>hsolve</TT> that has been created with a <TT>DUPLICATE</TT> is
+    not the same as for <TT>hsolve</TT> elements that have been
+    created with <TT>SETUP</TT>.  Only with the
+    <TT>findsolvefield</TT> command you will be able to access
+    computed fields.  Messages created before the <TT>DUPLICATE</TT>
+    action are ignored.  (also take a look at the exercises for
+    networks)
+</FONT></TD></TR>
+</TABLE>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html559"
+  HREF="node34.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html555"
+  HREF="node31.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html551"
+  HREF="node32.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html557"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html560"
+  HREF="node34.html">Exercises</A>
+<B> Up:</B> <A NAME="tex2html556"
+  HREF="node31.html">Networks of Cells</A>
+<B> Previous:</B> <A NAME="tex2html552"
+  HREF="node32.html">Introduction</A>
+ &nbsp <B>  <A NAME="tex2html558"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+
+2002-11-15
+</ADDRESS>
+</BODY>
+</HTML>

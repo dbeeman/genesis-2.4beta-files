@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<HTML>
+<HEAD><title>Making realistic neural compartments</title>
+<META NAME="generator" CONTENT="txt2html v1.21">
+</HEAD><title>Making realistic neural compartments</title>
+<BODY BGCOLOR="#ffffff" TEXT="#000000">
+Next: <A HREF="simplecell-tut.html">Building a cell the easy way</A>
+Previous: <A HREF="tutorial1.html">A Basic Tutorial on GENESIS</A>
+Up: <A HREF="genprog.html">Table of Contents</A>
+<HR>
+
+<h2>Making realistic neural compartments</h2>
+
+<P>
+The soma compartment that was simulated in the
+<a href="textScripts/tutorials/tutorial1.g.txt">tutorial1.g</a> script
+corresponds to the <a href="images/compt.gif">"generic neural
+compartment" diagram</a> but without the variable ionic conductances
+G<sub>k</sub> that we will add later.  As it is a single isolated
+compartment, we didn't make use of the axial resistance R<sub>a</sub>.  The
+diagram reveals that the current I<sub>inject</sub> flows through
+R<sub>m</sub> to create a potential difference that is in series with
+E<sub>m</sub>.  The simulation results show that initially, V<sub>m</sub>
+will equal E<sub>m</sub>, and the steady state will be reached after a time
+given roughly by the time constant for charging the membrane capacitance,
+R<sub>m</sub>C<sub>m</sub>.  With the values used, the time constant was
+20.
+
+<P>
+A lot of the simplicity of the script stems from the fact that the numbers
+used in the simulation worked well with the default values of the graph
+axis scales and the default integration step size used by GENESIS to
+integrate the equation for the compartment V<sub>m</sub>.  In order to make
+a realistic soma compartment that we can then link to dendrite compartments
+and populate with ion channels, we will need to pick appropriate values for
+the passive cell parameters R<sub>m</sub>, R<sub>a</sub>, C<sub>m</sub>,
+and the membrane resting potential E<sub>m</sub>.
+
+<P> So far, we haven't said much about the units used to express the
+quantities R<sub>m</sub>, R<sub>a</sub>, C<sub>m</sub>, V<sub>m</sub>, etc.
+that appear in the <a href="images/compt.gif">neural compartment
+diagram</a> and the <a href="images/compteqn.gif"> differential equation
+for V<sub>m</sub></a>.
+
+<P>
+Physicists and engineers like to use SI (MKS) units of ohms, farads, volts,
+and meters for describing resistance, capacitance, voltage, and length.
+Neurophysiologists are more likely to prefer kilohms, microfarads,
+millivolts, and either centimeters or micrometers.  One can use any
+consistent set of units with GENESIS, but it is most common to use SI
+units.
+
+<P>
+The problem with using any of these units for resistance and capacitance is
+that R<sub>m</sub>, C<sub>m</sub>, and R<sub>a</sub> will depend on the
+dimensions of the section of dendrite that is represented by the neural
+compartment.  In order to specify parameters that are independent of the cell
+dimensions, <i>specific units</i> are used.  For a cylindrical compartment, the
+membrane resistance is inversely proportional to the area of the cylinder, so
+we define a <i>specific membrane resistance</i> R<sub>M</sub>, which has
+units of <i>ohms&middot;m&sup2;</i>.  The membrane capacitance is proportional
+to the area, so it is expressed in terms of a <i>specific membrane
+capacitance</i> C<sub>M</sub>, with units of <i>farads</i>/<i>m&sup2;</i>.
+Compartments are connected to each other through their axial resistances
+R<sub>a</sub>.  The axial resistance of a cylindrical compartment is
+proportional to its length and inversely proportional to its cross-sectional
+area.  Therefore, we define the <i>specific axial resistance</i> R<sub>A</sub>
+to have units of <i>ohms&middot;m</i>.
+
+<P>
+For a piece of dendrite or a compartment of length <i>l</i> and diameter
+<i>d</i> we then have
+<P>
+<DIV ALIGN="CENTER">
+<IMG
+ WIDTH="315" HEIGHT="46" BORDER="0"
+ SRC="images/cableeqn1.gif"
+ ALT="\begin{displaymath}R_{m} = \frac{R_M}{\pi l d},\; C_{m} = \pi l d C_M,\;
+R_{a}= \frac{4 l R_A}{\pi d^{2}}.
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+
+<P>
+Note the membrane time constant R<sub>m</sub>&middot;C<sub>m</sub>
+is also equal to R<sub>M</sub>&middot;C<sub>M</sub>, so that it
+is independent of the dimensions of the membrane.
+
+<P>
+WARNING: Many treatments of the passive properties of neural tissue use
+the symbols R<sub>m</sub>, R<sub>a</sub>, and C<sub>m</sub>
+for the specific resistances and capacitance,
+instead of this notation with R<sub>M</sub>, R<sub>A</sub>, and C<sub>M</sub>.
+Also, many textbooks and journal papers define the resistance and capacitance
+in terms of that for a unit length of cable having a specified diameter, where
+
+<P ALIGN=CENTER><i>  R<sub>m</sub> = r<sub>m</sub>/l, C<sub>m</sub> =
+c<sub>m</sub>l, R<sub>a</sub> = r<sub>a</sub>l</i>.
+
+<P>
+Although this notation is convenient and widely used, it obscures the fact
+that r<sub>m</sub> and r<sub>a</sub> depend on the dendrite diameter.  In your
+reading, you should be aware of the units that are being used.
+
+<P>
+You can read more about passive properties of dendrites in the
+Digression on Cable Theory from the
+<A HREF="../cnslecs/cnslecs.html">Introduction to Computational
+Neuroscience</A> lectures.
+
+<P>
+Our goal is to build a cylindrical soma compartment that has the same
+physiological properties as those of the squid giant axon studied by
+Hodgkin and Huxley, and simulated in the GENESIS "squid" tutorial in
+<i>genesis/Scripts/squid</i>.  So, we will use these values (in SI units)
+for the compartment parameters.  However, we will make our soma smaller,
+with both the length and diameter equal to 30 micrometers.
+
+<P>
+We will also need to choose an appropriate time step for the numerical
+solution of the equation for V<sub>m</sub>.  With the values of
+R<sub></sub> and C<i>M</i> that we will use (R<sub>M</sub> = 0.33333 and
+C<sub>M</sub> = 0.01), the membrane time constant will be 0.003333 seconds.
+We would then expect our integration time step to be a small fraction of
+this.  In practice, it turns out that 50 microseconds (0.00005 sec) will be
+a good value.
+
+<P>
+You can (and should, at some point) read the section in the
+<A HREF="../Hyperdoc/Manual.html">GENESIS Reference Manual</A> on Clocks
+for further suggestions on choosing a time step.  The documentation for the
+commands <a href="textDoc/setclock.doc.txt">setclock</a> and <a
+href="textDoc/useclock.doc.txt">useclock</a> gives the details of setting
+the time step.
+
+<P>
+Chapter 13 of the <A HREF="../iBoGpdf/index.html">BoG</A> leads the reader
+through the process of developing the script <i>tutorial2.g</i>.  If you like,
+you can run this this script from the <i>genesis/Scripts/tutorials</i>
+directory.  You should now examine <A
+HREF="textScripts/tutorials/tutorial2.g.txt">tutorial2.g</A>.
+
+<P>
+There are several features of the GENESIS script language that are
+introduced here:
+
+<UL>
+  <LI> The use of a C-style multiline comment, extending from the second
+through fourth line.
+
+<P>
+  <LI> Declaration of variables to be used.  In this script only floating
+point variables (float) are used, but "int" and "str" are also allowed.
+The declaration and use of variables is explained in the
+<A HREF="../Hyperdoc/Manual.html">GENESIS Reference Manual</A> 
+section on Variables.
+
+<P>
+  <LI> The line "<tt>setclock 0 {dt}</tt>" sets the global simulation clock
+(clock 0) to the specified time step, <tt>dt</tt>.  Note the use of curly
+brackets around the variable name <tt>dt</tt>.  Usually, the value of a
+variable or an expression must be evaluated by enclosing it in curly
+brackets in order to distinguish between the value represented by the
+character string (0.00005) and the actual string of characters
+"<tt>dt</tt>".  This is particularly true when the expression is to be
+evaluated as an argument of a GENESIS command or script language function.
+
+<P>
+  <LI> The use of function declarations for <i>makecompartment</i> and
+<i>make_Vmgraph</i>, and their use in the "Main Script" section.
+GENESIS script language functions are described in the
+<A HREF="../Hyperdoc/Manual.html">GENESIS Reference Manual</A>
+section on Functions.
+<P>
+  <LI> The use of a backslash to continue a line in the long <i>setfield</i>
+command in the <i>makecompartment</i> function.
+
+<P>
+  <LI> Setting the graph scales, and the use of "^" to denote the element last
+referenced (in this example, <i>/data/voltage</i>).
+
+<P>
+  <LI> The use of the "-time" option for the step command with the RUN
+  button, to give the amount of time to run the simulation, rather than the
+  number of steps.  (See the documentation for <a
+  href="textDoc/step.doc.txt">step</a>.)
+</UL>
+
+<HR>
+Next: <A HREF="simplecell-tut.html">Building a cell the easy way</A>
+Previous: <A HREF="tutorial1.html">A Basic Tutorial on GENESIS</A>
+Up: <A HREF="genprog.html">Table of Contents</A>
+
+</BODY>
+</HTML>

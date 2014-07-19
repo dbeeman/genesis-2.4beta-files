@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<HTML>
+<HEAD><title>Getting started with GENESIS programming</title>
+</HEAD>
+<BODY BGCOLOR="#ffffff" TEXT="#000000">
+
+<P>
+Next: <A HREF="tutorial1.html">A Basic Tutorial on GENESIS</A> 
+Previous: <A HREF="intro.html">Introduction</A>
+Up: <A HREF="genprog.html">Table of Contents</A>
+<HR>
+
+<H1>Getting started with GENESIS programming</H1>
+
+<P>
+The building blocks used to create simulations under GENESIS are referred to
+as "elements".  Elements are created from templates called "objects".  This
+terminology can be somewhat confusing, because a GENESIS object is similar to
+what object-oriented languages such as Java or C++ call a "class", and a
+GENESIS element corresponds to an "object" in these languages.  In GENESIS,
+elements are created as instantiations of a particular object.
+
+<P>
+Simulations are constructed from these modules that receive inputs, perform
+calculations on them, and then generate outputs. Model neurons are constructed
+from these basic components, such as compartments. and variable conductance
+ion channels.
+
+<P>
+The various elements in a GENESIS simulation are organized in a tree like
+the one shown below, and are referenced with a notation similar to that
+used in UNIX directory trees.  Thus, "<tt>/net/cell[1]/dend[2]/GABA</tt>" might
+refer to an inhibitory synaptically activated conductance residing in
+the dendrite compartment 2 of cell 1 of a network.
+
+<P ALIGN=CENTER><img src="images/tree3.gif">
+
+<P>
+These objects communicate by passing messages to each other, and each
+contain the knowledge of their own variables (fields) and the methods
+(actions) that they use to perform their duties during a simulation.
+For example, during a simulation step, the PROCESS action will be carried
+for each type of object in its own way.  If it is a voltage activated
+channel, this means carrying out a step in the numerical solution of the
+Hodgkin-Huxley equations for the conductance.  If it is a graph object,
+this would mean plotting a point with data from any messages that it
+receives from other objects.
+
+<H2>GENESIS Scripting Example</H2>
+
+<P>
+The use of the GENESIS scripting language can best be illustrated with a simple
+example like the script from <i>genesis/Scripts/tutorials/tutorial1.g</i>:
+
+<pre>
+//genesis script for a simple compartment simulation (Tutorial #1)
+
+// create a parent element
+create neutral /cell
+
+// create an instance of the compartment object
+create compartment /cell/soma
+
+// set some internal fields
+setfield /cell/soma Rm 10 Cm 2 Em 25 inject 5
+
+// create and display a graph inside a form
+create xform /data
+create xgraph /data/voltage
+xshow /data
+
+// set up a message (PLOT Vm) to the graph
+addmsg /cell/soma /data/voltage PLOT Vm *volts *red
+addmsg /cell/soma /data/voltage PLOT inject *current *blue
+
+// make some buttons to execute simulation commands
+create xbutton /data/RESET -script reset
+create xbutton /data/RUN -script "step 100"
+create xbutton /data/QUIT -script quit
+
+check       // perform a consistency check for each element
+reset       // initialize each element before starting the simulation
+</pre>
+
+<P>
+This would produce the display:
+
+<P ALIGN=CENTER><img src="images/samplesim.gif"> 
+
+<P> Unless you have some previous experience with GENESIS (or are very
+impatient), you should quickly run through the updated web version of Matt
+Wilson's original <A HREF="tutorial1.html">Basic tutorial on using
+GENESIS</A>.  This gives an introduction to the most common GENESIS commands
+for creating, interacting with, and debugging GENESIS simulations on the
+command line, and leads you through the steps of creating the
+<i>tutorial1.g</i> script.  (This tutorial was later expanded to become
+Chapter 12 of the <A HREF="../iBoGpdf/index.html">BoG</A>.)
+
+<HR>
+Next: <A HREF="tutorial1.html">A Basic Tutorial on GENESIS</A> 
+Previous: <A HREF="intro.html">Introduction</A>
+Up: <A HREF="genprog.html">Table of Contents</A>
+
+</BODY>
+</HTML>

@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002 (1.62) JA patch-1.4
+patched version by:  Kenshi Muto, Debian Project.
+LaTeX2HTML 2002 (1.62),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Solution of Conductance Equations.</TITLE>
+<META NAME="description" CONTENT="Solution of Conductance Equations.">
+<META NAME="keywords" CONTENT="tutorial2">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002 JA patch-1.4">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutorial2.css">
+
+<LINK REL="previous" HREF="node57.html">
+<LINK REL="up" HREF="node56.html">
+<LINK REL="next" HREF="node59.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html889"
+  HREF="node59.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html885"
+  HREF="node56.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html881"
+  HREF="node57.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html887"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html890"
+  HREF="node59.html">Bibliography</A>
+<B> Up:</B> <A NAME="tex2html886"
+  HREF="node56.html">Hsolve as a Virtual</A>
+<B> Previous:</B> <A NAME="tex2html882"
+  HREF="node57.html">Solution of The Cable</A>
+ &nbsp <B>  <A NAME="tex2html888"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION04222000000000000000">
+Solution of Conductance Equations.</A>
+</H2>
+
+<P>
+The solution of conductance equations is done by looping over the
+byte-code in an array called <TT>ops</TT>.  The number of entries in
+this array can be found by inspecting the field <TT>nops</TT>:
+
+<P>
+<PRE>
+    genesis &gt; showfield solve nops
+    [ /Purkinje/solve ]
+    nops                 = 127132
+</PRE>
+
+<P>
+The byte-code in the <TT>ops</TT> array walks over the conductance
+equations for all compartments.  For the purposes of efficiency, the
+conductance equations are grouped per compartment and these groups are
+put in the same order as the compartments in the <TT>funcs</TT> array.
+Every time a new group is encountered, the next membrane potential is
+fetched from the <TT>vm</TT> array.  The groups are separated with
+<TT>COMPT_OP</TT> operations (and sometimes other operations with a
+resembling name).  Disassembling the opcodes gives something like the
+following output:
+
+<P>
+<PRE>
+    genesis &gt; printops solve 0 25
+    00000 :: 101                        FCOMPT_OP
+    00001 :: 3001                       CHAN_EK_OP
+    00002 :: 4101    0   -1   1   0     SYN3_OP    0   -1   1   0
+    00007 :: 100                        COMPT_OP
+    00008 :: 100                        COMPT_OP
+    00009 :: 5100                       NEWVOLT_OP
+    00010 :: 3001                       CHAN_EK_OP
+    00011 :: 4001    4    1             IPOL1V_OP    4    1
+    00014 :: 3200                       ADD_CURR_OP
+    00015 :: 1000    0                  CONC_VAL_OP    0
+    00017 :: 5110                       NEWCONC1_OP
+    00018 :: 3000                       CHAN_OP
+    00019 :: 4001    6    1             IPOL1V_OP    6    1
+    00022 :: 4002    0    2             IPOL1C_OP    0    2
+    00025 :: 3200                       ADD_CURR_OP
+</PRE>
+
+<P>
+The first opcode <TT>FCOMPT_OP</TT> simply loads the first membrane
+potential from the <TT>vm</TT> array.  Then we encounter a compartment
+that contains a single synaptic channel (<TT>SYN3_OP</TT> opcode).
+Then we encounter two consecutive <TT>COMPT_OP</TT> opcodes,
+indicating the presence of a passive compartment : if you inspect
+the Purkinje cell tutorial, you see that there are lots of spines
+consisting of a spine head that contains a synaptic channel and a
+spine neck that is a passive compartment.  The way hines numbering is
+implemented in <TT>hsolve</TT> forces the computations for the
+dendritic tips to be done first.  In the Purkinje cell tutorial all
+dendritic tips are spines which explains why we encounter a
+compartment with a single synaptic channel followed by a passive
+compartment.
+
+<P>
+Next we encounter a <TT>NEWVOLT_OP</TT>.  This operation loads a
+pointer to a table that contains an entry for each tabulated channel
+type in the model and that corresponds to the membrane potential of
+the current compartment.  The <TT>CHAN_EK_OP</TT> loads the maximal
+conductance and the reversal potential (that come from the current
+entries in the <TT>chip</TT> array).  Then the <TT>IPOL1V_OP</TT>
+computes a gate factor from a one-dimensional table (the table type is
+<IMG
+ WIDTH="12" HEIGHT="13" ALIGN="BOTTOM" BORDER="0"
+ SRC="img67.png"
+ ALT="$ 4$">, the exponent is <IMG
+ WIDTH="12" HEIGHT="13" ALIGN="BOTTOM" BORDER="0"
+ SRC="img11.png"
+ ALT="$ 1$">).  The next operation, <TT>ADD_CURR_OP</TT>,
+computes the current contribution for the channel.  After this we see
+opcodes encoding an analog scenario for a concentration dependent
+conductance.
+
+<P>
+<BR>
+<BR>
+The emulation of this byte-code is done in the source file
+<TT>hines_chip.c</TT>.
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<TABLE  WIDTH="635">
+<TR><TD>
+  <FONT SIZE="-1"><B>NOTE:</B> The <TT>printfuncs</TT> and
+    <TT>printops</TT> commands are not available in release 2.2 of
+    Genesis.
+</FONT></TD></TR>
+</TABLE>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+
+<P>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html889"
+  HREF="node59.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html885"
+  HREF="node56.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html881"
+  HREF="node57.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html887"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html890"
+  HREF="node59.html">Bibliography</A>
+<B> Up:</B> <A NAME="tex2html886"
+  HREF="node56.html">Hsolve as a Virtual</A>
+<B> Previous:</B> <A NAME="tex2html882"
+  HREF="node57.html">Solution of The Cable</A>
+ &nbsp <B>  <A NAME="tex2html888"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+
+2002-11-15
+</ADDRESS>
+</BODY>
+</HTML>

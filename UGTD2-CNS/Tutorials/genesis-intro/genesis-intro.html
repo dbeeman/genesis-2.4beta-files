@@ -1,0 +1,1046 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>Introduction to GENESIS</TITLE>
+<META NAME="generator" CONTENT="txt2html v1.25">
+</HEAD>
+<BODY BGCOLOR="#ffffff" TEXT="#000000">
+ 
+<HR>
+<P>
+<A HREF="../index.html"><img align=top src="back2.gif"> Back to the main
+index</A>
+<P>
+<HR>
+<p align=center><IMG SRC="tutfigs/genesis5.gif">
+
+<P>
+
+<center>
+<H1>Introduction to Realistic Neural Modeling with GENESIS</H1>
+
+<p>
+<i>David Beeman, University of Colorado, Boulder</i>
+</center>
+
+<p>
+
+This document is an expanded version of various presentations on the use of
+GENESIS for realistic neural modeling given at GENESIS users meetings (GUM
+2002, WAM-BAMM 2005 and 2006), the EU Advanced Course on Computational
+Neuroscience, the Latin American School on Computational Neuroscience
+(LASCON 2006 and 2008), and the Frankfurt Institute of Advanced
+Studies (FIAS 2006) summer school on theoretical neuroscience and
+complex systems. The papers referenced below are listed in the
+<A HREF="references.html">list of References</A>.
+<p>
+
+<H2>Part I - Modeling the Brain: Simplified vs. Realistic Models
+</H2>
+<P>
+
+When choosing which software to use for neural modeling, it is important
+to decide on the level of detail that the conceptual model requires, and to
+then choose the most appropriate tool for the job.
+
+<P>
+
+GENESIS (the GEneral NEural SImulation System) was designed as an
+extensible general simulation system for the realistic modeling of neural
+and biological systems, based on the known anatomical and physiological
+organization of neurons, circuits and networks (Bower, 1995). Thus, single
+cell models in GENESIS usually include dendritic morphology and a variety
+of ionic conductances, whereas realistic network models attempt to
+duplicate known efferent and afferent projection patterns.  Although
+GENESIS can be extended to model more abstract networks, other simulators
+are more suitable for connectionist modeling and simplied
+integrate-and-fire models.
+
+<P>
+
+The GENESIS tutorials in this package emphasize biologically realistic
+cell and network models.  Other GENESIS tutorials
+(e.g. <A HREF="../advanced-tutorials/blackwell/index.html">Blackwell, 2005</A>)
+show how to use GENESIS at the subcellular level to realistically model
+calcium transport and biochemical reactions.
+<P>
+
+But, there are many reasons why one should NOT make
+realistic neural simulations. We should at least be aware of them. The
+usual excuses are:
+
+<P>
+The human brain is large and complex, with
+    <UL>
+    <LI>about 20 x 10<SUP>9</SUP> neocortical neurons
+    <LI>and 200 x 10<SUP>12</SUP> synapses.
+    <LI>There are about 100 x 10<SUP>9</SUP> neurons in the CNS.
+    <LI>Neurons have specialized and complex dendritic structures.
+    <LI>A cortical neuron has many types of ionic conductances.
+    <LI>The "wiring diagram" is highly specialized and detailed.
+    <LI>Computers are too slow to model cortical areas at a high level
+     of detail.
+    </UL>
+
+The usual "solutions" to this situation include:
+ <UL>
+    <LI>High-level systems models that ignore individual neurons entirely,
+and represent functionally identified areas in the brain as "black boxes"
+that take certain inputs and produce appropriate outputs.
+
+    <LI>Artificial neural networks (e.g. feedforward with backpropagation)
+    <LI>Simple networks of integrate-and-fire "neurons"
+</UL>
+
+<P> The review by Brette et al. (2007) desacribes many good simulators for
+integrate-and-fire and other simplified neural models.  For a brief summary
+of abstract neural modeling techniques and their limitations, see the <A
+HREF="simple-models.html">Summary of methods used for simplified neuronal
+models</A>.
+
+<P>
+
+But there are also some good reasons to face this challenge.  Jim Bower has
+discussed the value of structurally realistic modeling and the modeling
+philosophy behind the GENESIS approach to modeling (Bower, 2005). You can
+also read his thoughts on choosing the level of detail to use in modeling
+in Chapter 11 of the <A HREF="../iBoGpdf/index.html">Book of GENESIS</A>. 
+
+<P>However, we can't model the brain down to every level of detail, so we
+have to decide what features are important for the types of computation
+that are performed by the brain.  With any sort of modeling of a
+complicated system, this question always comes up.  Someone once said that
+if we really wanted biological realism, then airplanes should have
+feathers.  Then, there is the story of the physicist who was going to model
+a race horse to predict the winner of a horse race.  ("First, let us assume
+a spherical horse ...")  We don't want our model to be either an airplane with feathers
+or a spherical horse. The decision to leave out certain details should
+be an informed one, and not based on ignorance of the details.
+
+<P>
+Some good reasons to consider structurally realistic modeling are:
+<P>
+
+<UL>
+<LI>It is better to put the details in first, then and then simplify
+after you understand which details are important.
+<P>
+<LI>Bad simple models can often fit experiment well, and are not a
+    good way to test a hypothesis.
+<P>
+<LI>There is a symbiotic relationship between modeling and experiments -
+modeling requires good data, and can provide direction for experiments.
+<P>
+<LI>Hard problems need many different approaches.
+<P>
+<LI>Many good single cell models are available for use in networks.
+<P>
+<LI>Computers are getting faster and more parallel.
+</UL>
+
+<P>
+The original 1989 GENESIS olfactory cortex simulation
+had 4500 neurons and ran on a 0.02 GHz Sun 3.
+More recent models, such as a 18,500 cell neocortex model with six
+varieties of multicompartmental cells (Herald et al. 2005; van Drongelen et
+al. 2006) use the extension of GENESIS for parallel computers (PGENESIS) to
+run on systems ranging from Personal Computers (PCs) with multicore
+processors and clusters of workstations to supercomputers such as the
+BlueGene/L.  Now, the widespread availability of inexpensive mass-market
+"Extreme Gaming" PCs with quad core processors makes it posssible for
+modelers with a limited budget to model very large networks using PGENESIS
+without needing access to a parallel supercomputer.  Models of moderate
+size, such as the 918 neuron model of turtle visual cortex (Nenadic, et al.
+2003) are routinely run with GENESIS on slow single processor PCs.  The
+prospects for modeling very large networks will continue to improve as the
+available hardware gets faster and more parallel.
+
+<P>
+If we plunge ahead and strive for maximal biological realism, here
+are some of the challenges that we face:
+
+<P>
+There are a large variety of neurons that have shapes (morphology)
+and behavior that are specific to their function in the network.  Here
+are some types of neurons found in  visual cortex;
+
+<p align=center><img src="tutfigs/cortical_cells4.gif">
+<P>
+<center><b>
+(A) pyramidal, (B) spiny stellate, (C) bi-tufted, (D) double bouquet,
+(E) small basket, (F) large basket, (G) chandelier
+</b></center>
+
+<P>
+There are many varieties of spiking patterns in cortical neurons, such as
+these observed by Nowak, et al. (2003).
+
+<p align=center><img src="tutfigs/cortical_spikes2.gif">
+
+<P>
+Even a "simplified" neocortical wiring diagram, such as this one redrawn
+from Shepherd (2004) is very complex with
+detailed and specific patterns of connections for each type of neuron.
+
+<p align=center><img src="tutfigs/cortical_net3c.gif">
+<P>
+<center><b>
+Excitatory spiny neurons and connections are red; GABAergic are blue.<BR>
+</b>
+<P>
+</center>
+
+<H2>Part II - Brief Overview of Realistic Neural Modeling Techniques</H2>
+<P>If you are familiar with this material, you may
+<A HREF = "#section-1">skip to the next section on Modeling with
+GENESIS</A>.
+
+<p>
+How do we use GENESIS, NEURON, or other simulation software to make a
+detailed realistic simulation of real neuron like this hippocampal
+pyramidal cell, or a network composed of them?
+<p>
+
+<P ALIGN=CENTER><img src="tutfigs/ca3small.gif"> 
+
+
+<p>
+As you can see, it doesn't look much like the ones you see in
+treatments of artificial neural networks, where you have a little
+circle with a summation sign inside.  There are extensive trees of
+dendrites with the apical dendrites at the top, and basal dendrites at
+the bottom.  Other neurons make synaptic connnections at various
+points on this structure, and release neurotransmitters that open
+channels, allowing ions to flow in or out of the cell,
+resulting in the production of post-synaptic potentials.  It
+turns out that these dendrites play an important role in the
+processing of information by the cell.  The pyramid shaped cell body,
+or soma, contains voltage activated sodium and potassium channels
+somewhat similar to those studied by Hodgkin and Huxley in the giant
+axon of the squid.  Post-synaptic potentials produced in the dendrites
+can propagate to the soma to trigger action potentials.
+Throughout the cell, we also have passive channels
+that remain partly open all the time, leading to a leakage
+resistance.  The insulating cell membrane separates the conductive
+cytoplasm inside the cell from the salt water environment outside,
+giving rise to a membrane capacitance.  As the cytoplasm has some
+resistance, we also have an axial resistance along the dendrites and
+axon (not visible in this picture).  To an electrical engineer or physicist,
+a section of dendrite acts like a leaky cylindrical capacitor, coupled to
+neighboring sections with resistances.
+
+<p>
+Taking this point of view, the answer to our question is - we model it piece
+by piece.  The usual approach is to model this with a lumped parameter model
+in which we divide the neuron into a finite number of compartments containing
+resistances, capacitances and batteries to represent ionic equilibrium
+potentials.  We model this complex neuron with something like this.
+
+<P ALIGN=CENTER><img src="tutfigs/compartments.gif">
+
+<p>
+As a contrast to this simple model with just a few compartments, here
+is a model of a Purkinje cell from the cerebellum made with GENESIS by
+De Schutter and Bower.  It has 4550 comparments and 8021 active
+conductances ("channels").  If you look closely, you can see that it
+is actually composed of many cylinders.
+
+<P ALIGN=CENTER><img src="tutfigs/purkcell.gif">
+
+<P> Why would one need to construct such a detailed model?  If the goal is to
+understand the way that individual neurons "compute", rather than to implement
+some abstract model of "neural computation", there is no way to avoid
+understanding the way that the dendritic structure processes its many inputs.
+After achieving this understanding with a structurally realistic model, it
+might be possible to produce a simpler "ball and stick" model that will
+function equivalently in a large network model.  If we ultimately want a
+simple, computationally efficient neuron model that can be used in simulations
+of very large neuronal networks, it is better to throw out details after
+proving that they aren't significant, rather than just hoping that we didn't
+omit something important at the outset.
+
+<p>
+Each of these compartments has an equivalent circuit.
+Here is a circuit diagram for a generic compartment.
+
+<P ALIGN=CENTER><img src="tutfigs/compt.gif">
+
+<p> V<sub>m</sub> represents the membrane potential at a point inside the
+compartment, relative to the "ground" symbol outside the cell.  The
+membrane capacitance C<sub>m</sub> can be charged or discharged as current
+flows into or out of the compartment, changing the value of V<sub>m</sub>.
+This current can come from adjacent compartments, from the passage of ions
+through ion channels, or from a current Iinject through a probe injected
+into the compartment.  Adjacent compartments have membrane potentials
+V<sub>m</sub>' and V<sub>m</sub>'', and the difference in potential across
+the axial resistances R<sub>a</sub> and R<sub>a</sub>' can cause current to
+enter or leave the compartment.  The "leakage resistance" R<sub>m</sub> and
+its associated equilibrium potential E<sub>m</sub> represent the passive
+channels, and the resistor with the arrow through it represents one of the
+possible variable conductances that are specific to a particular ion or
+combination of ions.  By convention, these are represented by a conductance
+G<sub>k</sub>, rather than a resistance, 1/G<sub>k</sub>.  Each one of
+these conductances has an associated equilibrium potential represented by
+the battery labeled E<sub>k</sub>.  The equilibrium potential (reversal
+potential) is the value of V<sub>m</sub> at which there is no net flow of
+the ion through the conductance.  Most neural simulation packages provide
+a way to calculate these from the Nernst equation.
+Typically, there will be several of
+these variable resistances, with different conductances and equilibrium
+potentials, corresponding to the different types of channels in the
+compartment.  For example, the area near the region of the soma called the
+"axon hillock" may contain voltage dependent sodium and potassium channels,
+and regions in the dendrites are likely to contain channels that are
+chemically activated from synaptic connections.  The index <i>k</i> is being
+used here to represent one of these various types of conductances.
+
+<P> Electrical circuit theory tells us that the rate of change of the voltage
+across a capacitor is proportional to the current that is applied to charge
+it.  For the circuit above, the differential equation to be solved by the
+simulation software is
+
+<p><img src="tutfigs/compteqn.gif">
+
+<p> Of course, the V<sub>m</sub>'' and V<sub>m</sub>' in the adjacent
+compartments affect the currents flowing into or out of the compartments,
+so we are solving many coupled equations in parallel.  Also, we will need good
+models for the way that the conductances G<sub>k</sub> vary with voltage, time
+or synaptic input.
+
+<H2>Building the Model</H2>
+<P> The process of building a biologically realistic compartmental model of a
+neuron, or a network of such neurons, involves three steps:
+
+<OL>
+
+<LI>Build a suitably realistic passive cell model, without the variable
+conductances.
+<P>
+<LI>Add voltage and/or calcium activated conductances.
+<P>
+<LI>Add synaptically activated conductances, and connect them to other cells in
+a network, or provide artificial inputs to simulate the <i>in-vivo</i>
+inputs to the neuron.
+<P>
+
+</OL>
+
+<P>These topics are dealt with in greater detail in the
+
+<A HREF="../advanced-tutorials/index.html">
+Advanced Tutorials</A> presentations on:
+<UL>
+
+<LI>Realistic Single Cell Modeling
+<P>
+
+<LI>Parameter Searching
+<P>
+
+<LI>Contructing large networks
+<P>
+
+<LI>Simulating in vivo-like synaptic input patterns in multicompartmental models
+<P>
+
+</UL>
+
+<p> You can find an overview of compartmental modeling and the Hodgkin-Huxley
+model in my <a href="../cnslecs/cnslecs.html">Introduction to Computational
+Neuroscience</a>.  For example, see the section on Cable Theory of Passive
+Propagation in Dendrites, and the review of the Hodgkin-Huxley model with
+its link to Further Details of the Hodgkin-Huxley Model.
+
+<A name="passive_cell"><H3>Constructing the passive cell</H3></A>
+
+<P>First, we need to determine the morphology of the dendritic structure
+to be used in our model and then to set the
+values of the passive parameters
+R<sub>m</sub>, C<sub>m</sub>, R<sub>a</sub>, and E<sub>m</sub> in
+the generic compartment diagram.
+
+<P>
+You will need to decide whether the situation requires an accurate
+morphological reconstruction, as in the case of the Purkinje cell model
+described above, or whether a simpler "ball and stick" model is sufficient.
+The entire process of constructing structurally realistic cell models is
+covered in the <A HREF="../advanced-tutorials/index.html">Advanced Tutorial</A>
+on Realistic Single Cell Modeling.
+
+<P>
+In either case, the model should display the same passive properties as the
+cell being modeled.  Typically, a negative (hyperpolarizing) current pulse is
+injected into the cell body.  This lowers the membrane potential to a value
+that will close the voltage-activated channels, eliminating the effect of
+the G<sub>k</sub> terms in the circuit equation and diagram.  Ohm's law then
+gives the input resistance of the cell R<sub>in</sub> as the change in
+V<sub>m</sub> divided by the amount of the current injection step.  As
+indicated in the figure, the exponential approach to the final V<sub>m</sub> value
+is given by a membrane time constant
+R<sub>in</sub>&middot;C<sub>m</sub>. This represents the time that it takes
+to charge up and to discharge the membrane capacitance, and will also
+affect the duration of a post-synaptic potential.
+
+
+<P ALIGN=CENTER><img src="tutfigs/characterized-neuron.gif">
+
+<P>
+For a simplistic single-compartment model of a cell, R<sub>m</sub> will
+equal R<sub>in</sub>.  For a multicompartmental model, it will depend on
+the  R<sub>m</sub> and  R<sub>a</sub> values for all the linked compartments.
+The problem is often simplified by assuming that all compartments have the
+same R<sub>m</sub> for a unit surface area, and the same R<sub>a</sub>
+per unit length.  Typically, C<sub>m</sub> is about 1 microfarad per square
+centimeter (0.01 F/m<sup>2</sup>) of membrane area.
+The measured membrane time constant provides another way
+to estimate these values.
+
+<P>
+A "ball and stick" model of a neuron might consist of a spherical soma
+compartment with the appropriate surface area of the actual cell soma,
+connected to a linear chain of cylindrical dendrite compartments.
+These are designed to provide a "collapsed dentritic tree" with the
+same passive properties of a much more detailed model made from a
+reconstruction of a measured cell morpholgy.
+
+<P>Then the model is divided into compartments linked together through
+the axial resistances.  The Digression on Cable Theory in the <A
+HREF="../cnslecs/cnslecs.html">Lectures on Computational Neuroscience</A>
+explains why it is customary to choose a compartment length that is less than
+5% of the dendrite <i>space constant</i>.
+
+<P ALIGN=CENTER><img src="tutfigs/compartmental-model.gif">
+
+<H3>Modeling active conductances</H3>
+
+<P>Most models of voltage or concentration dependent conductances are
+variations of the model developed by Hodgkin and Huxley to explain and
+describe the production of action potentials in the giant axon of the squid.
+For a detailed treatment of the Hodgkin-Huxley model, see Chapter 4 of the <A
+HREF="../iBoGpdf/index.html">Book of GENESIS</A>.  You can find a simpler
+review in the section on the Hodgkin-Huxley Model in the <A
+HREF="../cnslecs/cnslecs.html">Lectures on Computional Neuroscience</A>.  It is
+also worth reading the original paper (Hodgkin and Huxley 1952).
+<P>
+<font COLOR="#0000ff"><b>A brief review of the Hodgkin-Huxley model</b>
+</font>
+
+<p>The diagram below illustrates the ionic basis of the neuron membrane
+potential.
+
+<P ALIGN=CENTER><img src="tutfigs/ionflow.gif">
+
+<p> It is known that the concentration of sodium ions is greater outside the
+cell, so they have a tendency to enter.  The concentration of potassium ions
+is greater on the inside, so they tend to leave.  Metabolic processes within
+the cell called ionic pumps maintain this balance of concentrations. With this
+difference in ionic concentrations, the interior of the cell is polarized to a
+membrane potential of about 70 mV negative to the outside, when the cell is at
+rest.  Because of the higher exterior concentration of sodium, it has an
+equilibrium potential (reversal potential) of about 45 mV positive with
+respect to the cell, meaning that it will tend to enter the cell as long as
+the membrane potential is less than E<sub>Na</sub>.  Likewise, this
+competition betweem osmotic and electrostatic forces means that potassium will
+tend to leave unless the membrane potential falls below E<sub>K</sub>.
+
+<p> Hodgkin and Huxley quantitatively explained the process by which
+depolarization of the cell (an increase in V<sub>m</sub>) causes
+Na-selective channels to open, allowing Na ions to enter.  This raises the
+potential, further increasing the conduction of the Na channels, and causes
+the neuron to fire an action potential.  Eventually, the Na channels
+inactivate, and K-selective channels begin to open, causing a flow of charge
+out of the cell, ending the action potential.
+
+
+<P>
+The conductance of the squid axon potassium channel is proportional to
+the fourth power of the activation variable <i>n</i>.  The conductance of the
+sodium channel is proportional to the product of the third power of its
+activation variable <i>m</i> and an inactivation variable <i>h</i>, which
+decreases as the membrane potential increases.
+
+<P>
+<DIV ALIGN="CENTER"><FONT SIZE="+2">
+<IMG BORDER="0" SRC="tutfigs/HHeqns/img1.gif"> 
+<IMG BORDER="0" WIDTH="40" SRC="tutfigs/whitespace.gif"> 
+<IMG BORDER="0" SRC="tutfigs/HHeqns/img2.gif"></FONT></DIV>
+<P>
+The rate of change of the activation or inactivation variable is given
+by a differential equation similar to the one for <i>n</i>:
+
+<P>
+<DIV ALIGN="CENTER"><FONT SIZE="+2">
+<IMG  ALIGN="MIDDLE" BORDER="0"  SRC="tutfigs/HHeqns/img3.gif">
+</FONT></DIV>
+
+
+<P>
+The voltage dependent <i>rate parameters</i> <IMG WIDTH="26" HEIGHT="33"
+ALIGN="MIDDLE" BORDER="0" SRC="tutfigs/HHeqns/alpha_n.gif" ALT="$\alpha_n$">
+and <IMG WIDTH="24" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+SRC="tutfigs/HHeqns/beta_n.gif" ALT="$\beta_n$"> are related to the steady
+state value of the of the activation <IMG ALIGN=MIDDLE
+SRC="tutfigs/HHeqns/n_infinity.gif" WIDTH=21 HEIGHT=14> and its time constant
+for reaching this value <IMG WIDTH=14 HEIGHT=14 ALIGN=MIDDLE
+SRC="tutfigs/HHeqns/tau_n.gif"> by the equations
+
+<P>
+<DIV ALIGN="CENTER"><FONT SIZE="+2">
+<IMG BORDER="0"  SRC="tutfigs/HHeqns/img4.gif">
+<IMG BORDER="0" WIDTH="40" SRC="tutfigs/whitespace.gif">
+<IMG BORDER="0" SRC="tutfigs/HHeqns/img5.gif">
+</FONT></DIV>
+
+<P>
+These may be measured by voltage clamp experiments.  The plot below shows
+the steady state activation and inactivation variables <i>n</i>, <i>m</i>,
+and <i>h</i> and their time constants as a function of membrane potential.
+
+
+<P>
+<p align=center><img src="tutfigs/hhact.gif">
+
+
+<P>
+From this data, or from published results for other ionic conductances,
+one can fit the voltage dependence of the rate parameters.  The expressions
+obtained by Hodgkin and Huxley for the potassium conductance are:
+
+
+<P>
+<DIV ALIGN="CENTER"><FONT SIZE="+2">
+<IMG ALIGN="MIDDLE" BORDER="0"  SRC="tutfigs/HHeqns/img6.gif">
+</FONT></DIV>
+
+<P>
+<DIV ALIGN="CENTER"><FONT SIZE="+2">
+<IMG ALIGN="MIDDLE" BORDER="0" SRC="tutfigs/HHeqns/img7.gif">
+</FONT></DIV>
+
+<P>
+The simulator can then solve the differential equations for the activation
+variables and calculate the G<sub>k</sub> for each type of conductance
+<i>k</i>. Chapter 7 of the <A HREF="../iBoGpdf/index.html">
+Book of GENESIS</A> describes how
+this approach is used for the several other types of ionic conductances found
+in neurons, such as calcium conductances, calcium-activated potassium
+conductances, and inactivating potassium conductances.
+
+<H3>Providing synaptic connections</H3>
+
+<p>
+The variable conductance in the <a href="tutfigs/compt.gif">generic compartment
+diagram</a> could also represent a synaptically activated cconductance, usually
+in a dendritic compartment.
+
+<p align=center><img src="tutfigs/syncond.gif" WIDTH=483 HEIGHT=196>
+
+<p> This diagram shows a synapse with an action potential propagating to the
+pre-synaptic terminal, causing neurotransmitter release, and the resulting
+post-synaptic conductance change, G(t). Current flow through this conductance
+can lead to a post-synaptic potential (PSP).
+
+<p> There is a lot of biochemistry and molecular biology involved in this
+behavior, often involving complicated chains of reactions and 'second
+messengers'.  Fortunately, we can often use an empirical fit to the observed
+behavior, rather than modeling it in detail.
+
+<p>
+Typically, the conductance change from a quantum of neurotransmitter
+follows a linear rise and exponential decay, so it is often modeled
+with a so-called "alpha" function with a single time constant, tau.
+<p>
+
+<P>
+<DIV ALIGN="CENTER"><FONT SIZE="+2">
+<IMG  WIDTH="180" HEIGHT="44" ALIGN="MIDDLE" BORDER="0" SRC="tutfigs/alphafunc.gif">
+</FONT></DIV>
+
+<P>Sometimes, a dual exponential function will be used:
+<P>
+<DIV ALIGN="CENTER"><FONT SIZE="+2">
+<IMG WIDTH="247" HEIGHT="45" ALIGN="MIDDLE" BORDER="0"  SRC="tutfigs/dualexp.gif">
+ for
+<IMG  WIDTH="63" HEIGHT="36" ALIGN="MIDDLE" BORDER="0" SRC="tutfigs/tau1gttau2.gif">
+</FONT></DIV>
+
+<P>
+The current due to this conductance is I = G&middot;(E<sub>k</sub> - V<sub>m</sub>),
+which may be into or out of the cell, depending on the size of the ionic
+equilbrium potential E<sub>k</sub>, relative to the membrane potential.  Here
+we have adopted the convention that a positive current flows into the cell.
+Thus, if the E<sub>k</sub> is large (Na or Ca), the current will be into the
+cell, and it will be a depolarizing (excitatory) synapse.  If it is large and
+negative (E<sub>k</sub> < V<sub>m</sub>, as for potassium), it will be an
+inhibitory synapse.  So, we can use the same model for both types of synapses.
+
+<P> If we were interested in understanding the details of axonal propagation
+we could model an axon as a series of linked compartments containg
+Hodgkin-Huxley Na and K conductances.  We can model synaptic connections
+more efficiently if we treat an axon as just a delay line
+for the propagation of spike events that are triggered by action potentials
+and that last for a single time step.
+
+<P ALIGN=CENTER><img src="tutfigs/syn-connect.gif">
+
+
+<p> Hodgkin and Huxley used this general approach to model a single compartment
+representing a short piece of squid giant axon.  You could duplicate their
+model by writing a program in Pascal, C or FORTRAN to solve the equations
+given in their papers.  However, there are a lot of advantages to using a
+general purpose simulator such as GENESIS and a high level simulation
+language, rather than writing code in a computer language.
+
+
+<H2>Part III - Getting Started with Modeling Using GENESIS</H2>
+<H3><A NAME="section-1">Overview of GENESIS</A></H3>
+
+<P>
+The design of the GENESIS simulator and interface is based on a ``building
+block'' approach.  Simulations are constructed from modules that receive
+inputs, perform calculations on them, and then generate outputs.  Model
+neurons are constructed from these basic components, such as compartments.
+and variable conductance ion channels.  Compartments are linked to their
+channels and are then linked together to form multi-compartmental neurons
+of any desired level of complexity.  Neurons may be linked together to form
+neural circuits.  This object-oriented approach is central to the
+generality and flexibility of the system, as it allows modelers to easily
+exchange and reuse models or model components.  In addition, it makes it
+possible to extend the functionality of GENESIS by adding new commands or
+simulation components to the simulator, without having to modify the
+GENESIS base code.
+
+<P>
+GENESIS uses a high-level simulation language to construct neurons and
+their networks.  Commands may be issued
+either interactively to a command prompt, by use of simulation
+scripts, or through the graphical interface.  A particular simulation
+is set up by writing a sequence of commands in the scripting language
+that creates the network itself and the graphical interface for a
+particular simulation.  The scripting language and the modules are
+powerful enough that only a few lines of script are needed to specify a
+sophisticated simulation.  The principal components of the simulation
+system and the various modes of interacting with GENESIS are
+illustrated below.
+
+<P ALIGN=CENTER><img src="tutfigs/components.gif">
+
+<P>
+The underlying level of the GENESIS user interface is the Script Language
+Interpreter (SLI).  This is a command interpreter similar to a Unix system
+shell with an extensive set of commands related to building, monitoring and
+controlling simulations. GENESIS simulation objects and graphical objects
+are linked together using the scripting language.  The interpreter can read
+SLI commands either interactively from the keyboard (allowing interactive
+debugging, inspection, and control of the simulation), or from files
+containing simulation scripts.
+
+<P>
+The graphical user interface (GUI) is XODUS, the X-windows Output and
+Display Utility for Simulations.  This provides a higher level and
+user-friendly means for developing simulations and monitoring their
+execution.  XODUS consists of a set of graphical objects that are the same
+as the computational modules from the user's point of view, except that
+they perform graphical functions.  As with the computational modules, XODUS
+modules can be set up in any manner that the user chooses to display or
+enter data.  Furthermore, the graphical modules can call functions from the
+script language, so the full power of the SLI is available through the
+graphical interface.  This makes it possible to interactively change
+simulation parameters in real time to directly observe the effects of
+parameter variations.  The mouse may also be used to plant recording or
+injection electrodes into a graphical representation of the cell.  In
+addition to provisions for plotting the usual quantities of interest
+(membrane potentials, channel conductances, etc.), XODUS has visualization
+features that permit such things as using color to display the propagation
+of action potentials or other variables throughout a multi-compartmental
+model, and to display connections and cell activity in a network model.
+
+<P>
+Here are some examples of the GUI for some GENESIS  simulations:
+
+<UL>
+  <LI> <a href="tutfigs/Purk_tut1.gif">The cell display for the Purkinje cell
+tutorial</a>
+
+  <LI> <a href="tutfigs/pir2colo.gif">The display for the piriform cortex
+  tutorial</a>
+
+  <LI> <a href="tutfigs/cpg.gif">The display for the CPG tutorial</a>
+
+  <LI> <a href="tutfigs/kkit.gif">An example of Kinetikit,</a> for modeling
+  chemical reactions such as occur in biochemical signaling pathways
+
+</UL>
+<P>
+The ``GENESIS Simulation Engine'' consists of the simulator base code
+that provides the common control and support routines for the system,
+including those for input/output and for the numerical solution
+of the differential equations obeyed by the various neural simulation
+objects.
+
+<P>
+In addition to receiving commands from the SLI and the GUI, the
+simulation engine can construct simulations using information from
+data files and from the pre-compiled GENESIS object libraries.
+For example, the GENESIS ``cell reader'' allows one to build complex
+model neurons by reading their specifications from a data file,
+instead of from a lengthy series of GENESIS commands delivered to the
+SLI.  Similarly, network connection specifications may be read from a
+data file with the ``fileconnect'' command.
+
+<P>
+The GENESIS object libraries contain the building blocks from which many
+different simulations can be constructed.  These include the spherical and
+cylindrical compartments from which the physical structure of neurons are
+constructed, voltage and/or concentration activated channels,
+dendro-dendritic channels, and synaptically-activated channels with
+synapses of several types including Hebbian and facilitating synapses.  In
+addition, there are objects for computing intracellular ionic
+concentrations from channel currents, for modeling the diffusion of ions
+within cells (e.g., concentration pools, ionic pumps, and buffers), and for
+allowing ligand gating of ion channels (e.g., magnesium blocking for NMDA
+channels).
+
+<P>
+There are also a number of ``device objects'' that may be interfaced to
+the simulation to provide various types of input to the simulation
+(pulse and spike generators, voltage clamp circuitry, etc.) or
+measurements (peristimulus and interspike interval histograms, spike
+frequency measurements, auto- and cross-correlation histograms, etc.).
+
+<P>
+You may find a summary of all the GENESIS device objects in the Reference
+Manual section on Objects, with links to the documentation for individual
+objects.
+
+<H2><A NAME="section-2">The GENESIS Object Hierarchy</A></H2>
+
+<P>
+The various elements in a GENESIS simulation are organized in a tree like
+the one shown below, and are referenced with a notation similar to that
+used in UNIX directory trees.  Thus, "/net/cell[1]/dend[2]/GABA" might
+refer to an inhibitory synaptically activated conductance residing in
+the dendrite compartment 2 of cell 1 of a network.
+
+<P ALIGN=CENTER><img src="tutfigs/tree3.gif">
+
+<P>
+These objects communicate by passing messages to each other, and each
+contain the knowledge of their own variables (fields) and the methods
+(actions) that they use to perform their duties during a simulation.
+For example, during a simulaton step, the PROCESS action will be carried
+for each type of object in its own way.  If it is a voltage activated
+channel, this means carrying out a step in the numerical solution of the
+Hodgkin-Huxley equations for the conductance.  If it is a graph object,
+this would mean plotting a point with data from any messages that it
+receives from other objects.
+
+<H2><A NAME="section-3">GENESIS Scripting Examples</A></H2>
+
+<P>
+The <A HREF="../genprog/genprog.html">GENESIS Modeling Tutorial</A>
+is a "hands-on" practical guide to creating simulations using the GENESIS
+scripting language.  It provides and analyzes example scripts
+that you can modify or extend to create your own simulations of single
+cells and networks.  The following examples will give you a feel for
+what it is like to use the scripting language.
+
+<P>
+The use of GENESIS scripting language can best be illustrated with a simple
+example such as the trivial script:
+
+<pre>
+//genesis script for a simple compartment simulation
+// These commands may also be entered interactively
+
+// create an instance of the compartment object
+create compartment /soma
+
+// set some internal fields
+setfield /soma Rm 10 Cm 2 Em 25 inject 5
+
+// create and display a graph inside a form
+create xform /data
+create xgraph /data/voltage
+xshow /data
+
+// add messages (PLOT Vm and inject) to the graph
+addmsg /soma /data/voltage PLOT Vm *volts *red
+addmsg /soma /data/voltage PLOT inject *current *blue
+
+// make some buttons to execute simulation commands
+create xbutton /data/RESET -script reset
+create xbutton /data/RUN -script "step 100"
+create xbutton /data/QUIT -script quit
+
+// initialize each element before starting
+reset       
+</pre>
+
+<P>
+This would produce the display:
+
+<P ALIGN=CENTER><img src="tutfigs/samplesim.gif"> 
+
+<P>
+
+This script is further analyzed and developed in the GENESIS Modeling
+Tutorial sections
+<A HREF="../genprog/tutorial1.html">A basic tutorial on GENESIS</A> and
+<A HREF="../genprog/tut2-lite.html">Making realistic neural compartments</A>.
+
+<P>
+A more realistic cell model will use messages to link compartments
+together, and to add ionic conductances.  For example, compartments
+exchange information about their membrane potential (at the previous
+time step) and axial resistance with the messages and GENESIS commands
+<p>
+<center>
+<pre><b>/cell/soma                                        /cell/dend</b></pre>
+</center>
+
+<p align=center><img src="tutfigs/comptmsg.gif">
+<pre>
+<FONT SIZE="+1"><b>
+        addmsg /cell/soma /cell/dend AXIAL  previous_state
+        addmsg /cell/dend /cell/soma RAXIAL Ra previous_state
+</b></FONT>
+</pre>
+
+<P>
+Compartments and the ionic conductances ("channels") that they contain
+require these messages
+
+<p align=center><img src="tutfigs/chanmsg.gif">
+<pre>
+<FONT SIZE="+1"><b>
+        addmsg /cell/dend /cell/dend/Ex_channel VOLTAGE Vm
+        addmsg /cell/soma/Ex_channel /cell/dend CHANNEL Gk Ek
+</b></FONT>
+</pre>
+
+
+<P>
+Fortunately, you don't need to set up most of these messages by hand,
+writing a lot of GENESIS <i>addmsg</i> commands.  GENESIS has a
+<i>readcell</i> command that will build a cell from a file that specifies
+the dimensions of the compartments, how they are connected to each other,
+and what channels they contain.  The use of <i>readcell</i> and the format
+of GENESIS cell parameter files is is covered in the GENESIS Modeling
+Tutorial section <A HREF="../genprog/simplecell-tut.html">
+Building a cell the easy way</A>.
+
+<P>
+Here is an example of a GENESIS version of the 1991 Traub 19-compartment
+model hippocampal CA3 region pyramidal cell:
+
+<pre>
+// genesis - "Stand-alone" version of the traub91 tutorial
+setclock  0  0.00005            // set the simulation clock
+
+/* file for 1991 Traub model channels */
+include traub91proto.g
+
+// Create a library of prototype elements to be used by the cell reader
+create neutral /library
+pushe /library
+create symcompartment symcompartment
+make_Na
+make_Ca
+make_K_DR
+make_K_AHP
+make_K_C
+make_K_A
+make_Ca_conc
+pope
+
+// Build the cell from a parameter file using the cell reader
+readcell CA3.p /cell
+setfield /cell/soma inject 0.2e-9  // Provide 0.2 nA injection current
+
+include graphics.g  // You create this file to provide a GUI
+reset
+</pre>
+
+<P> This is the basis of a suggested exercise (see cells/traubcell/README),
+where it is up to you to implement the graphical interface.  This simulation
+makes use of two other files.  <a href="../cells/traubcell/CA3.p">
+cells/traubcell/CA3.p</a> is a "cell parameter file" describing the cell, and
+<a href="../cells/traubcell/traub91proto.g">
+cells/traubcell/traub91proto.g</a> defines the functions to make the channels
+and other elements used in the model.
+
+<P>
+Here is a simple example of a GENESIS script to create an ionic
+conductance, similar to the ones in traub91proto.g.
+
+<pre>
+/* FILE INFORMATION
+   GENESIS script to make a "squid-like" K channel
+   squid giant axon voltage-dependent channels,
+   A.L.Hodgkin and A.F.Huxley, J.Physiol(Lond) 117, pp 500-544 (1952)
+*/
+
+// CONSTANTS
+float EREST_ACT = -0.07     // resting potential (volts)
+float EK    = -0.082        // potassium equil potential
+float SOMA_A = len*PI*dia   // compartment area
+
+function make_K_squid_hh
+    str chanpath = "K_squid_hh"
+    create tabchannel {chanpath}
+    setfield ^ Ek {EK} Gbar {360.0*SOMA_A} Ik 0 Gk 0  \
+            Xpower 4 Ypower 0 Zpower 0
+    setupalpha {chanpath} X {10e3*(0.01 + EREST_ACT)} \
+        -10.0e3 -1.0 {-1.0*(0.01 + EREST_ACT)} -0.01 \
+        125.0 0.0 0.0 {-1.0*EREST_ACT} 80.0e-3
+end
+</pre>
+
+<P>
+This script creates a tabchannel (a Hodgkin-Huxley type voltage activated
+channel with tabulated values of the state variables).  The function
+setupalpha uses a generalized version of the Hodgkin-Huxley state variables
+alpha and beta, namely (A + B*V)/(C + exp((V + D)/F)), in order to set up
+the tabchannel tables.  Details of using the tabchannel object and the
+setupalpha command are given in the <A HREF="../Hyperdoc/Manual.html">
+GENESIS Reference Manual</A>.
+
+<P>
+Finally, here are some examples of GENESIS commands that are used to create
+networks.  Of course, you will need to look at the GENESIS Reference Manual
+to understand exactly how they work, and to study the GENESIS Modeling
+Tutorial sections <A HREF="../genprog/synchan-tut.html">
+Making synaptic connections</A> and
+<A HREF="../genprog/net-tut.html">Creating large networks with GENESIS</A>.
+
+<P>
+These statements create a synaptically activated channel (synchan), and
+send it spike events that are triggered by the membrane potential of a
+cell soma.
+
+<pre><FONT SIZE="+1"><b>
+/* create a synaptically activated channel and set some fields
+    create synchan /cell/dend[5]/Ex_channel
+    setfield /cell/dend[5]/Ex_channel tau1 3e-3 tau2 3e-3 gmax 5.0e-10
+
+/* Add a spike generator to the soma of a cell */
+    create spikegen /cell/soma/spike
+    setfield /cell/soma/spike thresh 0  abs_refract 0.010  output_amp 1
+/* use the soma membrane potential to drive the spike generator */
+    addmsg  /cell/soma  /cell/soma/spike  INPUT Vm
+/* make an excitatory connection to cell2 */
+    addmsg /cell/soma/spike /cell2/dend/Ex_channel SPIKE
+    setfield /cell2/dend/Ex_channel synapse[0].weight 10 synapse[0].delay 0.005
+</b></FONT></pre>
+
+<P>Networks of cells are created by making copies of a prototype cell.
+This can be done individually:
+<pre><FONT SIZE="+1"><b>
+copy /library/pyr_cell /cortex/cell[5]  // copy a prototype cell
+</b></FONT></pre>
+<P>or large arrays can be constructed with the <i>createmap</i> command:
+<pre><FONT SIZE="+1"><b>
+// Make two arrays of cells cell[0] through cell[nx*ny-1]
+    createmap /proto/cell /lgn {nx} {ny} -delta {dx} {dy}
+    createmap /proto/cell /v1 {destx} {desty} -delta {dx} {dy}
+</b></FONT></pre>
+
+<P>GENESIS also has commands to set up connections between an array of
+cells:
+<pre><FONT SIZE="+1"><b>
+// Make connections from the LGN to the V1 cells in a certain region
+    planarconnect /lgn/cell[]/spike /v1/cell[]/glu  -relative  \
+        -sourcemask box -1 -1  1  1   \
+        -destmask   box  {-dx * 2.4} {-dy * 0.6} {dx * 2.4} {dy * 0.6}
+
+// Use a file to specify the connections
+    fileconnect /lgn/##[TYPE=spikegen] /v1/cell[]/glu conn.wts -wtscale 0.01
+</b></FONT></pre>
+
+
+<P>The GENESIS Modeling Tutorial section on <a
+href="../genprog/net-tut.html">Creating large networks with GENESIS</a>
+illustrates the steps leading up to a simulation of a a grid of simplified
+neocortical regular spiking pyramidal cells, each one coupled with excitory
+synaptic connections to its four nearest neighbors. This might model the
+connections due to local association fibers in a cortical network. The example
+simulation, in the <i>networks/RSnet</i> directory, was designed to be easily
+modified to allow you to use other cell models, implement other patterns of
+connectivity, or to augment with a population of inhibitory interneurons and
+the several other types of connections in a cortical network.  When you run
+<i>RSnet.g</i> with the default parameters, you will see something like:
+
+<p align=center><img src="tutfigs/RSnet-GUI.gif">
+
+<P><img src="tutfigs/RSnetview.gif" align="left"><P> This animated image
+shows repeating sequences from the view widget that represents the membrane
+potentials for each of the cells in the network, using a cold to hot color
+scale.  Here, you can see propagating waves of action potentials.  <br
+clear=all>
+
+
+<H2>The Nenadic, Ghosh, and Ulinski turtle visual cortex model</H2>
+<P>
+As a final example of the interfaces and models possible with GENESIS,
+the snapshot below shows propagating cortical waves in the Nenadic, Ghosh, and
+Ulinski (2003) large scale model of turtle visual cortex.  The model
+contains a total of 918 neurons that consist of 3 to 16
+compartments, including two types of pyramidal cells and a variety of
+interneurons..  It is being used to study the cortical activation when
+different types of moving or stationary stimuli are presented to the
+retina, in an attempt to understand how the turtle obtains information
+about the position and speed of visual stimuli.
+
+<p align=center><img src="tutfigs/NGUgrab.gif">
+
+<P>
+The four graphs show the network response by plotting the soma membrane
+potential of selected medial and lateral layer pyramidal cell neurons, and
+the window under the control panel shows the locations of the lateral
+(represented by squares) and medial (represented by triangles) pyramidal
+cells.  During the simulation, they change color to represent the soma
+membrane potenial of the cells cells.  This snapshot was taken at about 0.4
+sec when the wave shows maximal excitation at both the upper left and lower
+left.
+
+<P>
+The simulation scripts and documentation for the model are included in the
+"Ultimate GENESIS Tutorial Distribution" package from the the GENESIS web
+site, and also my be downloaded from ModelDB
+(<A HREF="http://senselab.med.yale.edu/modeldb/ShowModel.asp?model=94845">
+http://senselab.med.yale.edu/modeldb/ShowModel.asp?model=94845</A>).
+The model is also described in more detail in the final section of the
+<A HREF="../cnslecs/cnslecs.html">Lectures on Computional Neuroscience</A>,
+with a video clip of the simulation.
+
+<P>
+If you would like to try running some GENESIS demos and tutorials, there is
+information to help you get started in the <A HREF="../README.html">
+README file</A> for your installation of GENESIS.
+To create your own GENESIS simulations, see the
+<a href="../genprog/genprog.html">GENESIS Modeling Tutorial</a>.
+
+ <HR>
+
+<P>
+<A HREF="references.html"><img align=top src="bookbtn.gif"> References cited
+in this document<A/>
+
+<P>
+<A HREF="../index.html"><img align=top src="back2.gif"> Back to the main
+index</A>
+<P>
+
+<a href="http://www.genesis-sim.org/">
+<img src="tutfigs/genbtn.gif" align="middle" hspace=12> GENESIS Home Page </a>
+
+<P>
+
+<HR>
+<P>
+<I>Last updated on:</I> Tue Jul  1 10:33:47 MDT 2008
+<P>
+
+</BODY>
+</HTML>

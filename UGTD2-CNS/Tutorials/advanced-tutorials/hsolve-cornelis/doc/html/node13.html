@@ -1,0 +1,263 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002 (1.62) JA patch-1.4
+patched version by:  Kenshi Muto, Debian Project.
+LaTeX2HTML 2002 (1.62),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Multiple compartments</TITLE>
+<META NAME="description" CONTENT="Multiple compartments">
+<META NAME="keywords" CONTENT="tutorial2">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002 JA patch-1.4">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutorial2.css">
+
+<LINK REL="previous" HREF="node12.html">
+<LINK REL="up" HREF="node11.html">
+<LINK REL="next" HREF="node14.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html303"
+  HREF="node14.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html299"
+  HREF="node11.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html295"
+  HREF="node12.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html301"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html304"
+  HREF="node14.html">Introducing Hsolve for Single</A>
+<B> Up:</B> <A NAME="tex2html300"
+  HREF="node11.html">Neuroscience Equations</A>
+<B> Previous:</B> <A NAME="tex2html296"
+  HREF="node12.html">A Single compartment</A>
+ &nbsp <B>  <A NAME="tex2html302"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION02122000000000000000"></A>
+<A NAME="sec:multiple-compartments"></A>
+<BR>
+Multiple compartments
+</H2>
+
+<P>
+In the trapezoidal scheme the following rule is used to spatially
+discretize the cylindrical cable equation:
+
+<P>
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="eq:spatial-2nd-order"></A><!-- MATH
+ \begin{equation}
+%%\frac{a}{2R_a}
+\frac{\partial^2V(x,t)}{\partial x^2} \approx
+  \frac{V_{x - \Delta x}(t) - 2 V_x(t) + V_{x + \Delta x}(t)}{(\Delta x) ^2}
+\end{equation}
+ -->
+<TABLE CELLPADDING="0" WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE">
+<TD NOWRAP ALIGN="CENTER"><IMG
+ WIDTH="524" HEIGHT="55" ALIGN="MIDDLE" BORDER="0"
+ SRC="img50.png"
+ ALT="$\displaystyle &lt;tex2html_comment_mark&gt;83 \frac{\partial^2V(x,t)}{\partial x^2} \approx \frac{V_{x - \Delta x}(t) - 2 V_x(t) + V_{x + \Delta x}(t)}{(\Delta x) ^2}$"></TD>
+<TD NOWRAP WIDTH="10" ALIGN="RIGHT">
+(1.12)</TD></TR>
+</TABLE></DIV>
+<BR CLEAR="ALL"><P></P>
+
+<P>
+This scheme splits up a single cable in multiple compartments and is
+second-order accurate in space if the discretization length is kept
+constant (use the Taylor series to prove this: take the sum of a
+Taylor expansion for <!-- MATH
+ $V(x + \Delta x)$
+ -->
+<IMG
+ WIDTH="80" HEIGHT="31" ALIGN="MIDDLE" BORDER="0"
+ SRC="img51.png"
+ ALT="$ V(x + \Delta x)$"> and <!-- MATH
+ $V(x - \Delta x)$
+ -->
+<IMG
+ WIDTH="80" HEIGHT="31" ALIGN="MIDDLE" BORDER="0"
+ SRC="img52.png"
+ ALT="$ V(x - \Delta x)$"> and see what
+happens).  It is used by most popular neuro-biological simulation
+packages to discretize dendritic trees (however with a non constant
+discretization length, which makes the rule first order accurate).
+
+<P>
+If this scheme is combined with an explicit numerical scheme like the
+exponential Euler, all the resulting equations are self contained and
+can be solved in isolation.  However if this scheme is combined with
+an implicit numerical scheme like the backward-Euler, the numerator of
+the right-hand side couples the neighboring compartments to each
+other.  it gives rise to a system of coupled finite-difference
+equations.  If you choose the trapezoidal rule for time
+discretization, the method is called a Crank-Nicolson.  For a linear
+cable the coefficients of this system can be arranged in a tridiagonal
+matrix such that it can be solved in linear time.  For branched
+morphologies the matrix is still symmetric (not tridiagonal however),
+and it can still be solved in linear time.  The arrangement of the
+equations is done with Hines numbering (a special kind of minimum
+degree algorithm, see[<A
+ HREF="node59.html#hines84:_effic">7</A>]), and the solution can be
+obtained with Gaussian elimination without
+pivoting[<A
+ HREF="node59.html#koch98:_method_neuron_model_from_ions_networ">8</A>,<A
+ HREF="node59.html#hines84:_effic">7</A>].
+This operation scales with the number of equations in the system and
+as such it can be considered to be a fast solution for this system.
+Figure <A HREF="node13.html#eq:matrix">1.2.2</A> gives an example morphology with the
+corresponding matrix structure.  The text below the figure gives more
+explanation about how to solve the system of equations.
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<TABLE  WIDTH="635">
+<TR><TD>
+  <FONT SIZE="-1"><B>NOTE:</B> Without extensions these schemes cannot be
+    applied to gap junctions, since gap junctions give rise to looped
+    electrical circuits such that the matrix containing the cable
+    equations, cannot be solved with Gaussian elimination without
+    pivoting.
+</FONT></TD></TR>
+</TABLE>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<BR>
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="eq:matrix"></A><A NAME="fig:matrix"></A><A NAME="1320"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure:</STRONG>
+Resulting matrix structure after applying an
+    implicit numerical scheme to the shown morphology.  The numbers in
+    the figure correspond to the rows in the matrix and come from one
+    possible (Hines) numbering scheme[<A
+ HREF="node59.html#hines84:_effic">7</A>].  The
+    system can easily be solved by sweeping through the equations
+    twice: the first sweep eliminates all the coefficients below the
+    main diagonal and results in the decoupling of the last equation
+    such that it can be solved in isolation.  Then the second sweep
+    starts by substituting the last unknown in the second last
+    equation, such that this equation can be solved too.  Continuing
+    this process upwards solves the complete system.  (Application of
+    an explicit numerical scheme to this morphology would result in a
+    matrix with only coefficients on the main diagonal.  Of course in
+    such a system all equations can be solved in isolation.)</CAPTION>
+<TR><TD><TABLE  WIDTH="635">
+<TR><TD>
+    <!-- MATH
+ $\begin{bmatrix}
+      b & a & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      a & b & a & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & a & b & 0 & 0 & 0 & a & 0 & 0 & 0 \\
+      0 & 0 & 0 & b & a & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & a & b & a & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & a & b & a & 0 & 0 & 0 \\
+      0 & 0 & a & 0 & 0 & a & c & a & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & a & b & a & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 0 & a & b & a \\
+      0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & a & b \\
+    \end{bmatrix}
+    \cdot \overline{V(t + \Delta t)} = \overline{V(t)}
+\nonumber$
+ -->
+<IMG
+ WIDTH="386" HEIGHT="206" ALIGN="MIDDLE" BORDER="0"
+ SRC="img53.png"
+ ALT="$ \begin{bmatrix}
+b &amp; a &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+a &amp; b &amp; a &amp; 0 &amp; 0 &amp; ...
+... \\
+\end{bmatrix}\cdot \overline{V(t + \Delta t)} = \overline{V(t)}
+\nonumber
+$"> <BR>
+<IMG
+ WIDTH="123" HEIGHT="150" ALIGN="BOTTOM" BORDER="0"
+ SRC="img54.png"
+ ALT="\begin{graph}(3,3.5)(0,1.75)
+\graphnodesize{0.1}
+\graphnodecolour{0}
+\par\roun...
+...{b3}{b4}
+\edgetext{b3}{b4}{8}
+\edge{b4}{b5}
+\edgetext{b4}{b5}{9}
+\end{graph}">
+<BR></TD></TR>
+</TABLE>
+  <DIV ALIGN="CENTER">  </DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html303"
+  HREF="node14.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html299"
+  HREF="node11.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html295"
+  HREF="node12.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html301"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html304"
+  HREF="node14.html">Introducing Hsolve for Single</A>
+<B> Up:</B> <A NAME="tex2html300"
+  HREF="node11.html">Neuroscience Equations</A>
+<B> Previous:</B> <A NAME="tex2html296"
+  HREF="node12.html">A Single compartment</A>
+ &nbsp <B>  <A NAME="tex2html302"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+
+2002-11-15
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,5 @@
+The textScripts directory contains copies of GENESIS simulation scripts
+that have been renamed to add the extension ".txt".  This is to allow
+them to be viewed with web browsers that do not know how to deal with
+plain text files that do not have this extension.
+

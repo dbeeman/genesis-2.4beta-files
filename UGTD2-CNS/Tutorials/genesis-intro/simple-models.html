@@ -1,0 +1,267 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>Simplified Neuronal Models</TITLE>
+</HEAD>
+<BODY BGCOLOR="#ffffff" TEXT="#000000">
+
+
+<H1>A summary of methods used for simplified neuronal models</H1>
+
+<H2> Overview of artificial neural networks </H2> <P> 
+
+<P> The goal of this short summary is to explain the neurobiological basis
+of ANN models by identifing the characteristics of biological neurons and
+neural networks that should go into a simple model of what we might call
+"biologically-inspired computation".
+
+<p><h2>Properties of "wet" neurons</h2>
+
+<P>
+What do we know about the behavior of real neurons that we would like
+to include in our model?
+
+<ol>
+<li> Neurons are integrating (summing) devices.  Each input spike causes
+a PSP which adds to the charge on the membrane capacitance, gradually
+increasing the membrane potential until the potential in the axon
+hillock reaches the threshold for firing an action potential.
+<p>
+
+<p align=center><img src="tutfigs/summing_device.gif">
+
+<li>Neurons receive both excitatory and inhibitory inputs, with
+differing and modifiable synaptic weights.  This weighting of synaptic
+inputs can be accomplished in a variety of ways.  The efficiency of a
+single synaptic connection depends on the surface area and geometry of
+the synapse and the number of vesicles containing neurotransmitter on
+the presynaptic side.  A neuron which interacts strongly with another
+may make many synapses with the same target neuron, so we can use
+multiple synapses to increase the weight of a connection between two
+neurons.
+
+<p>
+<li>Neurons have a non-linear input/output relationship. 
+
+<pre>
+           Input                                   Output
+
+|_______|_______|_______|_______|        ________________________________
+
+|___|___|___|___|___|___|___|___|        |_______|_______|_______|_______|
+
+|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|        |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
+
+|||||||||||||||||||||||||||||||||        |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
+
+</pre>
+
+<p>Do you remember why this is so?
+
+<p>If we plot the input firing rate vs. the output firing rate, we
+   generally get something like this, with a threshold, and a
+   saturation level arising from the refractory period for firing.
+
+<P>
+<P ALIGN=CENTER><IMG SRC="tutfigs/iorel.gif"><P>
+</ol>
+
+<h2>The generic model "neuron"</h2>
+
+<P> There are many variations on the models which have been proposed for
+artificial neuron-like computational units.  Other lectures in this course
+will cover some of them in detail, and a few of them superficially.  Most
+of them have these basic features.
+
+<ol>
+<li>The output of the <i>i</i>th neuron is represented by a voltage level,
+V<sub>i</sub>,
+instead of a sequence of spikes.  Sometimes this is a continously
+variable analog voltage, which represents the firing rate of a real
+neuron.  In other models, the output is a binary value, representing
+either firing or not firing.
+
+<p><li>The input to the <i>i</i>th neuron is a weighted sum of the outputs of
+the neurons that make connections to it, plus any external inputs.  The
+connection weights, W<sub>ij</sub>, may be positive or negative, representing
+excitatory or inhibitory inputs.
+
+<P ALIGN=CENTER><IMG SRC="tutfigs/ithinput.gif"><P>
+
+
+<li>The output is related to the input by some non-linear function
+V<sub>i</sub> = <i>f</i>(u<sub>i</sub>), which may look like:
+
+<P ALIGN=CENTER><IMG SRC="tutfigs/ANactfuncs.gif"><P>
+
+<P>
+The function often has some sort of threshold parameter (theta) that
+allows different neurons to have different thresholds for activation.
+We'll see different variations on this basic paradigm.  Almost all of
+them have in common the idea that the so-called "neurons" receive
+inputs from the outside world, or from other neurons, which are
+multiplied by some weighting factor and summed.  The output or
+"activation" is formed by passing the input through some sort of
+"squashing" function.  This output often becomes the input to other
+neurons.
+</ol>
+
+<P>
+The situation we are describing is something like this,
+<P ALIGN=CENTER><IMG SRC="tutfigs/ANNetwork.gif"><P>
+
+<p>with some units ("neurons") receiving external inputs (I), some
+presenting an external output (O), and others being intermediate (hidden)
+units that only connect with other units.  The output of one unit is passed
+on to become part of the weighted input of another, finally reaching the
+output units.  The states of the neurons may be updated in parallel
+(synchronously), or one at a time (asynchronously).  In most neural network
+models, the network is designed so that the outputs of all the neurons will
+eventually settle down to a steady state when the external input is held
+constant.  It may take a number of iterations of the update process for
+this to occur.  (Biological networks are different in this respect - their
+output is usually continously changing.)  Various learning algorithms such
+as "backpropagation" are used to modify the weights in order train the
+network to perform some mapping between inputs and outputs.
+
+<P>
+<b>A question to discuss:</b> What possibly significant features have we left
+out of our model?  Are there any important ways in which it is
+different from real neurons?
+
+<p> <b>Spatial effects</b> - What are the consequences of having inputs to
+various parts of an extended dendritic tree?  Can the right weights in a
+ANN model take this into account? Perhaps not.  For example, shunting
+inhibition by the activation of channels close to the soma can "gate"
+excitation from more distant regions.  The various ways that that
+computations are performed in the dendritic tree is a current research
+topic.
+
+
+<p><b>Temporal effects</b> - is firing rate everything?  Our artifical
+neurons have an output which either corresponds to a firing rate or
+simply to "firing" or "not firing".  However, the pattern of firing of
+a biological neuron can encode information.  The phase relationship
+and correlations between the firing of neurons can be important.  If a
+neuron receives input from several others that are firing in unison,
+the effect will be larger than if their firings were uncorrelated.
+There may be even more subtle ways that the spacing of action
+potentials can convey information.  Consider the differences between
+the firing patterns of neurons A, B, and C, which all have the same
+average firing rate:
+
+<pre>
+
+        A  |___|___|___|___|___|___|___|___|
+
+        B  __|___|___|___|___|___|___|___|__
+
+        C  |||_________|||_________|||______
+
+</pre>
+<P> If another neuron receives synaptic inputs from neurons A, B, or
+C, can you see how the results might vary?
+
+<p>Here are some specific examples:
+
+<p>
+<UL>
+
+<LI>  As little as three spikes from the retinal system of the blowfly
+    can tell it which way to turn. Obviously, many bits
+    of information would be required for any sort of precision. This
+    implies that analog information conveyed by spike timing is being used.
+
+<LI>    The barn owl uses phase differences and delays for sound
+    localization.
+
+<LI>    In the cat visual system, spike timing is preserved through four
+    layers of the visual cortex - there must be a reason for this.
+
+<LI>    Spiral ganglion cells in the cochlea phase lock when stimulated by
+    pure tones.
+</UL>
+<P>
+
+<P>
+For some rather outdated lecture notes on AI and Artificial Neural Nets
+from a University of Colorado web site, see:
+
+<P>
+<A HREF="http://ece.colorado.edu/~ecen4831/lectures/ai.html"> Computer
+models of mind and brain - Artificial Intelligence</A> and
+
+<A HREF="http://ece.colorado.edu/~ecen4831/lectures/NNet1.html">Lectures on Artificial Neural
+Networks</A>.
+
+<p>
+
+<H2>Simplified Integrate-and-Fire Models</H2>
+
+
+ <P> In order to provide more realistic neurons than those used in
+non-spiking artificial neural nets, Integrate-and-Fire neuron models are
+often used in simplified network models.  As illustrated below, they are
+point neurons with no dendritic structure or ion channels.  They simply sum
+post-synaptic potentials as if charging the membrane capacitance and fire a
+spike when a threshold is exceeded.  The models typically used for the
+synaptic inputs range from simple current injection pulses to the realistic
+synaptically activated conductance models used in GENESIS and other
+biologically realistic neural simulators.
+
+<P>
+
+<TABLE>
+<TR>
+
+ <TD> <B>
+  <FONT SIZE="+1" COLOR="#0000ff"><p align=top>
+  Integrate-and-Fire neuron
+  </FONT>
+<FONT SIZE="+1">
+<P>
+<i>if</i> V < V<SUB>thresh</SUB>, <i>then</i> V = IR[1 - exp(-t/RC)]
+<P>
+<i>else</i> generate a spike and set V = V<SUB>rest</SUB>
+</FONT>
+</B>
+ </TD>
+
+ <TD><p align=center><img src="tutfigs/IandF3.gif"></TD>
+</TR>
+<TR>
+ <TD><FONT SIZE="+1" COLOR="#0000ff"><p align=top>
+<B>
+Network of Integrate-and-Fire  neurons
+</FONT>
+<P>
+<FONT SIZE="+1">
+<UL>
+<LI> 75% excitatory (red)
+<LI> 25% inhibitory (blue)
+<LI> Sparse random connectivity
+</UL>
+</FONT>
+</B>
+
+ </TD>
+ <TD><p align=center><img src="tutfigs/IFnet.gif"></TD>
+</TR>
+
+</TABLE>
+
+<P>
+
+The computational efficiency of this simple model makes it possible to
+rapidly simulate networks such as the one illustrated above.
+Special-purpose simulators for integrate-and-fire networks can easily
+simulate networks with hundreds of thousands of neurons.
+<P>
+<HR>
+<P>
+<A HREF="genesis-intro.html"><img align=top src="back2.gif"> Back to
+Realistic Neural Modeling with GENESIS</A>
+<P>
+
+</BODY>
+</HTML>

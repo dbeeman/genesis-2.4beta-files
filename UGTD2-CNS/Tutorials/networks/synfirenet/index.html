@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE></TITLE>
+<META NAME="generator" CONTENT="txt2html v1.28">
+</HEAD>
+<BODY>
+<P>
+This simulation was developed by Dieter Jaeger (djaeger@emory.edu) as
+as an exercise in script programming of networks, using a synfire
+chain network as an example.
+
+<P>
+A synfire chain network is a feedforward network consisting of several
+parallel chains of cells.  Each cell has excitatory connections to cells on
+the next chain, with no connections within the chain, or to the previous
+chain.  This network has the interesting property that desynchronized spike
+trains at the input chain can become synchronized at the final chain.
+
+<P>
+The main script is netsim.g.  It creates 10 columns, with 10 cells in each
+column.  These are displayed with labels in the "viewform", which comes up
+when the simulation is run.  Each of the 100 cells has Na and K channels as
+well as an excitatory and an inhibitory synapse.  The pattern of
+connections is set in the script connections.g, which may be modified to
+experiment with other network topologies.  In this version, each cell in a
+column makes an excitatory connection to every cell in the column to the
+right.  The first column receives no input connections, and the last one
+has no outgoing connections.  Desynchronization is provided by adding a
+random component to the propagation delays, which are set to 5 msec, with a
++/- 2 msec variation.
+
+<P>
+The synaptically activated channels are implemented with hebbsynchan
+objects, which are initialized to have no learning, making them equivalent
+to synchans.  To turn learning on or off, give the commands "learnon" or
+"learnoff" at the genesis prompt.  See the documentation for hebbsynchan,
+and the example script Scripts/examples/hebb/hebb.g in the GENESIS
+distribution for further information on implementing Hebbian learning.
+
+<P>
+Typically, one starts the simulation by clicking on one or more cells in
+the first one or two (left) columns of the viewform, to provide 1 nA
+injection to the cell.  The "Graphs" form is used to select which graphs
+will be displayed.  Clicking on "STEP" in the main control panel runs the
+simulation for the indicated amount of time.  Changes in injection can then
+be made before stepping it again.  For further information on running the
+simulation or suggested ways to modify the simulation, click on "HELP".
+
+<P>
+Modified for the GENESIS Tutorials package by D. Beeman Feb 28, 2006
+<P>
+<hr>
+<p><h1>Contents of networks/synfirenet</h1></p>
+<p><h3>32 Files:</h3></p>
+<p><dl>
+<dt><a href="addspikechan.g">addspikechan.g</a><dd>-
+<dt><a href="addvgchan.g">addvgchan.g</a><dd>-
+<dt><a href="alphasyn.g">alphasyn.g</a><dd>-
+<dt><a href="cell.g">cell.g</a><dd>-
+<dt><a href="connections.g">connections.g</a><dd>-
+<dt><a href="edschan.g">edschan.g</a><dd>-
+<dt><a href="eicon.g">eicon.g</a><dd>-
+<dt><a href="ggraphs.g">ggraphs.g</a><dd>-
+<dt><a href="graphcontrols.g">graphcontrols.g</a><dd>-
+<dt><a href="graphs100.g">graphs100.g</a><dd>-
+<dt><a href="graphs25.g">graphs25.g</a><dd>-
+<dt><a href="hebbsyn.g">hebbsyn.g</a><dd>-
+<dt><a href="help.g">help.g</a><dd>-
+<dt><a href="help.hlp">help.hlp</a><dd>-
+<dt><a href="index.html">index.html</a><dd>-
+<dt><a href="inputs.g">inputs.g</a><dd>-
+<dt><a href="makeobjects.g">makeobjects.g</a><dd>-
+<dt><a href="netsim.g">netsim.g</a><dd>-
+<dt><a href="params.hlp">params.hlp</a><dd>-
+<dt><a href="pulsesyn.g">pulsesyn.g</a><dd>-
+<dt><a href="README">README</a><dd>-
+<dt><a href="running.hlp">running.hlp</a><dd>-
+<dt><a href="setcolors.g">setcolors.g</a><dd>-
+<dt><a href="settings.g">settings.g</a><dd>-
+<dt><a href="spikechan.g">spikechan.g</a><dd>-
+<dt><a href="toggles.g">toggles.g</a><dd>-
+<dt><a href="tools.g">tools.g</a><dd>-
+<dt><a href="totry.hlp">totry.hlp</a><dd>-
+<dt><a href="utilfuncs.g">utilfuncs.g</a><dd>-
+<dt><a href="vclamp.g">vclamp.g</a><dd>-
+<dt><a href="viewform.g">viewform.g</a><dd>-
+<dt><a href="xtools.g">xtools.g</a><dd>-
+</dl></p>
+<hr>
+
+</BODY>
+</HTML>

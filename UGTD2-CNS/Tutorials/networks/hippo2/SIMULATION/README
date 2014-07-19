@@ -1,0 +1,44 @@
+The simulation is launched by typing
+genesis main.g
+
+After that, the simulation can be started for a certain time t by typing
+step t -time
+at the GENESIS prompt, where t is in seconds. 
+Alternatively, the simulation can be started for a certain number of
+time  steps n by typing 
+step n
+
+In order to produce data stored in ascii-files, you have to create
+a directory DATA before starting the simulation with the step
+command. Since the simulation does not provide any direct graphical
+output, you should store data to ascii-files and visualize it by means
+of e.g. Matlab or xplot.
+
+If your computer has problems to handle many outputfiles, you can
+reduce their number in the file ascii_output41.g, by e.g. reducing the
+counters. Somatic membrane potentials of selected cells and
+extracellular potentials recorded by simulated electrodes are stored
+by means of this file. The file spikehist2409.g creates another set of
+ascii-files, where only the points in time of spike-initiation of
+selected cells get stored.
+
+About the other files:
+======================
+The core of the simulation is the file main.g. This file imports
+everything else. The comments should guide your way. The
+second most important file is maybe constants41.g. Almost every constant
+needed is defined in this file. The cell descriptor files are
+implicitely imported by the readcell-commands in cell_arrays41.g.
+
+Currently, I use hsolve with chanmode 1. Integration method is Crank-
+Nicolson.
+I run the simulation on a SGI with XEON-processor under Linux Suse 7.3 and GENESIS
+2.2, but none of the new features of GENESIS 2.2 is applied.
+A simulation of 100 msec takes approximately 5 minutes on the above
+mentioned machine.
+
+For more information about the set-up of the simulation, please have a look at
+my diploma thesis, Chapter 2.
+
+
+Enjoy!

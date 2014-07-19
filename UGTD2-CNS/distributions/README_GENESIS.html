@@ -1,0 +1,408 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE></TITLE>
+<META NAME="generator" CONTENT="txt2html v1.28">
+</HEAD>
+<BODY BGCOLOR="#ffffff" TEXT="#000000">
+<P>
+
+<CENTER>
+<H2>This is the README file for the GENESIS downloads directory</H2>
+<P>(Updated May 28, 2009.)
+</CENTER>
+
+<P>
+This directory contains the March 2006 distribution of GENESIS version 2.3.
+
+<P>
+GENESIS 2.3 supercedes version 2.2.1, and has a number of changes in the
+simulator source code to allow use on a greater variety of platforms,
+including Intel and AMD 64 bit processors, MacIntosh with OS/X, and
+Microsoft Windows with the Cygwin environment.  It includes Kinetikit
+Version 11, Version 2 of the Purkinje cell tutorial, some new objects and
+enhancements of existing ones, plus revised and updated documentation.
+<P>
+We expect that GENESIS 2.3 will be the last GENESIS 2 release, before we begin
+preliminary releases of GENESIS 3.  Therefore we encourage all GENESIS users
+to upgrade to this (hopefully) final GENESIS 2 release.
+
+<P> This directory also contains the latest release of Parallel GENESIS
+(PGENESIS 2.3.1), which now has support for MPI as well as PVM.  It should
+run on almost any multiple core PC, parallel cluster, SMP, supercomputer,
+or network of workstations where MPI and/or PVM is supported, and on which
+serial GENESIS itself is runnable.  For further information about the use
+and installation of PGENESIS, please see <A
+HREF="README.pgenesis.html">README.pgenesis</A>, which is a copy of the the
+README file in the PGENESIS distribution.  There is also additional
+hypertext documentation in the PGENESIS distribution.  Note that older
+versions of PGENESIS will not work with GENESIS 2.3 or later.
+
+<H1><A NAME="section-1.">Downloading GENESIS and PGENESIS</A></H1>
+
+<P>
+This directory contains several different forms of the GENESIS 2.3
+distribution.  
+
+<P>
+The GENESIS source distribution contains full source code and documentation
+for both GENESIS and XODUS as well as a large number of tutorial and
+example simulations.  Documentation for these tutorials is included along
+with online GENESIS help files and the hypertext GENESIS Reference Manual.
+
+<P>
+It is available in the following compressed archive formats:
+
+<UL>
+  <LI>genesis-2.3-src.tar.gz - A gzipped tar archive that unpacks (with gunzip and
+  tar) to genesis-2.3/genesis.
+
+  <LI>genesis-2.3-src.tar.bz - A more highly compressed form of the archive, that
+  is recommended it you have the bunzip2 utility installed.
+
+  <LI>genesis-2.3-src.tar.Z - A less highly compressed form of the archive, to
+  be used if you have only the old UNIX uncompress utility.
+
+  <LI>pgenesis-2.3-src.tar.gz - A gzipped tar archive for PGENESIS.  Note that
+  the GENESIS source distribution must also be installed to use PGENESIS.
+
+</UL>
+
+<P>
+MD5 checksum files are also provided to check the integrity of the
+downloaded files.  For example, after downloading the archive file and the
+corresponding file with the ".md5" extension, type
+<PRE>
+    md5sum -c genesis-2.3-src.tar.gz.md5
+</PRE>
+
+<P>
+Binary distributions are also available that include precompiled versions
+of both genesis (with XODUS, dependent on X11 installation) and nxgenesis
+(non-X genesis, without the XODUS GUI, hence no X11 dependence).  These
+contain all the contents of the full source distribution, except for the
+source code.  They also unpack to form the directories genesis-2.3/genesis.
+After unpacking the distribution, please consult the file README.bindist
+for installation instructions.
+
+<P>
+The genesis executables have been linked with certain versions of dynamic
+libraries. These libraries must be available at run time, so the binary
+versions are not guaranteed to work on all operating system versions.  If you
+have problems running a binary distribution, or want to compile your own
+version of GENESIS, please get the source distribution.
+
+<P>
+The binary distributions currently available are:
+
+<UL>
+  <LI>genesis-2.3-linux-bin.tar.gz - A gzipped tar archive for Linux.
+  This should run under most recent Linux distributions.
+
+  <LI>genesis-2.3-cygwin-bin.tar.gz - A gzipped tar archive for Windows, using
+  Cygwin.  Cygwin (http://cygwin.com) is a free Windows application that
+  provides a UNIX-like environment for Windows. It is easy to install
+  directly from the Cygwin site, and provides much of the functionality of
+  UNIX or Linux, complete with X-windows support, under Windows. Installing
+  Cygwin will let you use Windows to run GENESIS and other UNIX programs
+  that have been compiled to run under Cygwin.
+
+  <LI>genesis-2.3-cygwin-bin.zip - The Windows/Cygin binary distribution
+  packaged for use with the zip utilty, commonly used with Windows.
+
+  <LI>genesis-2.3-osx-bin.tar.gz - A gzipped tar archive for the Mac with
+  OS/X.  This should run under recent versions of OS/X.
+
+</UL>
+<P>
+<B>NOTE for Windows users:</B>
+<P>
+If you are using a computer with Windows to install the GENESIS binary for
+Windows, you can download genesis-2.3-cygwin-bin.zip, and use Winzip or a
+similar utility to extract it.  Then, read the file genesis/README.bindist
+for information about installing Cygwin.  If you are planning on installing
+the source "tar.gz" distribution, you will need to install Cygwin first, in
+order to have a terminal window to enter the "tar" commands above for
+extracting the files.  Here is a link to
+<A HREF="README.bindist.html">README.bindist</A> with the instructions.
+<P>
+
+If you experience any trouble compiling or running GENESIS, be sure to
+see the README file in the Bug-fixes directory for any patches or changes
+since the release of the 2.3 distribution.   The LATEST.NEWS file
+also contains information on recent developments and changes.
+
+<H1><A NAME="section-2.">Installation</A></H1>
+
+<P>
+After downloading the distribution that you plan to install, change to the
+directory in which you wish the GENESIS directory tree to reside.  For a
+system-wide installation, it is common to use /usr/local/.  If this is a
+system directory such as /usr/local, you will probably need to have root
+privileges to do this.  However, you can install it on one of your own
+directories with no special privileges.
+
+<P>
+If you have downloaded the file genesis-2.3-src.tar.gz, it should be
+uncompressed with the gnu "gunzip" utility, then extracted with tar.  This
+can be done with:
+
+<PRE>
+    gunzip -c genesis-2.3-src.tar.gz | tar xvf -
+</PRE>
+
+On most Linux systems, and those with GNU tar, it is possible to simply use:
+
+<PRE>
+    tar xvzf genesis-2.3-src.tar.gz
+</PRE>
+<P>
+If genesis-2.3-src.tar.gz, is not in this directory, give the full path to
+it, e.g.
+
+<PRE>
+    gunzip -c ~joeuser/downloads/genesis-2.3-src.tar.gz | tar xvf -.
+</PRE>
+<P>
+Note that genesis-2.3-src.tar.gz <B>cannot</B> be uncompressed with the UNIX
+compress utility.  If you do not have gunzip, use the genesis-2.3-src.tar.Z
+file instead, with the command "zcat genesis-2.3-src.tar.Z | tar xvf -".
+
+<P>
+These commands will create the directory tree 'genesis-2.3/genesis' with a
+number of subdirectories.  Begin by reading the README file in the
+'genesis' directory.  Directions for compiling and installing the software
+may be found in the README file contained in the 'src' subdirectory.  Also,
+be sure to carefully read the comments in 'src/Makefile'.  In the case of a
+binary distribution, there will be a file 'README.bindist'.
+
+<P>
+Directions for using the documentation may be found in 'Doc/README'.  The
+'Scripts/README' file describes the demonstration and tutorial simulations
+which are included with this distribution.  The 'Tutorials' directory
+contains additional hypertext documentation, including a beginners guide to
+UNIX/Linux commands.  This directory also serves as a "place holder" for
+supplemental hypertext GENESIS modeling tutorials and documentation,
+including the GENESIS Neural Modeling Tutorials package.  The latest
+version of this package is offered as a separate download from the GENESIS
+web site, http://www.genesis-sim.org/GENESIS. The downloaded file
+(Tutorials.tar.gz or Tutorials.zip) should be unpacked in the 'genesis'
+directory in order to augment the files that are already provided there.
+
+<P>
+The PGENESIS source distribution is unpacked in a similar manner, to
+produce the directory tree genesis-2.3/pgenesis.  The 'pgenesis/README'
+file gives installation instructions for PGENESIS.  To use PGENESIS, you
+will need to have PVM or MPI installed.  If you do not have PVM installed
+on your computer, you can get the latest version, as well as more
+information about PVM from the PVM home page:
+ 
+<P>
+        http://www.epm.ornl.gov/pvm/pvm_home.html.
+ 
+<P>
+A PVM distribution and manual is also available from the GENESIS site, but
+it is not guaranteed to be the most recent version.
+
+<H1><A NAME="section-3.">GENESIS Description</A></H1>
+
+<P>
+GENESIS is a general purpose simulation platform which was developed to
+support the simulation of neural systems ranging from complex models of
+single neurons to simulations of large networks made up of more abstract
+neuronal components.  GENESIS has provided the basis for laboratory courses
+in neural simulation at Caltech, the Marine Biological Laboratory, the
+Bangalore, European Union, and Latin American (LASCON) short courses in
+Computational Neuroscience, and at least 49 universities of which we are
+aware.  Most current GENESIS applications involve realistic simulations of
+biological neural systems.  Although the software can also model more
+abstract networks, other simulators are more suitable for backpropagation
+and similar connectionist modeling.
+
+<H1><A NAME="section-4.">Machine dependence</A></H1>
+
+<P>
+GENESIS and its graphical front-end XODUS are written in C and are known to
+run under many UNIX-based systems with the X Window System (X11R5 or
+X11R6), as well as OSX and Windows with Cygwin. This is a partial list of
+tested UNIX/Linux platforms:
+
+<UL>
+  <LI>x86-based Linux systems:
+  <UL>
+    <LI>Debian Linux with kernel 2.x
+    <LI>Fedora Core 2, 3, and 4
+    <LI>Gentoo
+    <LI>Ubuntu
+    <LI>Mandrake Linux 7, 8, and 9.1 (but not 9.0)
+    <LI>Red Hat Linux 5, 6, 7, 8, and 9
+    <LI>Slackware 10
+  </UL>
+  <LI>64 bit Linux:
+  <UL>
+    <LI>Fedora Core 3 and 4
+    <LI>Red Hat Enterprise
+  </UL>
+  <LI>x86-based FreeBSD 4.1
+  <LI>Alpha with Debian 3.0
+  <LI>IBM SP2 systems running AIX 4.2 and 4.3
+  <LI>PPC-based Linux systems running LinuxPPC, SUSE 7.0, and OSX.
+  <LI>SGI MIPS-based systems running IRIX 5.x and 6.5.x
+  <LI>Sun SPARC-based systems running Solaris 2.6, and 2.7
+
+</UL>
+<P>
+It is quite likely that GENESIS will also work on systems running other
+versions of the operating systems listed above; however, the GENESIS
+developers only have direct experience with the particular systems listed.
+
+<P>
+GENESIS may *fail* to work on DEC Alpha-based systems. Please let us know
+of any experiences with this platform.
+
+<P>
+GENESIS has in the past worked on the following systems, but the developers
+do not have these systems available for full testing and have not been able
+to adequately verify that GENESIS 2.3 compiles and runs properly:
+
+<UL>
+  <LI>Sun SPARC-based systems running SunOS 4.1.x
+  <LI>Sun SPARC-based running Solaris 2.5/2.5.1
+  <LI>HP-UX systems
+  <LI>Intel Paragon
+  <LI>DECStation running Ultrix 4.x or 3.x
+  <LI>Cray T3E and T3D
+
+</UL>
+<P>
+We welcome feedback on experiences with these platforms.  If you attempt to
+use GENESIS on these systems and have problem reports (or even better,
+fixes), please contact the GENESIS maintainers.
+
+<H1><A NAME="section-5.">GENESIS Scripts</A></H1>
+
+<P>
+In addition to demonstrations which illustrate GENESIS features and
+techniques for programming simulations, the genesis/Scripts direcctory
+contains a number of interactive tutorials for teaching concepts in
+neurobiology and neural modeling.  As their use requires no knowldge of
+GENESIS programming, they are suitable for use in a computer simulation
+laboratory which would accompany upper division undergraduate and graduate
+neuroscience courses.  Each of these has on-line help and a number of
+suggested exercises or "experiments" which may be either assigned as
+homework or used for self-study.  These tutorials may also be taken apart
+and modified to create your own simulations, as they are reasonably well
+commented.  Several of them are derived from existing research simulations.
+In addition there are a number of example simulation scripts to illustrate
+the use of various GENESIS features.  These simulations are described in
+detail in "The Book of GENESIS" by James M. Bower and David Beeman, which
+is available for download from the GENESIS web site.
+
+<H1><A NAME="section-6.">The GENESIS Neural Modeling Tutorials</A></H1>
+
+<P>
+The genesis/Tutorials directory in the GENESIS distribution is provided as
+a "place holder" for supplemental hypertext GENESIS modeling tutorials and
+documentation, including the GENESIS Neural Modeling Tutorials package.
+These are an evolving set of HTML tutorials intended to teach the process
+of constructing biologically realistic neural models with the GENESIS
+simulator.  The latest version of this package is offered as a separate
+download from the GENESIS web site.  The Tutorials directory that comes
+with the GENESIS distribution contains a short guide to getting around in
+the UNIX command line environment that may be helpful to new users who are
+unfamiliar with entering commands into a terminal window.
+
+<H1><A NAME="section-7.">GENESIS Users Group (BABEL)</A></H1>
+
+<P>
+Due to the large number of requests for GENESIS, we are only able to
+provide limited help or support for those who acquire GENESIS through the
+GENESIS web site.  Therefore, we strongly encourage serious users of
+GENESIS to join the GENESIS Users Group (BABEL) mailing list
+"genesis-sim-users" and to subscribe to the user forums on the
+GENESIS web site. 
+
+<P>
+<H2>How to subscribe</H2>
+<P>
+In order to subscribe to the mailing list, go to the web page at
+<CENTER><A
+HREF="https://lists.sourceforge.net/lists/listinfo/genesis-sim-users">
+https://lists.sourceforge.net/lists/listinfo/genesis-sim-users</A>
+</CENTER>
+<P>
+and enter the address from which you will post and receive email, and
+a password of your choice.
+
+<P>
+In order to subscribe to the forums, go to the GENESIS web page at
+<CENTER><A HREF="http://genesis-sim.org">http://genesis-sim.org</A>
+</CENTER>
+<P>
+and create an account. As we move towards GENESIS 3, this will become
+the main entry point for access to GENESIS distributions and information
+about GENESIS 3 development.
+
+<P>
+Although it is not required, the GENESIS development team would like
+to know something about your intended or present use of GENESIS
+through the forums.
+
+<P> Although this description need not be lengthy, please try to be as
+specific as possible in your statement of what types of models you intend
+to construct with GENESIS.  If you have used GENESIS in teaching or
+research in the past, we would like to hear about it, with references for
+any publications or conference papers related to your use of GENESIS.  This
+introduction of yourself will not only help GENESIS developers to support
+your needs, but will also enable other GENESIS users to share information
+and ideas with those who have similar modeling interests.
+
+<P>
+
+<P>
+The Sourceforge project page
+<P>
+
+<CENTER><A HREF="http://sourceforge.net/projects/genesis-sim">
+http://sourceforge.net/projects/genesis-sim</A>
+</CENTER>
+
+<P>
+is the CVS repository for GENESIS 2 versions.
+
+<P>
+<H1><A NAME="section-8.">Copyright Notice</A></H1>
+
+<P>
+  Copyright 1988 - 2001 by the California Institute of Technology
+ 
+ <P>
+This program is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the Free
+Software Foundation. Portions of this program are in library form. The
+libraries are also free software; you can redistribute them and/or modify
+them under the terms of the GNU Lesser General Public License as published
+by the Free Software Foundation; either version 2.1 of the License, or (at
+your option) any later version. 
+
+<P>
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+more details. 
+
+<P>
+You should have received a copy of the GNU General Public License and the
+GNU Lesser General Public License along with this program; if not, write to
+the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+<STRONG>02110-1301 USA. </STRONG>
+
+<P>
+Recent additions to the GENESIS libraries are copyrighted by other
+institutions or authors, and are covered by the GNU General Public License
+(GPL), GNU Lesser General Public License (LGPL), or by other licenses that
+are compatible with the GPL and that do not restrict the free distribution
+of GENESIS. These licenses appear with these modules. 
+
+</BODY>
+</HTML>

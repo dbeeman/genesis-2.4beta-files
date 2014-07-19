@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE></TITLE>
+<META NAME="generator" CONTENT="txt2html v1.28">
+</HEAD>
+<BODY>
+
+
+<center>
+<H1><A NAME="section-1.">Using CVAPP with GENESIS</A></H1>
+<P>
+<H2>Dieter Jaeger
+<P>
+Emory University
+</H2></center>
+
+<P> CVAPP is a morphology viewer/editor written in Java by Robert Cannon
+for converting between file formats.  The original version (1.1) and a
+modification by Steve van Hooser to handle remeshing of structures for
+GENESIS (1.4.3) are available at <A
+HREF="http://www.compneuro.org/CDROM/docs/cvapp.html">
+http://www.compneuro.org/CDROM/docs/cvapp.html</A>.  More information about
+CVAPP, with a link to basic usage information can be found at <A
+HREF="http://www.compneuro.org/CDROM/nmorph/cellArchive.html">
+http://www.compneuro.org/CDROM/nmorph/cellArchive.html</A>.
+
+<P> Dieter Jaeger has written the following supplemental notes for using
+version 1.4.3 with GENESIS:
+
+<P>
+<B>Directions on using CVAPP to convert Neurolucida v3 files to
+GENESIS 2 cell parameter file (.p) file format
+</B>
+<PRE>
+
+     Step 1: Reconstruct cell in Neurolucida v3.x
+
+     Be careful not to miss any dendrites or misjudge diameter of thin
+     processes. Save data in ascii format.
+
+     Step 2: Install cvapp on your computer
+
+     The meshing facilities required for genesis are only available in
+     the version 1.4 or later of cvapp. If you are using Linux, set the
+     CLASSPATH environment variable to point to the directory
+     containing your cvapp installation.
+
+     Step 3: run cvapp
+
+     In the directory containing you Neurolucida data asci files, type
+     java cvapp.
+
+     Step 4: File -&gt; Open -&gt; &gt; your file &gt;
+
+     Step 5: Replace the soma
+
+     GENESIS uses a single spherical compartment as a soma instead of
+     the polygonal shape used by Neurolucida. Delete the existing
+     polygon with select tree option, followed by delete. To select a
+     tree, click two points on the soma contour after clicking the
+     select tree option. If the soma was not a closed shape (as it
+     should be), you need to start the tree selection at one of the
+     contour endpoints. In general after clicking on a menu command,
+     further instructions will appear as text in the upper left corner
+     of the cell display.
+
+     To create the new spherical soma, use menu option add floating to
+     add a single compartment in center of intended soma. Drag out the
+     size of this compartment w/ right mouse button. Delete the narrow
+     end of the created cylinder by using remove menu option and left
+     clicking on this point. Now only a single point is visible for the
+     new soma, but the diameter information is retained. If you don't
+     see anything left of your soma, click on the nodes menu item. This
+     toggles a single point visibility mode. Remove old soma.
+
+     Step 6: Connect dendrites to new soma
+
+     Click on ident menu option, then left-click on the trunk
+     compartment of a dendrite, then left click on the soma point. A
+     connection will become visible. If it doesn't, click once on the
+     outlines toggle, which makes connections visible as yellow lines.
+     Repeat this process for each dendrite, starting with a new click
+     on ident.
+
+     Step 7: Mark areas of the cell as dendrites, axon, soma etc.
+
+     Use the trace select option to select pieces (selected pieces
+     change color), use the pulldown menu located underneath the mark
+     menu item (right click on text string starting with as) to set the
+     desired structure type. Then click on the mark menu item.
+
+     [Important note: If you need to create new types of structures,
+     you need to add this to a file called a marking file (example see
+     HN4_marks in your cvapp directory). You can add the structures
+     from a marking file from the mark menu options.]
+
+     Step 8 option 1: Save cell to genesis .p file w/o remeshing the
+     compartment structure
+
+     Use file -&gt; save as -&gt; genesis v2.1 option. DONE. Most often,
+     however, Neurolucida files are not drawn with electronically
+     correct compartment sizes. To recompartmentalize the cell
+     (meshing), follow step 8, option 2.
+
+     Step 8, option 2: Mesh the cell
+
+     Beware, there is no undo option - any goof and you go back to step
+     1. However, you can save the cell in its current state in cvapp's
+     native format with the save as swc option and then reload it as
+     often as you like.
+
+     Set meshing parameters in the file -&gt; set meshing parameters menu
+     to reflect passive constants of your cell. (Comp. length is in
+     electrotonic constants, max radius change is in microns difference
+     diameter between beginning and end of a cylinder to be meshed
+     together). Then mesh. You will get a text output in your console
+     window as each dendrite is meshed, and you will get a final output
+     Meshing Done; number of compartments: xxx. This process can take
+     several minutes with large neurons. If you get errors, most likely
+     your soma isn't connected right, or you have stray points in your
+     file. Start over and try to eliminate such extra points. When the
+     meshing works you will see nicely regular spaced node points
+     appear in the drawn cell. Then follow Step 8, option 1.
+</PRE>
+
+</BODY>
+</HTML>

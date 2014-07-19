@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>README</TITLE>
+<META NAME="generator" CONTENT="txt2html v1.25">
+</HEAD>
+<BODY BGCOLOR="#ffffff" TEXT="#000000">
+<H1><A NAME="section-1">README - Getting started with GENESIS</A></H1>
+
+<P> This README file tells you how to obtain, install, and run GENESIS and the
+GENESIS Neural Modeling Tutorials package.  The main index to the tutorials is
+<A HREF="index.html">here</A>.
+<P>
+If you are unfamilar with the UNIX command line environment, the short
+<A HREF="unixhelp/unixhelp.html">Introduction to UNIX or Linux</A>
+will help you understand the instructions below.
+
+<H2>Installing GENESIS
+</H2>
+<P>
+
+You may install the hypertext GENESIS Modeling Tutorials and the
+supplementary material for the Advanced GENESIS Tutorials anywhere on your
+computer, without installing GENESIS.  However, you will get the most
+advantage from the tutorials if you install the GENESIS simulator first,
+and install the Tutorials in the "genesis" directory.
+
+<P> The first step is to download the latest GENESIS distribution from the
+GENESIS Web site <A HREF="http://genesis-sim.org/GENESIS/">
+http://genesis-sim.org/GENESIS/</A>. If you are using Linux, Mac OS/X,
+or Microsoft Windows with Cygwin (a UNIX-like environment for Windows), you
+may download the appropriate GENESIS binary distribution that includes a
+precompiled "<i>genesis</i>" executable file.  This will save you the
+trouble of compiling GENESIS from the source code that is included with the
+GENESIS source distribution.
+
+<P> The GENESIS distribution may be installed in whatever directory is most
+convenient.  You do not need "root" privileges to install within your home
+directory.  On the other hand, if you want a system-wide installation,
+<i>/usr/local</i> is a good place to install GENESIS.  The distributed
+compressed tar file will have name like <i>genesis-2.4-src.tar.gz</i>,
+or if it is a binary distribution, <i>genesis-2.4-linux-bin.tar.gz</i>.
+It will unpack to produce the directory tree <i>genesis-2.4/genesis</i> and
+its subdirectories.
+
+<P> Use a terminal window to change to the directory in which you wish the
+GENESIS directory tree to reside, and (if the file you downloaded is called
+"<i>genesis-2.4-src.tar.gz</i>") give the Unix command:
+
+<PRE>
+    gunzip -c genesis-2.4-src.tar.gz | tar xvf -
+</PRE>
+
+For most Linux systems and those with gnu tar, you can simply use:
+
+<PRE>
+    tar xvzf genesis-2.4.src.tar.gz
+</PRE>
+
+<P>
+If genesis-2.4-src.tar.gz, is not in this directory, give the full path to
+it, e.g. 
+<PRE>
+    gunzip -c ~joeuser/downloads/genesis-2.4-src.tar.gz | tar xvf -
+</PRE>
+
+<P> Begin by reading the README file in the <i>genesis</i> directory, and
+then follow the compilation instructions in <i>genesis/src/README</i>.  If
+you are using a package with a precompiled executeable, there will be
+installation instructions in a README file within the unpacked
+<i>genesis</i> directory.
+
+<P>
+
+<H2>Installing the GENESIS Neural Modeling Tutorials
+</H2>
+<P>
+It is likely that the GENESIS Neural Modeling Tutorials have been installed
+with this file that you are reading.  If not, download the "Ultimate
+GENESIS Tutorial Distribution archive from the GENESIS Web site <A
+HREF="http://genesis-sim.org/GENESIS/UGTD.html">
+http://genesis-sim.org/GENESIS/UGTD.html</A>.  It is available as either
+UGTD.tar.gz, or UGTD.zip, which may be extracted with "unzip" or
+one of the tools used with Windows for extracting zip files.  In either
+case, it extracts to a directory (folder) called "<i>UGTD</i>".  If
+you have installed GENESIS, you can extract the files in the
+<i>genesis/Tutorials</i> directory, alongside the <i>Scripts</i>, <i>Doc</i>,
+<i>Hyperdoc</i>, and other GENESIS directories.  This will allow you to
+treat it as an extension of the documentation in the GENESIS distribution.
+
+<P> The GENESIS tutorials refer to this "GENESIS Tutorials directory", which
+contains the tutorials themselves, this README file, and other directories
+such as the <i>cells</i> directory, which contains cell models that are used
+by the tutorials.  The <a href="index.html">index.html</a> file in the GENESIS
+Tutorials directory is the master index to the tutorials.  It would be a good
+idea to set a bookmark to this file in your web browser, so that you will have
+the links to the tutorials and to the GENESIS documentation easily available.
+
+<P> If you have installed GENESIS, the hypertext GENESIS Reference Manual will
+be in <i>genesis/Hyperdoc/Manual.html</i>.
+
+<P>
+
+<H2>Running GENESIS simulations</H2>
+
+<P>
+You can try out some of the GENESIS demonstration and tutorial
+simulations in the <i>genesis/Scripts</i> directory.  This directory and its
+subdirectories each have a README file with information about the files
+to be found in the directory.   For example, assuming that the GENESIS
+directory is <i>/usr/local/genesis</i>, you can run the "Squid" tutorial
+on Hodgkin-Huxley channels by giving the commands:
+
+<PRE>
+    cd /usr/local/genesis/tutorials/squid
+    genesis Squid
+</PRE>
+
+<P>
+Other demos and tutorials that you might want to try are <i>traub91</i>,
+<i>burster</i>, <i>neurokit</i>, <i>purkinje</i>, and <i>piriform</i>.  In
+some cases, you will want to copy a set of GENESIS simulation scripts into a
+directory of your own, so that you can modify the scripts or run simulations
+that create output files.  (The permissions of the GENESIS directories are set
+so that you cannot write into them.)  For this you can create your own Scripts
+directory with "<tt>mkdir ~/Scripts</tt>" and then copy a directory tree with
+a command such as
+
+<PRE>
+    cp -r /usr/local/genesis/Scripts/purkinje ~/Scripts
+</PRE>
+<P>
+You can also try out some of the GENESIS cell and network simulations from
+the included archives of <A HREF="cells/index.html">cell</A> and
+<A HREF="networks/index.html">network</A> simulation
+scripts.
+
+<P>
+
+
+Once you are able to run these scripts, you can begin to modify them or
+write your own, using the information in the
+<A HREF="index.html">GENESIS Neural Modeling Tutorials</A>.
+<P>
+
+<HR>
+<P>
+
+<A HREF="index.html"><img align=top src="back2.gif">
+Back to the main Tutorials Index</A>.
+
+<P>
+<i>Last update on:</i> Wed Jul 16 21:36:25 MDT 2014
+
+<P>
+
+<HR>
+
+</BODY>
+</HTML>
+

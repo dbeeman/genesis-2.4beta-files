@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE></TITLE>
+<META NAME="generator" CONTENT="txt2html v1.28">
+</HEAD>
+<BODY>
+<H1><A NAME="section-1.">Demonstration of gap junction coupling</A></H1>
+
+<P>
+gapdemo.g is a simple demo of the effect of gap junctions on
+synchronization of firing.  It is a modification of the
+Tutorials/cells/simplecell simulation in the GENESIS Neural Modeling
+Tutorials package, with two copies of the simple two-compartment cell
+having a random background activation frequency for the dendrite
+Ex_channel, and a gap junction between the the dendrites of the two cells.
+The cells are defined in cell.p and protodefs.g.
+
+<P>
+The GUI allows the frequency and the resistance of the gap junction to be
+varied.  The latter is performed by the function in graphics.g:
+
+<PRE>
+function set_R_gap(dialog)
+    str dialog<BR>
+    R_gap = {{getfield {dialog} value}*1e6}  // sets it globally
+    // get rid of the original messages
+    deletemsg /cell2/dend 0 -incoming -find /cell1/dend RAXIAL
+    deletemsg /cell1/dend 0 -incoming -find /cell2/dend RAXIAL
+    addmsg /cell1/dend /cell2/dend RAXIAL {R_gap} Vm
+    addmsg /cell2/dend /cell1/dend RAXIAL {R_gap} Vm
+end
+</PRE>
+
+<P>
+With the default R_gap of 200 Mohm and a frequency of 200 Hz, the
+synchronization is nearly perfect.  The firing begins to desynchronize
+for larger values.
+
+<P>
+Of course, the synchronization is aided by the fact that the two cells are
+identical, although they have independent set of random activations at the
+same average frequency.  The setrandfield command can be used to the
+genesis prompt in order to explore the effect of introducing random
+variations in the cell passive parameters or the channel dynamics.  For
+example:
+
+<PRE>
+setrandfield /cell1/soma Rm -gaussian 117891384 50e6
+setrandfield /cell2/soma Rm -gaussian 117891384 50e6
+</PRE>
+
+<P>
+This is causes some obvious decrease in synchronization when R_gap = 300 Mohm.
+
+<P>
+Dave Beeman Wed Jun 18 18:05:36 MDT 2008
+
+<HR><P>
+Links to files in the gapdemo directory:
+<P>
+<a href="cell.p">cell.p</a><BR>
+<a href="gapdemo.g">gapdemo.g</a><BR>
+<a href="graphics.g">graphics.g</a><BR>
+<a href="protodefs.g">protodefs.g</a><BR>
+<a href="xtools.g">xtools.g</a><BR>
+<a href="README">README</a><BR>
+<P>
+<HR>
+
+</BODY>
+</HTML>

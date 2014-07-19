@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002 (1.62) JA patch-1.4
+patched version by:  Kenshi Muto, Debian Project.
+LaTeX2HTML 2002 (1.62),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Synchan event handling</TITLE>
+<META NAME="description" CONTENT="Synchan event handling">
+<META NAME="keywords" CONTENT="tutorial2">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002 JA patch-1.4">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutorial2.css">
+
+<LINK REL="next" HREF="node52.html">
+<LINK REL="previous" HREF="node50.html">
+<LINK REL="up" HREF="node50.html">
+<LINK REL="next" HREF="node52.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html807"
+  HREF="node52.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html803"
+  HREF="node50.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html797"
+  HREF="node50.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html805"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html808"
+  HREF="node52.html">New Incoming Events</A>
+<B> Up:</B> <A NAME="tex2html804"
+  HREF="node50.html">Implementation</A>
+<B> Previous:</B> <A NAME="tex2html798"
+  HREF="node50.html">Implementation</A>
+ &nbsp <B>  <A NAME="tex2html806"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION04121000000000000000">
+<TT>Synchan</TT> event handling</A>
+</H2>
+
+<P>
+For every synaptic channel <TT>hsolve</TT> keeps an internal counter
+that tracks when the next event on that channel arrives.  If the
+counter is zero, <TT>hsolve</TT> puts a zero in the
+<TT>activation</TT> field of the channel.  Then it asks the channel to
+calculate the activation for all events that should be fired during
+the next time step by calling the <TT>HPROCESS</TT> action on the
+channel element.  The channel then computes the activation value for
+all firing events by summing the weights of the synapses at which the
+events arrive, but without doing any numerical computations for the
+conductance (i.e. the computations that are part of a normal
+<TT>PROCESS</TT> cycle for a synaptic channel).  The result is put in
+the <TT>activation</TT> field of the synaptic channel.
+<TT>Hsolve</TT> then fetches the value of the <TT>activation</TT>
+field and incorporates it in its own computations to compute the
+conductance of the channel.  The internal counter that <TT>hsolve</TT>
+maintains for the channel, is set to the number of time steps before
+the next synaptic event arrives on that channel by inspecting the
+(sorted) list of pending events of the channel.
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<TABLE  WIDTH="635">
+<TR><TD>
+  <FONT SIZE="-1"><B>NOTE:</B> The Genesis scheduler never schedules the
+    synaptic channels taken over by an <TT>hsolve</TT> element.  It is
+    <TT>hsolve</TT> that calls the <TT>HPROCESS</TT> action on the
+    appropriate channel when needed.  These channels are therefore not
+    represented in the simulation schedule.
+</FONT></TD></TR>
+</TABLE>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html807"
+  HREF="node52.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html803"
+  HREF="node50.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html797"
+  HREF="node50.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html805"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html808"
+  HREF="node52.html">New Incoming Events</A>
+<B> Up:</B> <A NAME="tex2html804"
+  HREF="node50.html">Implementation</A>
+<B> Previous:</B> <A NAME="tex2html798"
+  HREF="node50.html">Implementation</A>
+ &nbsp <B>  <A NAME="tex2html806"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+
+2002-11-15
+</ADDRESS>
+</BODY>
+</HTML>

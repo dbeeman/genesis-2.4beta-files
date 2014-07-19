@@ -1,0 +1,222 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>>Passive Propagation in Dendrites</TITLE>
+</HEAD>
+<BODY BGCOLOR="#ffffff" TEXT="#000000">
+<H1>Passive Propagation in Dendrites: A Digression on Cable Theory</H1>
+
+<P>
+We would like to understand and make some quantitative predictions about the
+attenuation of post-synaptic potentials as they propagate through a length of
+dendrite towards the soma.  So far, we haven't said anything about the length
+of the neural compartments that we use when we model a section of dendrite.
+When we approximate the continous dendrite with discrete compartments, how
+many should we use in order to have a relatively smooth variation in membrane
+potential from one compartment to the next?
+
+<P>
+If we consider a length of dendrite as a chain of linked compartments that are
+represented by the <a href="compt.gif">generic compartment diagram</a>, we can
+see that a PSP propagating from one compartment to another must flow through
+the axial resistance R<sub>a</sub>, and can be reduced as current is shunted
+off to ground as it flows through the membrane resistance R<sub>m</sub>.  (If
+there are conducting ion channels, the conductance G<sub>k</sub> can further
+affect the PSP.)  So, we would expect that the attenuation of a PSP will be
+least when R<sub>a</sub> is small and R<sub>m</sub> is large, and that it
+should be possible to calculate the attentuation from a knowledge of these
+quantities.
+
+<H2>Some History</H2>
+
+<P>
+In 1855, Prof. William Thompson (Lord Kelvin) presented to the Royal
+Society a theoretical analysis of attentuation of signals in the
+transatlantic telephone cable that was then being planned.
+An undersea cable is similar to a nerve fiber.  It has a conducting core
+covered with an insulating sheath, and is surrounded by sea water.  As the
+insulation is not perfect, there will be a finite leakage resistance
+through the insulation.  The main quantitative difference is that the core
+of the cable is made of copper, which is a much better conductor than the
+salt solution inside a neuron, and the cable covering is a much better
+insulator than the cell membrane.  As a result, signals in the cable may
+travel for many miles without significant attenuation.
+
+<P>
+In the 1940's, Hodgkin and others applied cable theory to nerve fibers.
+Many papers by Wilfred Rall in the 1960's and 1970's made further
+application of cable theory to the analysis of PSPs in dendrites.
+
+<H2>Some Notation</H2>
+
+<P>
+So far, we haven't said much about the units used to express the quantities
+R<sub>m</sub>, R<sub>a</sub>, C<sub>m</sub>, V<sub>m</sub>, etc. that appear
+in the <a href="compt.gif">neural compartment diagram</a> and the <a
+href="compteqn.gif"> differential equation for V<sub>m</sub></a>.
+
+<P>
+Physicists and engineers like to use SI (MKS) units of ohms, farads, volts,
+and meters for describing resistance, capacitance, voltage, and length.
+Neurophysiologists are more likely to prefer kilohms, microfarads,
+millivolts, and either centimeters or micrometers.  One can use any
+consistent set of units with GENESIS, but it is most common to use SI
+units.
+
+<P>
+The problem with using any of these units for resistance and capacitance is
+that R<sub>m</sub>, C<sub>m</sub>, and R<sub>a</sub> will depend on the
+dimensions of the section of dendrite that is represented by the neural
+compartment.  In order to specify parameters that are independent of the cell
+dimensions, <i>specific units</i> are used.  For a cylindrical compartment, the
+membrane resistance is inversely proportional to the area of the cylinder, so
+we define a <i>specific membrane resistance</i> R<sub>M</sub>, which has
+units of <i>ohms&middot;m&sup2;</i>.  The membrane capacitance is proportional
+to the area, so it is expressed in terms of a <i>specific membrane
+capacitance</i> C<sub>M</sub>, with units of <i>farads</i>/<i>m&sup2;</i>.
+Compartments are connected to each other through their axial resistances
+R<sub>a</sub>.  The axial resistance of a cylindrical compartment is
+proportional to its length and inversely proportional to its cross-sectional
+area.  Therefore, we define the <i>specific axial resistance</i> R<sub>A</sub>
+to have units of <i>ohms&middot;m</i>.
+
+<P>
+For a piece of dendrite or a compartment of length <i>l</i> and diameter
+<i>d</i> we then have
+
+<P>
+<BR><P></P>
+<DIV ALIGN="CENTER">
+<IMG
+ WIDTH="315" HEIGHT="46" BORDER="0"
+ SRC="cableeqn1.gif"
+ ALT="\begin{displaymath}R_{m} = \frac{R_M}{\pi l d},\; C_{m} = \pi l d C_M,\;
+R_{a}= \frac{4 l R_A}{\pi d^{2}}.
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+
+<P>
+Note the membrane time constant R<sub>m</sub>&middot;C<sub>m</sub>
+is also equal to R<sub>M</sub>&middot;C<sub>M</sub>, so that it
+is independent of the dimensions of the membrane.
+
+<P>
+WARNING: Many treatments of the passive properties of neural tissue use
+the symbols R<sub>m</sub>, R<sub>a</sub>, and C<sub>m</sub>
+for the specific resistances and capacitance,
+instead of this notation with R<sub>M</sub>, R<sub>A</sub>, and C<sub>M</sub>.
+Also, many textbooks and journal papers define the resistance and capacitance
+in terms of that for a unit length of cable having a specified diameter, where
+
+<P ALIGN=CENTER><i>  R<sub>m</sub> = r<sub>m</sub>/l, C<sub>m</sub> =
+c<sub>m</sub>l, R<sub>a</sub> = r<sub>a</sub>l</i>.
+
+<P>
+Although this notation is convenient and widely used, it obscures the fact
+that r<sub>m</sub> and r<sub>a</sub> depend on the dendrite diameter.  In your
+reading, you should be aware of the units that are being used.
+
+<H2>Results and Consequences</H2>
+
+<P>
+Linear cable theory assumes that the cable (or neural fiber) has a constant
+diameter and leakage resistance.  Thus, it applies to passive membrane
+properties, as when PSPs propagate through a uniform section of dendrite that
+has no time or voltage dependent conductances.  When R<sub>m</sub> is much
+greater than R<sub>a</sub>, as is typically the case, the current flow is
+essentially one-dimensional, along the length of the cable.  Under these
+conditions, there are exact mathematical solutions for the voltage as a
+function of time and position along the cable.  With the additional
+simplifying assumptions that a constant, or very slowly varying, voltage
+V<sub>0</sub> is applied to one end of a very long cable, there is a simple
+solution to the cable equation for the voltage at a distance <i>x</i>:
+
+<P>
+<BR><P></P>
+<DIV ALIGN="CENTER">
+<!-- MATH
+ \begin{displaymath}
+V(x) = V_0 e^{-x/\lambda}, \mbox{ where } \lambda = \sqrt{(d/4)R_M/R_A}
+\end{displaymath}
+ -->
+ <IMG
+ WIDTH="353" HEIGHT="36" BORDER="0"
+ SRC="cableeqn2.gif"
+ ALT="\begin{displaymath}
+V(x) = V_0 e^{-x/\lambda}, \mbox{ where } \lambda = \sqrt{(d/4)R_M/R_A}
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>                                                                         
+<P>
+The quantity "lambda" in this equation is called the "space constant" (or
+"length constant"), and represents the distance at which the voltage will have
+decreased to 1/<i>e</i>, or about 37%, of its original value.
+
+<P>
+The GENESIS Neuron tutorial simulation uses values of R<sub>M</sub> = 5
+<i>Kohm&middot;cm&sup2;</i> and R<sub>A</sub> = 0.025 <i>Kohm&middot;cm</i>, with a
+dendrite diameter of 0.0002 cm (2 micrometers) and a length of 0.01 cm for
+each compartment.  You should be able to show that the space constant is then
+0.1 cm and that and the attenuation over the length of seven compartments (0.07
+cm) is exp(-0.7) = 0.497.
+
+<P>
+Note the the space constant depends on the square root of the radius.  Thus,
+large diameter axons are best for propagation of action potentials over large
+distances.  The space constant also influences spatial summation.  Spatially
+separated synaptic inputs will combine differently in small diameter dendrites
+than in ones with larger diameters.  The giant axon of the squid has a
+diameter of about 1 mm.  How much larger would the space constant be for the
+squid, if it had the same values of R<sub>M</sub> and R<sub>A</sub> as used in
+the Neuron tutorial?
+
+<P>
+If the leakage resistance varies with time and voltage, as when there are
+active channels present, then one must solve the equations for V<sub>m</sub>
+numerically, dividing the dendrite into finite compartments.  Nevertheless,
+the space constant is a useful quantity for giving a rough idea of the
+attenuation.
+
+<P>
+As the length of a compartment approaches zero, the behavior of this "lumped
+parameter" model approaches that of a continous cable.  In practice, we want
+to have only "small" jumps in V<sub>m</sub> from one compartment to the next,
+approximating the smooth variation of a continous medium.  But, we don't want
+to make the compartments any smaller than we have to in order to obtain
+reasonably accurate results.  Experience with compartmental simulations
+suggests that good results can usually be obtained when the compartment length
+is less than 1/20 of the space constant.
+
+<H2>For Further Study</H2>
+
+<P>
+The help menus for the GENESIS Neuron and Cable tutorial simulations suggest
+some experiments and exercises involving passive propagation in dendrites.
+Chapters 5 and 6 of <a
+href="http://www.genesis-sim.org/GENESIS/bog/bog.html">The Book of GENESIS</a>
+provide further details and give additional theoretical background.
+Other chapters describe the process of creating simulations of
+multicompartmental neurons and of networks, such as the Traub model and
+Piriform Cortex model described in these lectures.
+
+You can read more about the application of cable theory to dendrites in:
+
+<P>
+Rall, W. and Agmon-Snir, H. (1998) Cable Theory for Dendritic Neurons,
+<i>in</i> C. Koch and I. Segev (eds.) <i>Methods in Neuronal Modeling</i>,
+second edn, MIT Press, Cambridge, MA, chapter 2, pp. 27-92.
+
+<P>
+Jack, J. J. B., Noble, D. and Tsien, R. W. (1975) <i>Electric Current Flow in
+Excitable Cells</i>, Calderon Press, Oxford.
+
+<P>
+Rall, W.  (1977) Cable Theory for Neurons, <i>in</i> E. R. Kandel,
+J. M. Brookhardt and V. B. Mountcastle (eds), <i>Handbook of Physiology: The
+Nervous System</i>, Vol. 1, Williams and Wilkins, Baltimore, chapter 3,
+pp. 39-98.
+
+</BODY>
+</HTML>

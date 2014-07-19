@@ -1,0 +1,407 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002 (1.62) JA patch-1.4
+patched version by:  Kenshi Muto, Debian Project.
+LaTeX2HTML 2002 (1.62),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Basic Use: A short overview</TITLE>
+<META NAME="description" CONTENT="Basic Use: A short overview">
+<META NAME="keywords" CONTENT="tutorial2">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002 JA patch-1.4">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutorial2.css">
+
+<LINK REL="next" HREF="node16.html">
+<LINK REL="previous" HREF="node14.html">
+<LINK REL="up" HREF="node14.html">
+<LINK REL="next" HREF="node16.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html343"
+  HREF="node16.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html339"
+  HREF="node14.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html333"
+  HREF="node14.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html341"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html344"
+  HREF="node16.html">The chanmode Field: Modes</A>
+<B> Up:</B> <A NAME="tex2html340"
+  HREF="node14.html">Introducing Hsolve for Single</A>
+<B> Previous:</B> <A NAME="tex2html334"
+  HREF="node14.html">Introducing Hsolve for Single</A>
+ &nbsp <B>  <A NAME="tex2html342"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION02210000000000000000"></A>
+<A NAME="sec:hsolve-overview"></A>
+<BR>
+Basic Use: A short overview
+</H1>
+
+<P>
+Since <TT>hsolve</TT> is only a computation engine, it has no
+knowledge of your model (number of equations, morphology, ...).  The
+first step in using <TT>hsolve</TT> is always a step of model
+construction without using <TT>hsolve</TT> at all.  The next step is
+creating and configuring <TT>hsolve</TT> such that it knows what (part
+of) the model to compute and how to compute it.  Then you inform
+<TT>hsolve</TT> that everything is in place and it may do its internal
+initialization.  After the usual '<TT>reset</TT>', you can start the
+simulation.
+
+<P>
+If we want to compute two coupled compartments with Hodgkin-Huxley
+channels, this may look like the following:
+
+<P>
+
+<OL>
+<LI>Write your scripts as if you are not using <TT>hsolve</TT> at
+  all:
+  
+<OL>
+<LI><I>Set the simulation clock(s)</I>.
+
+<P>
+<PRE>
+ genesis &gt; setclock 0 0.0000030
+</PRE>
+
+<P>
+<BR>
+<BR>
+
+<P>
+<TABLE  WIDTH="544">
+<TR><TD>
+      <FONT SIZE="-1"><B>NOTE:</B> Never forget to set the main simulation
+        clock.  If you do not do so, <TT>hsolve</TT> will be confused and
+        can produce unexpected results.
+    </FONT></TD></TR>
+</TABLE>
+
+<P>
+<BR>
+<BR>
+
+<P>
+</LI>
+<LI><I>Create the model</I> you want to simulate: create all the
+    elements, set all their fields and create messages between them.  In
+    this example we create two coupled compartments each containing a
+    fast sodium conductance and a delayed rectifier conductance.  For
+    <TT>hsolve</TT> it is important that these channels are below the
+    compartments they belong to in the Genesis element hierarchy:
+<PRE>
+ genesis &gt; create neutral /cell
+ genesis &gt; ce /cell
+ genesis &gt; create compartment c1
+ genesis &gt; setfield c1 Ra 0.5 Rm 10 Cm 0.01 Em -0.065
+ genesis &gt; copy /library/NaF c1/NaF
+ genesis &gt; addmsg c1 c1/NaF VOLTAGE Vm ; addmsg c1/NaF c1 CHANNEL Gk Ek
+ genesis &gt; copy /library/Kdr c1/Kdr
+ genesis &gt; addmsg c1 c1/Kdr VOLTAGE Vm ; addmsg c1/Kdr c1 CHANNEL Gk Ek
+ genesis &gt; copy c1 c2
+ genesis &gt; addmsg c1 c2 AXIAL Vm ; addmsg c2 c1 RAXIAL Ra Vm
+</PRE>
+
+<P>
+<BR>
+<BR>
+
+<P>
+<TABLE  WIDTH="544">
+<TR><TD>
+      <FONT SIZE="-1"><B>NOTE:</B> In this example all elements use the
+        same simulation clock i.e. clock 0.  When you want to use
+        <TT>hsolve</TT> on elements that use different simulations
+        clocks, reconfigure the model such that they all use the same
+        simulation clock.  Afterwards migrate to <TT>hsolve</TT>.
+    </FONT></TD></TR>
+</TABLE>
+
+<P>
+<BR>
+<BR>
+
+<P>
+</LI>
+</OL>
+</LI>
+<LI>Create and configure <TT>hsolve</TT>:
+  
+<OL>
+<LI><I>Create hsolve</I> element at the right location.
+<PRE>
+ genesis &gt; ce /cell
+ genesis &gt; create hsolve solver
+</PRE>
+</LI>
+<LI><I>Set the '<TT>path</TT>' field</I> with a wild card to match
+    the compartments to be computed.  The '<TT>path</TT>' field is
+    always specified relative to the hsolve element (not to the
+    current working element).  In this example the full path
+    specification is
+    "<TT>/cell/solver/../##[][TYPE=compartment]</TT>", which is the
+    same as "<TT>/cell/##[][TYPE=compartment]</TT>".  Configure
+    <TT>hsolve</TT> further by setting other fields like
+    <TT>chanmode</TT> and <TT>calcmode</TT> if needed (it is not
+    needed in this example).  We will cover these fields in one of the
+    next sections.
+<PRE>
+ genesis &gt; setfield solver path "../##[][TYPE=compartment]"
+</PRE>
+</LI>
+<LI><I>Set the numerical method</I> to use for the computations
+    done by hsolve (normally one always uses Crank-Nicolson, i.e.
+    method 11).
+<PRE>
+ genesis &gt; setmethod solver 11
+</PRE>
+
+<P>
+<BR>
+<BR>
+
+<P>
+<TABLE  WIDTH="544">
+<TR><TD>
+      <FONT SIZE="-1"><B>NOTE:</B> Never forget to set the method to
+        backward-Euler (method 10) or Crank-Nicolson (method 11).  If
+        you do not do so, <TT>hsolve</TT> will be confused and can
+        produce unexpected results.
+    </FONT></TD></TR>
+</TABLE>
+
+<P>
+<BR>
+<BR>
+
+<P>
+</LI>
+</OL>
+</LI>
+<LI>Initialize <TT>hsolve</TT>:
+  
+<OL>
+<LI><I>Call the <TT>SETUP</TT> action</I> on <TT>hsolve</TT>.
+    This allows <TT>hsolve</TT> to do its internal initialization.
+    Basically <TT>hsolve</TT> will <I>examine</I> the <I>structure
+      of the model</I> and compile it into an internal efficient
+    representation.  All operations up till this step may only be
+    performed once.
+<PRE>
+ genesis &gt; call solver SETUP
+</PRE>
+</LI>
+<LI>Do <I>other things</I> of interest to your simulation
+    (<I>don't touch the elements that will be computed by
+      <TT>hsolve</TT></I>).
+<PRE>
+ genesis &gt; ...
+</PRE>
+</LI>
+<LI><I>Call the <TT>RESET</TT> action</I> on <TT>hsolve</TT> (this
+    is automatically done by the Genesis '<TT>reset</TT>' command).
+    This will <I>transfer and convert</I> all <I>initial values</I>
+    into <TT>hsolve</TT>'s internal data structures.  This step can be
+    repeated as many times as needed since it does not alter the
+    model's structure.
+<PRE>
+ genesis &gt; reset
+</PRE>
+</LI>
+</OL>
+</LI>
+<LI>Do the simulation ('<TT>step</TT>' command).
+<PRE>
+ genesis &gt; step 1 -time
+</PRE>
+</LI>
+</OL>
+
+<P>
+That's it, here is again the full code:
+
+<P>
+<PRE>
+       genesis &gt; create neutral /cell
+       genesis &gt; ce /cell
+       genesis &gt; create compartment c1 -initVm
+       genesis &gt; setfield c1 Ra 0.5 Rm 10 Cm 0.01 Em -0.065
+       genesis &gt; copy /library/NaF c1/NaF
+       genesis &gt; addmsg c1 c1/NaF VOLTAGE Vm ; addmsg c1/NaF c1 CHANNEL Gk Ek
+       genesis &gt; copy /library/Kdr c1/Kdr
+       genesis &gt; addmsg c1 c1/Kdr VOLTAGE Vm ; addmsg c1/Kdr c1 CHANNEL Gk Ek
+       genesis &gt; copy c1 c2
+       genesis &gt; addmsg c1 c2 AXIAL Vm ; addmsg c2 c1 RAXIAL Ra Vm
+       genesis &gt; ce /cell
+       genesis &gt; create hsolve solver
+       genesis &gt; setfield solver path "../##[][TYPE=compartment]"
+       genesis &gt; setmethod solver 11
+       genesis &gt; call solver SETUP
+       genesis &gt; ...
+       genesis &gt; reset
+       genesis &gt; step 1 -time
+</PRE>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<TABLE  WIDTH="635">
+<TR><TD>
+  <FONT SIZE="-1"><B>NOTE:</B> Depending on the circumstances, the
+    <TT>hsolve</TT> element can be created automatically.  An example
+    is the use of the '<TT>-hsolve</TT>' option of the
+    '<TT>readcell</TT>' command in which case the <TT>path</TT> field
+    is also set to point to the compartments of the cell that is being
+    read.  Currently an annoying bug in the <TT>readcell</TT> code
+    obliges you to use absolute pathnames for the created elements if
+    you use this option.
+</FONT></TD></TR>
+</TABLE>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<TABLE  WIDTH="635">
+<TR><TD>
+  <FONT SIZE="-1"><B>NOTE:</B> In the example given above all elements use
+    clock zero.  It must be noted that <TT>hsolve</TT> computes all
+    variables using the same clock (so the same time step).  If you
+    only use the elements that act as a model for <TT>hsolve</TT>, you
+    have the flexibility to use different clocks for different
+    elements (so different time steps for different elements).
+
+</FONT></TD></TR>
+</TABLE>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+It is useful to discuss how Genesis deals with <TT>hsolve</TT>.
+Without <TT>hsolve</TT>, all elements you create, are responsible for
+their own calculations.  A compartment for example will compute a
+(cylindrical) cable equation using the exponential-Euler rule and has
+some facilities to communicate certain variables to or from other
+elements (via the Genesis message system).  When using <TT>hsolve</TT>
+however, <TT>hsolve</TT> does the computations as shown in figure
+<A HREF="node15.html#fig:hsolve-software-layout">2.1</A>.  Depending on the configuration of
+<TT>hsolve</TT> - something that will be discussed in the next
+section - <TT>hsolve</TT> is able to use the facilities of the
+original objects to communicate with other elements, but it is also
+able to use its own internally optimized communication facilities.
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="fig:hsolve-software-layout"></A><A NAME="1331"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 2.1:</STRONG>
+Normally all Genesis elements in
+    the element hierarchy - represented by the boxes in these
+    pictures - do their own computations (as indicated by the
+    toot-wheels).  When using <TT>hsolve</TT>, computations of some or
+    all of the elements in the model are done by <TT>hsolve</TT>, the
+    original elements for which <TT>hsolve</TT> does the computations
+    only serve as a model description.  In chanmode 0 (middle panel)
+    only compartments are computed by <TT>hsolve</TT>, while in
+    chanmode 4 (lower panel) all elements are computed by
+    <TT>hsolve</TT>.</CAPTION>
+<TR><TD>
+<DIV ALIGN="CENTER">
+<IMG
+ WIDTH="508" HEIGHT="241" ALIGN="BOTTOM" BORDER="0"
+ SRC="img55.png"
+ ALT="\includegraphics[scale=0.65]{figures/hsolve1.eps}"> 
+<BR>    <BR>
+<BR>
+<BR>
+    <IMG
+ WIDTH="525" HEIGHT="306" ALIGN="BOTTOM" BORDER="0"
+ SRC="img56.png"
+ ALT="\includegraphics[scale=0.65]{figures/hsolve2.eps}"> 
+<BR>    <BR>
+<BR>
+<BR>
+    <IMG
+ WIDTH="524" HEIGHT="312" ALIGN="BOTTOM" BORDER="0"
+ SRC="img57.png"
+ ALT="\includegraphics[scale=0.65]{figures/hsolve3.eps}"> 
+<BR>  
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html343"
+  HREF="node16.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html339"
+  HREF="node14.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html333"
+  HREF="node14.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html341"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html344"
+  HREF="node16.html">The chanmode Field: Modes</A>
+<B> Up:</B> <A NAME="tex2html340"
+  HREF="node14.html">Introducing Hsolve for Single</A>
+<B> Previous:</B> <A NAME="tex2html334"
+  HREF="node14.html">Introducing Hsolve for Single</A>
+ &nbsp <B>  <A NAME="tex2html342"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+
+2002-11-15
+</ADDRESS>
+</BODY>
+</HTML>

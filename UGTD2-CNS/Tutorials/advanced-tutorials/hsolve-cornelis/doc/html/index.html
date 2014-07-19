@@ -1,0 +1,224 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002 (1.62) JA patch-1.4
+patched version by:  Kenshi Muto, Debian Project.
+LaTeX2HTML 2002 (1.62),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Tutorial: Simulations with Genesis using hsolve</TITLE>
+<META NAME="description" CONTENT="Tutorial: Simulations with Genesis using hsolve">
+<META NAME="keywords" CONTENT="tutorial2">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002 JA patch-1.4">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutorial2.css">
+
+<LINK REL="next" HREF="node1.html">
+</HEAD>
+
+<BODY>
+ <HR>
+<A HREF="../../index.html">Back to the index</A>
+ <HR>
+<!--Navigation Panel-->
+<A NAME="tex2html14"
+  HREF="node1.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up_g.png"> 
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev_g.png"> 
+<A NAME="tex2html12"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html15"
+  HREF="node1.html">Contents</A>
+ &nbsp <B>  <A NAME="tex2html13"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<P>
+<H1 ALIGN=CENTER>Tutorial: Simulations with Genesis using <TT>hsolve</TT></H1>
+<P ALIGN=CENTER><STRONG>Hugo Cornelis<A NAME="tex2html1"
+  HREF="footnode.html#foot40"><SUP>1</SUP></A> 
+<BR>
+Laboratory of 
+<BR>
+Theoretical Neurobiology 
+<BR>
+University of
+  Antwerp  - Erik De Schutter<A NAME="tex2html2"
+  HREF="footnode.html#foot41"><SUP>2</SUP></A> 
+<BR>
+Laboratory of 
+<BR>
+Theoretical Neurobiology 
+<BR>
+University of Antwerp</STRONG></P>
+<BR><P ALIGN=CENTER><I>Date:</I> Antwerp, 15 November 2002</P>
+<P ALIGN=LEFT></P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"></A>
+
+<UL>
+<LI><A NAME="tex2html16"
+  HREF="node1.html">Contents</A>
+<LI><A NAME="tex2html17"
+  HREF="node2.html">Towards basic use of <TT>hsolve</TT></A>
+<UL>
+<LI><A NAME="tex2html18"
+  HREF="node3.html">From Numerical Theory to Simulation Practice</A>
+<UL>
+<LI><A NAME="tex2html19"
+  HREF="node4.html">Numerical Preliminaries</A>
+<UL>
+<LI><A NAME="tex2html20"
+  HREF="node5.html">Taylor series</A>
+<LI><A NAME="tex2html21"
+  HREF="node6.html">Numerical Schemes</A>
+</UL>
+<LI><A NAME="tex2html22"
+  HREF="node11.html">Neuroscience Equations</A>
+<UL>
+<LI><A NAME="tex2html23"
+  HREF="node12.html">A Single compartment</A>
+<LI><A NAME="tex2html24"
+  HREF="node13.html">Multiple compartments</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html25"
+  HREF="node14.html">Introducing <TT>Hsolve</TT> for Single Cells</A>
+<UL>
+<LI><A NAME="tex2html26"
+  HREF="node15.html">Basic Use: A short overview</A>
+<LI><A NAME="tex2html27"
+  HREF="node16.html">The <TT>chanmode</TT> Field: Modes of Operation</A>
+<LI><A NAME="tex2html28"
+  HREF="node17.html">Tabulated Calculations</A>
+<LI><A NAME="tex2html29"
+  HREF="node20.html">Interpreting the Mode of Operation</A>
+<LI><A NAME="tex2html30"
+  HREF="node21.html">Exercise: Speed Comparison</A>
+<LI><A NAME="tex2html31"
+  HREF="node22.html">Communication with Other Elements</A>
+<LI><A NAME="tex2html32"
+  HREF="node25.html">A Practical Example 1: <TT>Hsolve</TT> and the <TT>efield</TT>
+  Object</A>
+<LI><A NAME="tex2html33"
+  HREF="node26.html">A Practical Example 2: Experimental Setups with <TT>Hsolve</TT></A>
+<UL>
+<LI><A NAME="tex2html34"
+  HREF="node27.html">Chronology of Commands</A>
+<LI><A NAME="tex2html35"
+  HREF="node28.html">Setup of Experiments</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html36"
+  HREF="node31.html">Networks of Cells</A>
+<UL>
+<LI><A NAME="tex2html37"
+  HREF="node32.html">Introduction</A>
+<LI><A NAME="tex2html38"
+  HREF="node33.html">The <TT>DUPLICATE</TT> Action</A>
+</UL>
+<LI><A NAME="tex2html39"
+  HREF="node34.html">Exercises</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html40"
+  HREF="node35.html">Some Useful Tricks with <TT>Hsolve</TT></A>
+<UL>
+<LI><A NAME="tex2html41"
+  HREF="node36.html">Beyond Simple Use</A>
+<UL>
+<LI><A NAME="tex2html42"
+  HREF="node37.html">Advanced Actions</A>
+<UL>
+<LI><A NAME="tex2html43"
+  HREF="node38.html">Setting/Getting Fields for Individual Elements</A>
+<LI><A NAME="tex2html44"
+  HREF="node39.html">Setting all Computed Fields at the Same Time</A>
+</UL>
+<LI><A NAME="tex2html45"
+  HREF="node40.html">Advanced Fields</A>
+<UL>
+<LI><A NAME="tex2html46"
+  HREF="node41.html"><TT>calcmode</TT></A>
+<LI><A NAME="tex2html47"
+  HREF="node42.html"><TT>storemode</TT></A>
+<LI><A NAME="tex2html48"
+  HREF="node43.html"><TT>no_elminfo</TT></A>
+<LI><A NAME="tex2html49"
+  HREF="node44.html"><TT>outclock</TT></A>
+<LI><A NAME="tex2html50"
+  HREF="node45.html">Other Fields</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html51"
+  HREF="node46.html">Exercises</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html52"
+  HREF="node47.html">Intrinsics and Technicalities</A>
+<UL>
+<LI><A NAME="tex2html53"
+  HREF="node48.html"><TT>Synchan</TT> - <TT>hsolve</TT> coordination</A>
+<UL>
+<LI><A NAME="tex2html54"
+  HREF="node49.html">A word about events</A>
+<LI><A NAME="tex2html55"
+  HREF="node50.html">Implementation</A>
+<UL>
+<LI><A NAME="tex2html56"
+  HREF="node51.html"><TT>Synchan</TT> event handling</A>
+<LI><A NAME="tex2html57"
+  HREF="node52.html">New Incoming Events</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html58"
+  HREF="node53.html">Byte-codes</A>
+<UL>
+<LI><A NAME="tex2html59"
+  HREF="node54.html">Compilation</A>
+<UL>
+<LI><A NAME="tex2html60"
+  HREF="node55.html">Data Model</A>
+</UL>
+<LI><A NAME="tex2html61"
+  HREF="node56.html"><TT>Hsolve</TT> as a Virtual Machine</A>
+<UL>
+<LI><A NAME="tex2html62"
+  HREF="node57.html">Solution of The Cable Equation.</A>
+<LI><A NAME="tex2html63"
+  HREF="node58.html">Solution of Conductance Equations.</A>
+</UL>
+</UL>
+</UL>
+<BR>
+<LI><A NAME="tex2html64"
+  HREF="node59.html">Bibliography</A>
+<LI><A NAME="tex2html65"
+  HREF="node60.html">About this document ...</A>
+</UL>
+<!--End of Table of Child-Links-->
+<BR><HR>
+<ADDRESS>
+
+2002-11-15
+</ADDRESS>
+</BODY>
+</HTML>

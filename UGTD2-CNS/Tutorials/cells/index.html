@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>Cell models</TITLE>
+<META NAME="generator" CONTENT="txt2html v1.28">
+</HEAD>
+<BODY>
+<P>
+<H2>Tutorials/cells</H2>
+<P>
+This directory contains the documented GENESIS cell model simulations,
+used in the GENESIS Modeling Tutorial.  See the README files in the
+directories below for more details.
+
+<p><h1>Contents of cells/</h1></p>
+<hr>
+<p><h3>Directories:</h3></p>
+<p><dl>
+
+<dt><a href="simplecell/index.html">simplecell</a><dd>- This uses the cell
+reader to create a simple two-compartment neuron with a dendrite
+compartment, a soma, and an axon. The dendrite contains synaptically
+activated excitatory and inhibitory channels and the soma contains
+"squid-like" voltage-activated Hodgkin-Huxley sodium and potassium
+channels, plus a spikegen element that acts like the intial part of an
+axon.  This may be used to provide synaptic input to another cell.
+
+<dd>-<dt><a href="simplecell2/index.html">simplecell2</a>
+<dd>- This implements the same model neuron as simplecell, but provides a
+fancier graphical interface with controls to allow pulsed injection
+current, synaptic input from spike trains, and random Poisson-distributed
+background synaptic activation. It also provides user-defined string
+variables in the main script that you can change to use with different cell
+models. The README file for the simplecell2 model tells more about the
+simulation.
+
+<dt><a href="cell-tuning/README.html">cell-tuning</a><dd>- This manual
+parameter search example shows how to use a custom XODUS GUI for
+adjusting channel parameters.  The example cell model is a version of
+the layer 4 pyramidal cell from the ACnet2 network model.
+
+<dt><a href="FScell/index.html">FScell</a><dd>- This simplified neuron
+model could be used to represent a fast spiking interneuron in a cortical
+network.
+
+<dt><a href="RScell/index.html">RScell</a>
+<dd>- This is a simple one-compartment model of a neocortical regular
+spiking pyramidal cell that, in addition to a fast sodium current and
+delayed rectifier potassium current, uses a Muscarinic potassium current
+(KM) in order to achieve spike frequency adaption.
+
+<dt><a href="corticalcells/index.html">corticalcells</a>
+<dd>- These are simplified (8-9 compartment) models of much larger (about
+400 compartment) models of pyramidal cells from area 17 of cat visual
+cortex, derived from models by Bush and Sejnowski.  A collapsing method was
+used that conserves the axial resistance and makes some adjustments in the
+passive membrane parameters in order to faithfully reproduce the electrical
+responses of the larger models.
+
+<dt><a href="new_mit/index.html">new_mit</a><dd>- This contains mitral cell
+scripts by U. S. Bhalla.
+
+<dt><a href="traubcell/index.html">traubcell</a> <dd>- This uses a simple
+script (traubcell.g) to create the 1991 Traub model 19-compartment CA3
+region pyramidal cell from the CA3.p cell parameter file and the channel
+prototypes file traub91proto.g.
+
+<dt><a href="traub94/index.html">traub94</a>
+<dd>  - The 1994 Traub model is a more detailed version of the 1991 model,
+with 64 compartments.
+
+<dt><a href="traub95/index.html">traub95</a>
+<dd>- This is a version of Traub's 51-compartment hippocampal interneuron.
+
+<dt><b>Purkinje_tutorial</b
+
+<dd>- This is a newer version (Release 2-2.16) of the Purkinje cell
+tutorial, and can be used to replace Release 2-2.11, which is included in
+the GENESIS 2.3 genesis/Scripts/purkinje directory.  The tutorial
+implements the full De Schutter and Bower (1994) detailed Purkinje cell
+model.  In the new version, multiple cell views are now possible via the
+output menu, and a configuration layer on top of the tutorial allows you to
+restrict the GUI to the things that you think are important.  The files
+README and help.txt (which can be viewed from within the simulation by
+using the HELP button) describe the model and the various types of synaptic
+input that you can apply.  The file archive file <a
+href="purkinje.Release2-2.16.tar.gz">purkinje.Release2-2.16.tar.gz</a>
+included here extracts to the directory "Purkinje_tutorial", so that it
+will not overwrite the older version, if it is unpacked in the genesis
+directory.
+
+</dl>
+<hr>
+
+<a href="../index.html"><img src="../back2.gif" align="middle"
+ hspace=12>Return to the GENESIS Neural Modeling Tutorials main index</a>
+<P>
+
+</BODY>
+</HTML>

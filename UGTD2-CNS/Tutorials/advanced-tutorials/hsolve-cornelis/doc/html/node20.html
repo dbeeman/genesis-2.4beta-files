@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002 (1.62) JA patch-1.4
+patched version by:  Kenshi Muto, Debian Project.
+LaTeX2HTML 2002 (1.62),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Interpreting the Mode of Operation</TITLE>
+<META NAME="description" CONTENT="Interpreting the Mode of Operation">
+<META NAME="keywords" CONTENT="tutorial2">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002 JA patch-1.4">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutorial2.css">
+
+<LINK REL="next" HREF="node21.html">
+<LINK REL="previous" HREF="node17.html">
+<LINK REL="up" HREF="node14.html">
+<LINK REL="next" HREF="node21.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html403"
+  HREF="node21.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html399"
+  HREF="node14.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html393"
+  HREF="node19.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html401"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html404"
+  HREF="node21.html">Exercise: Speed Comparison</A>
+<B> Up:</B> <A NAME="tex2html400"
+  HREF="node14.html">Introducing Hsolve for Single</A>
+<B> Previous:</B> <A NAME="tex2html394"
+  HREF="node19.html">The Table Properties.</A>
+ &nbsp <B>  <A NAME="tex2html402"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION02240000000000000000">
+Interpreting the Mode of Operation</A>
+</H1>
+
+<P>
+Suppose you are inspecting a simulation, to see what it does and how
+it does it.  You know <TT>hsolve</TT> is being used in the simulation,
+but you do not know where in the scripts it is configured.  This short
+section will help you out.  The first step is to locate all
+<TT>hsolve</TT> elements:
+
+<P>
+<PRE>
+  genesis &gt; echo {el /##[][TYPE=hsolve]}
+  /purkinje
+</PRE>
+
+<P>
+Then for every <TT>hsolve</TT> element reported, you inspect the
+<TT>chanmode</TT>, <TT>calcmode</TT> and <TT>path</TT> field.
+
+<P>
+<PRE>
+  genesis &gt; showfield /purkinje path chanmode calcmode
+  [ /purkinje ]
+  path                 = ./##[][TYPE=compartment]
+  chanmode             = 4
+  calcmode             = 1
+</PRE>
+
+<P>
+The <TT>path</TT> field tells you that all <TT>compartment</TT>s below
+the <TT>hsolve</TT> element have been taken over by
+<TT>/purkinje</TT>.  The <TT>chanmode</TT> is four which means that
+also all intracellular mechanisms within the compartments will be
+computed by <TT>hsolve</TT>.  Finally the <TT>calcmode</TT> tells that
+all tables are used with linear interpolation to compute results.
+
+<P>
+The numerical method that <TT>hsolve</TT> uses for the cable equations
+and the equations of intracellular mechanisms is found with the
+following command:
+
+<P>
+<PRE>
+  genesis &gt; showfield /purkinje object-&gt;method
+  [ /purkinje ]
+  object-&gt;method       = 11
+</PRE>
+
+<P>
+So in this case Crank-Nicolson is used to update the variables.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html403"
+  HREF="node21.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html399"
+  HREF="node14.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html393"
+  HREF="node19.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html401"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html404"
+  HREF="node21.html">Exercise: Speed Comparison</A>
+<B> Up:</B> <A NAME="tex2html400"
+  HREF="node14.html">Introducing Hsolve for Single</A>
+<B> Previous:</B> <A NAME="tex2html394"
+  HREF="node19.html">The Table Properties.</A>
+ &nbsp <B>  <A NAME="tex2html402"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+
+2002-11-15
+</ADDRESS>
+</BODY>
+</HTML>

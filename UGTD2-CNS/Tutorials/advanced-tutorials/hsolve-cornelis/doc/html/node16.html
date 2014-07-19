@@ -1,0 +1,250 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002 (1.62) JA patch-1.4
+patched version by:  Kenshi Muto, Debian Project.
+LaTeX2HTML 2002 (1.62),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>The chanmode Field: Modes of Operation</TITLE>
+<META NAME="description" CONTENT="The chanmode Field: Modes of Operation">
+<META NAME="keywords" CONTENT="tutorial2">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002 JA patch-1.4">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutorial2.css">
+
+<LINK REL="next" HREF="node17.html">
+<LINK REL="previous" HREF="node15.html">
+<LINK REL="up" HREF="node14.html">
+<LINK REL="next" HREF="node17.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html355"
+  HREF="node17.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html351"
+  HREF="node14.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html345"
+  HREF="node15.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html353"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html356"
+  HREF="node17.html">Tabulated Calculations</A>
+<B> Up:</B> <A NAME="tex2html352"
+  HREF="node14.html">Introducing Hsolve for Single</A>
+<B> Previous:</B> <A NAME="tex2html346"
+  HREF="node15.html">Basic Use: A short</A>
+ &nbsp <B>  <A NAME="tex2html354"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION02220000000000000000">
+The <TT>chanmode</TT> Field: Modes of Operation</A>
+</H1>
+
+<P>
+In the previous example we have seen a basic example of how to setup
+<TT>hsolve</TT> and configure it to simulate a model represented by
+two compartments.  How is this related to the mathematics we discussed
+earlier on ?  Which numerical scheme was used for the cable equation
+and which numerical scheme was used for channels ?  These questions
+are answered by inspecting the <TT>chanmode</TT> field.  Basically you
+have to make a major distinction between the lower chanmodes (chanmode
+0 and 1) and the higher chanmodes (chanmode 2 to 5).  The lower
+chanmodes are modes intended for compatibility with other Genesis
+objects and they are slow compared to the higher chanmodes.
+<TT>Hsolve</TT> will automatically update all the computed fields in
+the original elements, such as to create the illusion that the
+original elements still perform their own computations.  The updated
+fields are then available for plotting or for other elements to do
+additional calculations.
+
+<P>
+
+<OL>
+<LI>chanmode 0 (default): <TT>hsolve</TT> computes the cable
+  equation only (i.e. <TT>hsolve</TT> does the computations of the
+  compartments).  All the other elements (Hodgkin-Huxley channels,
+  concentration elements) still do their own calculations.  Since
+  <TT>hsolve</TT> does not compute the channel equations, the channel
+  rates are updated at time points independent of update times of the
+  membrane potential.  This loss of second-order accuracy results in
+  the penalty of having to use a small time step.
+
+<P>
+To communicate variables to/from other elements, <TT>hsolve</TT>
+  uses the message system of Genesis.  This makes the chanmode 0 the
+  most compatible mode of operation and it is recommended for people
+  that have developed their own set of custom objects.
+
+<P>
+</LI>
+<LI>chanmode 1: hsolve computes the cable equations and the
+  <TT>tabchannel</TT> elements inside the compartments with a
+  staggered time grid.  This results in some extra performance but is
+  not completely compatible with all types of setup.  More precisely,
+  incoming and outgoing messages for the tabulated channels are
+  ignored, except for the messages that link the channels to the
+  compartments (<TT>CHANNEL</TT>, <TT>VOLTAGE</TT>), single messages
+  coming from a <TT>nernst</TT> element (<TT>EK</TT>) and a single
+  message that is linked with the Z gate (<TT>CONCEN</TT>).  If your
+  model contains only tabulated channels, all conductances will be
+  calculated by <TT>hsolve</TT> at time points between the updates of
+  the membrane potential.  This maintains the second-order accuracy
+  and thus you can use a larger time step.
+
+<P>
+To use chanmode 1 in the previous example, you configure
+  <TT>hsolve</TT> with the following command:
+
+<P>
+<PRE>
+   genesis &gt; setfield solver path "../##[][TYPE=compartment]" chanmode 1
+</PRE>
+
+<P>
+</LI>
+</OL>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<TABLE  WIDTH="635">
+<TR><TD>
+  <FONT SIZE="-1"><B>NOTE:</B> The compartmental <TT>Im</TT> field is only
+    computed by <TT>hsolve</TT> running in chanmode 0 or 1 if you turn
+    on the field '<TT>computeIm</TT>'.  Calculation of the <TT>Im</TT>
+    field incurs a small performance penalty.
+</FONT></TD></TR>
+</TABLE>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+When using the higher chanmodes, <TT>hsolve</TT> will compile all
+elements that belong to your model to byte-codes.  During the
+simulation these byte-codes are emulated which results in a high
+performance (the higher chanmodes can be 5-10 times faster than the
+lower chanmodes, depending on the model structure).  To be able to
+compile an element into byte-codes, <TT>hsolve</TT> must be aware of
+the element type (the Genesis object) and its computations.  The
+objects <TT>hsolve</TT> is able to compile to byte-codes, are
+documented in the Genesis manuals.
+
+<P>
+The higher chanmodes all share the property that <TT>hsolve</TT>
+computes all the elements present in your model on the staggered time
+grid, so this guarantees second-order accuracy under all
+circumstances.  A single time step in the simulation will compute the
+membrane potential at the simulated time after an update of the
+conductance at an intermediate time point.
+
+<P>
+In most cases the original elements' fields will not be updated.  For
+<TT>hsolve</TT> the elements only serve as a description of the model
+to be computed, so we call these elements <I>modeling elements</I>.
+To inspect calculated values, they have to be fetched with the
+<TT>findsolvefield</TT> command.  We will show examples of the use of
+this command shortly.  The difference between the different chanmodes
+lies in the fact that some fields might not be computed and are not
+accessible - even with the <TT>findsolvefield</TT> command - as
+explained in the following:
+
+<P>
+
+<OL>
+<LI>chanmode 2: The compartmental voltage is stored in the
+  respective fields of the original compartments.  Other fields like
+  channel gates are accessible via the <TT>findsolvefield</TT> command.
+  The channel parameters <TT>Gk</TT>, <TT>Ik</TT>, <TT>Ek</TT> and the
+  compartmental membrane current <TT>Im</TT> are not stored by
+  <TT>hsolve</TT>.  At every time step of the simulation,
+  <TT>hsolve</TT> will update the membrane potential of the original
+  compartments (that serve as the model) with the computed membrane
+  potential.  If you are only interested in membrane potentials, this
+  mode will be handy.  Outgoing messages to non computed elements that
+  are created before the <TT>SETUP</TT> call are not supported in this
+  mode.
+</LI>
+<LI>chanmode 3: This is exactly the same as chanmode 2, except
+  that the compartments' <TT>Vm</TT> field is not updated.  The
+  membrane potential is only accessible via the
+  <TT>findsolvefield</TT> command.
+</LI>
+<LI>chanmode 4: As in chanmode 3, none of the fields of the
+  modeling elements will be updated, but in this chanmode all fields
+  are accessible with the <TT>findsolvefield</TT> command (including
+  the channel parameters <TT>Gk</TT>, <TT>Ik</TT>, <TT>Ek</TT> and the
+  compartmental <TT>Im</TT> field).
+</LI>
+<LI>chanmode 5: This chanmode is as chanmode 4 (all fields are
+  stored), but the channel parameters <TT>Gk</TT>, <TT>Ik</TT> and
+  <TT>Ek</TT> and the compartmental membrane current <TT>Im</TT> are
+  calculated as relative values (normalized to the compartment
+  surface).
+</LI>
+</OL>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html355"
+  HREF="node17.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html351"
+  HREF="node14.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html345"
+  HREF="node15.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html353"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html356"
+  HREF="node17.html">Tabulated Calculations</A>
+<B> Up:</B> <A NAME="tex2html352"
+  HREF="node14.html">Introducing Hsolve for Single</A>
+<B> Previous:</B> <A NAME="tex2html346"
+  HREF="node15.html">Basic Use: A short</A>
+ &nbsp <B>  <A NAME="tex2html354"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+
+2002-11-15
+</ADDRESS>
+</BODY>
+</HTML>

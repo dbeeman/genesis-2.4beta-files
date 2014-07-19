@@ -1,0 +1,253 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>Further Details of the Hodgkin-Huxley Model</TITLE>
+</HEAD>
+<BODY BGCOLOR="#ffffff" TEXT="#000000">
+<H1><A NAME="HHdetails"></A>
+Further Details of the Hodgkin-Huxley Model
+</H1>
+
+<P>
+In their model, Hodgkin and Huxley represented the rate of change of the
+potassium activation variable <i>n</i> as a rate equation for a first-order
+kinetic process:
+
+<P>
+<BR>
+<DIV ALIGN="RIGHT">
+<TABLE WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE"><TD ALIGN="CENTER" NOWRAP><A NAME="hheq6"></A><IMG
+ WIDTH="255" HEIGHT="46" BORDER="0"
+ SRC="hheqn6.gif"
+ ALT="\begin{displaymath}
+\frac{d n}{d t} = \alpha_n(V) \; (1-n) - \beta_n(V) \; n.
+\end{displaymath}"></TD>
+<TD WIDTH=10 ALIGN="RIGHT">
+(6)</TD></TR>
+</TABLE>
+<BR CLEAR="ALL"></DIV><P>
+<P>
+The modern interpretation of this equation is that the opening of a K
+channel involves the motion of four physical gates between "permissive" and
+"non-permissive" states.  If all gates are in a the permissive state, then
+the channel is open, and ions are allowed to flow.  In a population of
+channels, <i>n</i> is the fraction of gates that are open.  Thus, the
+conductance of these of channels is proportional to the fourth power of
+<i>n</i>.  Here, <IMG WIDTH="26" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+SRC="alpha_n.gif" ALT="$\alpha_n$"> is the voltage-dependent rate constant for
+transitions to the permissive state, and <IMG WIDTH="24" HEIGHT="34"
+ALIGN="MIDDLE" BORDER="0" SRC="beta_n.gif" ALT="$\beta_n$"> is the rate
+constant for transitions to the non-permissive state.  By comparison with
+Eq. 4, we can see that
+
+<P>
+<BR>
+<DIV ALIGN="RIGHT">
+<TABLE WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE"><TD ALIGN="CENTER" NOWRAP><A NAME="hheq7"></A><IMG
+ WIDTH="132" HEIGHT="52" BORDER="0"
+ SRC="hheqn7.gif"
+ ALT="\begin{displaymath}
+\alpha_n(V) = \frac{n_{\infty}(V)}{\tau_n(V)}
+\end{displaymath}"></TD>
+<TD WIDTH=10 ALIGN="RIGHT">
+(7)</TD></TR>
+</TABLE>
+<BR CLEAR="ALL"></DIV><P></P>
+
+<P>
+<BR>
+<DIV ALIGN="RIGHT">
+<TABLE WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE"><TD ALIGN="CENTER" NOWRAP><A NAME="hheq8"></A><IMG
+ WIDTH="164" HEIGHT="52" BORDER="0"
+ SRC="hheqn8.gif"
+ ALT="\begin{displaymath}
+\beta_n(V) = \frac{1 - n_{\infty}(V)}{\tau_n(V)}
+\end{displaymath}"></TD>
+<TD WIDTH=10 ALIGN="RIGHT">
+(8)</TD></TR>
+</TABLE>
+<BR CLEAR="ALL"></DIV><P></P>
+
+<P>
+Likewise, the Na activation and inactivation variables obey the equations
+
+<P>
+<BR>
+<DIV ALIGN="RIGHT">
+<TABLE WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE"><TD ALIGN="CENTER" NOWRAP><A NAME="hheqn9"></A><IMG
+ WIDTH="274" HEIGHT="46" BORDER="0"
+ SRC="hheqn9.gif"
+ ALT="\begin{displaymath}
+\frac{d m}{d t} = \alpha_m(V) \; (1-m) - \beta_m(V) \; m
+\end{displaymath}"></TD>
+<TD WIDTH=10 ALIGN="RIGHT">
+(9)</TD></TR>
+</TABLE>
+<BR CLEAR="ALL"></DIV><P></P>
+
+<P>
+<BR>
+<DIV ALIGN="RIGHT">
+<TABLE WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE"><TD ALIGN="CENTER" NOWRAP><A NAME="hheqn10"></A><IMG
+ WIDTH="250" HEIGHT="46" BORDER="0"
+ SRC="hheqn10.gif"
+ ALT="\begin{displaymath}
+\frac{d h}{d t} = \alpha_h(V) \; (1-h) - \beta_h(V) \; h
+\end{displaymath}"></TD>
+<TD WIDTH=10 ALIGN="RIGHT">
+(10)</TD></TR>
+</TABLE>
+<BR CLEAR="ALL"></DIV><P></P>
+
+
+<P>with similar relationships between the rate constants and the activation
+variables and their time constants.
+
+<P>
+From their voltage clamp measurements of the activation variables and their
+time constants, Hodgkin and Huxley were able to make the empirical fits:
+
+<P>
+<BR>
+<DIV ALIGN="RIGHT">
+<TABLE WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE"><TD ALIGN="CENTER" NOWRAP><A NAME="hh.eq23"></A><IMG
+ WIDTH="192" HEIGHT="54" BORDER="0"
+ SRC="hheqn11.gif"
+ ALT="\begin{displaymath}
+\alpha_n(V) = \frac{0.01 (10-V)}{exp(\frac{10-V}{10}) - 1}
+\end{displaymath}"></TD>
+<TD WIDTH=10 ALIGN="RIGHT">
+(11)</TD></TR>
+</TABLE>
+<BR CLEAR="ALL"></DIV><P></P>
+
+<P>
+<BR>
+<DIV ALIGN="RIGHT">
+<TABLE WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE"><TD ALIGN="CENTER" NOWRAP><A NAME="hh.eq24"></A><IMG
+ WIDTH="220" HEIGHT="33" BORDER="0"
+ SRC="hheqn12.gif"
+ ALT="\begin{displaymath}
+\beta_n(V) = 0.125\; exp(-V/80)
+\end{displaymath}"></TD>
+<TD WIDTH=10 ALIGN="RIGHT">
+(12)</TD></TR>
+</TABLE>
+<BR CLEAR="ALL"></DIV><P></P>
+
+<P>
+<BR>
+<DIV ALIGN="RIGHT">
+<TABLE WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE"><TD ALIGN="CENTER" NOWRAP><A NAME="hh.eq26"></A><IMG
+ WIDTH="196" HEIGHT="54" BORDER="0"
+ SRC="hheqn13.gif"
+ ALT="\begin{displaymath}
+\alpha_m(V) = \frac{0.1 (25-V)}{exp(\frac{25-V}{10}) - 1}
+\end{displaymath}"></TD>
+<TD WIDTH=10 ALIGN="RIGHT">
+(13)</TD></TR>
+</TABLE>
+<BR CLEAR="ALL"></DIV><P></P>
+
+<P>
+<BR>
+<DIV ALIGN="RIGHT">
+<TABLE WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE"><TD ALIGN="CENTER" NOWRAP><A NAME="hh.eq27"></A><IMG
+ WIDTH="190" HEIGHT="33" BORDER="0"
+ SRC="hheqn14.gif"
+ ALT="\begin{displaymath}
+\beta_m(V) = 4 \; exp(-V/18)
+\end{displaymath}"></TD>
+<TD WIDTH=10 ALIGN="RIGHT">
+(14)</TD></TR>
+</TABLE>
+<BR CLEAR="ALL"></DIV><P></P>
+
+<P>
+<BR>
+<DIV ALIGN="RIGHT">
+<TABLE WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE"><TD ALIGN="CENTER" NOWRAP><A NAME="hh.eq28"></A><IMG
+ WIDTH="212" HEIGHT="33" BORDER="0"
+ SRC="hheqn15.gif"
+ ALT="\begin{displaymath}
+\alpha_h(V) = 0.07 \; exp(-V/20)
+\end{displaymath}"></TD>
+<TD WIDTH=10 ALIGN="RIGHT">
+(15)</TD></TR>
+</TABLE>
+<BR CLEAR="ALL"></DIV><P></P>
+
+<P>
+<BR>
+<DIV ALIGN="RIGHT">
+<TABLE WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE"><TD ALIGN="CENTER" NOWRAP><A NAME="hh.eq29"></A><IMG
+ WIDTH="191" HEIGHT="52" BORDER="0"
+ SRC="hheqn16.gif"
+ ALT="\begin{displaymath}
+\beta_h(V) = \frac{1}{exp(\frac{30-V}{10}) + 1}
+\end{displaymath}"></TD>
+<TD WIDTH=10 ALIGN="RIGHT">
+(16)</TD></TR>
+</TABLE>
+<BR CLEAR="ALL"></DIV><P></P>
+
+
+
+<P>
+Here voltages are measured with respect to a resting potential of zero
+(rather than the actual value of about -70 mV), and are given in mV.  With
+these expressions for the rate constants, one can numerically solve Eqs. 6,
+9, and 10 for the time dependence of the activation variables, and use
+these in Eqs. 2 and 5 to solve for the conductances.  These can then be
+used in Eq. 1 to solve for the time behavior of the membrane potential.
+
+<P>
+As we will see in the next lecture on the Traub hippocampal pyramidal cell
+model, there are many other varieties of voltage-activated conductances
+found in neurons, in addition to those found in the squid giant axon.  Most
+of these can be modeled using variations of the Hodgkin-Huxley model, with
+a similar notation, but with different values of the parameters and
+different values of the exponents for activation and inactivation.  Some
+modelers use equations similar to Eqs. 11-16, and others use expressions
+for the steady-state activation and time constant, which can be related to
+these by Eqs. 7 and 8.
+
+<H2>For Further Study</H2>                                                     
+
+<P>
+These simulation examples were made with the GENESIS Squid tutorial.
+The help menu for this tutorial suggests further experiments and exercises
+involving the Hodgkin-Huxley model.  Chapter 4 of
+<a href="http://www.genesis-sim.org/GENESIS/bog/bog.html">
+The Book of GENESIS</a> provides further details and gives additional
+theoretical and historical background.  It is also worth reading the
+original paper:
+
+<P><a name="HH1952d"></a>
+Hodgkin, A. and Huxley, A.  (1952).
+A quantitative description of membrane current and its application to
+  conduction and excitation in nerve, <EM>J. Physiol. (London)</EM> <B>
+  117</B>:&nbsp;500-544.
+
+<P>For the details of implementing models of ionic conductances in GENESIS,
+see chapters 7, 14 and 19 of The Book of GENESIS.
+
+<P>
+<HR>
+<ADDRESS>
+Dave Beeman
+2001-10-13
+</ADDRESS>
+</BODY>
+</HTML>

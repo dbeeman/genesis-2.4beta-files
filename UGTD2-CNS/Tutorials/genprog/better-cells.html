@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<HTML>
+<HEAD>
+</HEAD>
+<BODY BGCOLOR="#ffffff" TEXT="#000000">
+
+<P>
+
+<!-- Return from a Detour -->
+Back to <A HREF="simplecell-tut.html">Building a cell the easy way</A><BR>
+Back to <A HREF="net-tut.html">Creating large networks with GENESIS</A><BR>
+Up: <A HREF="genprog.html">Table of Contents</A>
+<HR>
+
+<H1>Making more realistic cell models</H1>
+<P>
+
+<H2>Why bother?</H2>
+<P>
+Jim Bower has discussed the value of structurally realistic modeling
+in his introductory remarks on WAM-BAMM and the modeling philosophy
+behind the GENESIS approach to modeling  (Bower 2005).
+You can also read his thoughts on choosing the level of detail to use in
+modeling in <A HREF="../iBoGpdf/index.html">BoG</A> Chapter 11.
+
+<P> The simple cell model that we have been using so far, described in <A
+HREF="simplecell-tut.html">Building a cell the easy way</A>, fires at a steady
+rate, with equal intervals between spikes.  With the addition of a
+non-inactivating muscarinic potassium current, it was possible to produce a
+non-uniform firing pattern with spike frequency adaptation.  The RScell
+simulation in the <i>cells/RScell</i> directory is another simple
+one-compartment model that has a somewhat more realistic firing pattern.
+(See the <A HREF="textScripts/cells/RScell/README.txt">README</A> file for
+the RScell model for more details.)
+
+<P>
+We might ask, how important is it to accurately reproduce the firing pattern of a
+typical pyramidal cell when picking a cell model to use in a cortical network?
+What is the effect of the spike latency and initial interspike interval (ISI) vs.
+the final ISI in determining the behavior of a network of neurons that display
+spike frequency adaptation?  Is the <i>RScell</i> model good enough to use in a
+realistic network model?
+
+<P>
+Current clamp experiments on neocortical pyramidal cells often show results
+similar to the simulation results below (generated from the detailed BDK5cell
+simulation in the <i>cells/corticalcells</i> directory).  Is it necessary that
+a model neuron used in a large network accurately fit the timing of these
+action potentials?  Or will the large variation in properties of individual
+neurons somehow "wash out" these details in the network, and allow us to use
+much simpler models?  This is still an open question that may be answered by
+further modeling studies.  However, there are indications that this variable
+spike timing can significantly affect network behavior.
+
+<P ALIGN=CENTER><img src="images/adaptation.gif">
+
+<P>
+
+Here T<sub>0</sub> is the spike latency, or time between the application of
+the injection pulse and the first spike.  Under conditions of low excitation,
+this could act as an additional propagation delay, and affect the behavior of
+the network.  The increasing interspike intervals T<sub>1</sub> -
+T<sub>5</sub> can also affect the behavior of the network.  Under conditions
+of high excitation, when the neuron is firing nearly continously, the later
+intervals will be more relevant than the early ones.
+
+<P>
+Spike frequency adaption may also be used as a mechanism for processing
+behaviorally relevant stimuli in the presence of many other sources of
+synaptic input.  For example , Benda et al. (2005) have presented evidence
+that spike frequency adaption is used as a high pass filter to separate
+transient signals from slower oscillatory signals in the electrosensory
+system of weakly electric fish.
+
+<H2>Building the model</H2>
+
+<P>
+The electronically published version of the WAM-BAMM 2005 <A
+HREF="../advanced-tutorials/index.html">Advanced Tutorial</A> on Realistic
+Single Cell Modeling (Jaeger, 2005) may be viewed or downloaded at
+<A HREF="http://www.brains-minds-media.org/archive/222">
+http://www.brains-minds-media.org/archive/222</A>.
+It presents a detailed account of the process of using experimental
+data to create a realistic single neuron model.
+
+<P>
+To briefly summarize, the process consists of three main steps:
+
+<OL>
+
+<LI>Build a suitably realistic passive cell model, without the variable
+conductances.  This subject is treated briefly in the
+Introduction to GENESIS section on
+<A HREF="../genesis-intro/genesis-intro.html#passive_cell">
+Constructing the passive cell</A>, and in detail by Jaeger (2005).
+Holmes et al. (2006) discuss issues that one encounters when determining
+passive parameters for a model using physiological data and morphogical
+data from different sources.
+
+<P>
+
+<LI>Add voltage and/or calcium activated conductances.  See
+<A HREF="../iBoGpdf/index.html">BoG</A> Chapter 7 for
+an overview of the various types of ionic conductances, such as calcium
+conductances, calcium-activated potassium
+conductances, and inactivating potassium conductances,
+and how they affect firing properties
+
+<P>
+
+<LI>Tune the model to better fit passive properties and channel parameters
+that are known only approximately from experiment.  Chapter 7 of the <A
+HREF="../iBoGpdf/index.html">BoG</A> describes how the cell and channel
+editing features of Neurokit may be used to perform manual parameter searches.
+The <A HREF="../Hyperdoc/Manual.html"> GENESIS Reference Manual</A> section on
+the GENESIS Parameter Search Library and the example scripts in
+<i>genesis/Scripts/param</i> describe powerful methods for performing
+automated parameter searches in GENESIS.  The WAM-BAMM 2005 Advanced Tutorial
+on Parameter Searching Tools in GENESIS at <A
+HREF="http://www.wam-bamm.org/WB05/Tutorials">
+http://www.wam-bamm.org/WB05/Tutorials</A> gives a good overview of parameter
+searching and a discussion of the issues involved, suggestions, hints, and
+pitfalls.
+
+</OL>
+
+
+<P>
+
+<H2>References</H2>
+
+<P>
+Benda J, Longtin A, Maler L. (2005) Spike-frequency
+adaptation separates transient communication signals from background
+oscillations, J.  Neurosci. 25: 2312-2321.
+
+<P>
+Bower, JM (2005) Looking for Newton: Realistic modeling in modern biology
+Brains, Minds and Media 1:bmm217 (http://www.brains-minds-media.org/)
+
+<P>
+Holmes WR, Ambros-Ingerson J, Grover LM (2006) Fitting experimental data to
+models that use morphological data from public databases. J. Comput.
+Neurosci.20; 349-365.
+
+<P>
+Jaeger D (2005) Realistic single cell modeling - From experiment to
+simulation. Brains, Minds, and Media. 1: bmm222
+(http://www.brains-minds-media.org/)
+
+<P>
+
+<!-- Return from a Detour -->
+<HR>
+Back to <A HREF="simplecell-tut.html">Building a cell the easy way</A><BR>
+Back to <A HREF="net-tut.html">Creating large networks with GENESIS</A><BR>
+Up: <A HREF="genprog.html">Table of Contents</A>
+
+</BODY>
+</HTML>

@@ -1,0 +1,559 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<HTML>
+<HEAD>
+<TITLE>A tutorial on using GENESIS</TITLE>
+
+</HEAD>
+
+<BODY BGCOLOR="#ffffff" TEXT="#000000">
+Next: <A HREF="tut2-lite.html">Making realistic neural compartments</A>
+Previous: <A HREF="tut1-lite.html">Getting started with GENESIS programming</A>
+Up: <A HREF="genprog.html">Table of Contents</A>
+<HR>
+
+<H1>A basic tutorial on using GENESIS</H1>
+
+<P>
+<I>Originally written by : Matt Wilson</I><BR>
+<B>Tutorial #1</B> <BR>
+
+<P>
+<B>A Basic Tutorial on GENESIS - Constructing a Simple Compartment</B> <BR>
+
+<P>
+This document will guide you through a brief session under GENESIS in which
+you will use the basic features of the simulator to create and run a simple
+simulation.
+
+<P>
+
+<H2>Some Notation</A>
+</H2>
+
+<P>
+In this guide you will be instructed, at various points, to enter
+GENESIS commands through the keyboard. This will be indicated
+by showing the text that you should enter in a monospaced "typewriter" font.
+For example: 
+
+<PRE>
+    type this
+</PRE>
+
+<P>
+
+
+<H2>Getting Started</H2>
+
+<P>
+To run the simulator, first make sure that you are at the UNIX shell
+command prompt.  At the prompt type <TT>genesis</TT>.  If your path is
+properly configured this should start up the simulator and display the opening
+credits. If you get a message such as <TT>genesis: Command not found</TT>,
+check your path (<tt>echo $PATH</tt>) to be sure that it contains the
+<i>genesis</i> directory (often <i>/usr/genesis</i>).
+
+<P>
+
+<H2>Interpreter Basics</A>
+</H2>
+
+<P>
+After the simulator has completed its startup procedure you should see the
+GENESIS command prompt "<tt>genesis #0 ></tt>" indicating that you are now
+in the GENESIS interpreter (SLI).  In the interpreter you can execute both
+UNIX shell and GENESIS commands.  Try this by typing
+
+<PRE>
+    ls
+</PRE>
+
+<P>
+This should invoke the UNIX <I>ls</I> command displaying files in the current
+directory. Typing 
+
+
+<PRE>
+    listcommands
+</PRE>
+
+<P>
+should produce a list of available GENESIS commands.
+Note that while there are a large number of available commands, you
+will typically use a much smaller subset of these.
+It is also possible to combine GENESIS and UNIX shell commands. Typing
+
+<PRE>
+    listcommands | more
+</PRE>
+
+<P>
+will "pipe" the output of the GENESIS command <I>listcommands</I> 
+through the UNIX command <I>more</I>, thus allowing you to page through 
+the listing. 
+
+<PRE>
+    listcommands | lpr
+</PRE>
+
+<P>
+will <TT>"</TT>pipe<TT>"</TT> the output to the printer and
+
+<PRE>
+    listcommands > myfile
+</PRE>
+
+<P>
+will redirect the output into a file called <TT>"</TT>myfile<TT>"</TT>.
+
+<P>
+
+<H2>Basic Objects</H2>
+
+<P> The building blocks used to create simulations under GENESIS are referred
+to as elements. Elements are created from templates called "objects".  The
+simulator comes with a number of basic objects. To list the available objects
+type 
+
+<PRE>
+    listobjects
+</PRE>
+
+<P>
+To get more information on a particular objects type
+
+<PRE>
+    showobject name
+</PRE>
+
+<P>
+where "name" is replaced by any name from the object list.
+
+<P>
+The <B>compartment</B> object is commonly used in GENESIS simulations to
+construct parts of neurons.  As we will be using this object, try the
+command <TT>showobject compartment</TT> at this time.  There are a few commonly
+used objects which are documented more thoroughly with the GENESIS <I>help</I>
+command.  In order to obtain a detailed description of the equivalent
+circuit for the <B>compartment</B> object, type 
+
+
+<PRE>
+    help compartment
+</PRE>
+
+<P>
+(HINT: You may pipe these commands into <I>more</I> to prevent the output from
+scrolling off the top of the screen.)  For example.
+
+<PRE>
+    help compartment | more
+</PRE>
+
+
+<P>
+
+<H2>Creating Elements</H2>
+
+<P>
+To create an Element from an Object description you use the <I>create</I>
+command.  Try typing the create command without arguments
+
+
+<PRE>
+    create
+</PRE>
+
+<P>
+This gives a usage statement which gives the proper syntax for using this
+command. Most commands will produce a usage statement if invoked without
+arguments, or if followed with the option <TT>-usage</TT> or <TT>-help</TT>.
+In the case of the <I>create</I> command the usage statement looks like
+
+<PRE>
+    usage: create object name -autoindex [object-specific-options]
+</PRE>
+
+<P>
+In this exercise we will create a simple passive compartment. 
+In order to keep track of the many elements that go into a simulation, each
+element must be given a name. To create a compartment with the name
+<I>soma</I> type 
+
+
+<PRE>
+    create compartment /soma
+</PRE>
+
+<P>
+Elements are maintained in a hierarchy much like that used to maintain files
+in the UNIX operating system.  In this case, <I>/soma</I> is a pathname which
+indicates that the soma is to be placed at the root or top of the hierarchy.
+
+<P>
+We will eventually build a fairly realistic neuron called <I>/cell</I> with
+a soma, dendrites, channels and an axon.  It would be a good idea to organize
+these components into a hierarchy of elements such as <I>/cell/soma</I>,
+<I>/cell/dend</I>, <I>/cell/dend/Ex_channel</I>, and so on.  If we do
+this, we need to create the appropriate type of element for <I>/cell</I>.
+GENESIS has a <B>neutral</B> object for this sort of use.  An element of this
+type is an empty element that performs no actions and is used chiefly as a
+parent element for a hierarchy of child elements.
+
+<P>
+To start the construction of our cell, give the commands
+
+<PRE>
+    create neutral /cell
+    create compartment /cell/soma
+</PRE>
+
+<P>
+As we no longer need our original element <i>/soma</i>, we may
+delete it with the command <I>delete</I>.
+
+<PRE>
+    delete /soma
+</PRE>
+
+<P>
+
+<H2>Examining Elements</H2>
+
+<P>
+The commands for maintaining elements within their hierarchy are
+very much like those used to maintain
+files in the UNIX operating system. In that spirit, the commands for
+moving about within the GENESIS element hierarchy are similar to 
+their UNIX counterparts. For example, to list the elements in the
+current level of the hierarchy use the <I>le</I> (list elements) command 
+
+
+<PRE>
+    le
+</PRE>
+
+<P>
+You should see several items listed including the newly created <I>cell</I>.
+
+<P>
+Each element contains data fields which contain the values of parameters
+and state variables used by the element. To show the contents of these
+data fields use the <I>showfield</I> command. 
+
+
+<PRE>
+    showfield /cell *
+</PRE>
+<P>
+This will display the names and contents of the data fields of the "cell".
+The "*" indicates that you wish to display all the data fields associated
+with the element.
+To display the contents of a particular field, type
+
+<PRE>
+    showfield /cell/soma Rm
+</PRE>
+
+<P>
+To display an extended listing of the element contents including a 
+description of the object associated with the element, type 
+
+<PRE>
+   showfield /cell/soma **
+</PRE>
+
+<H2>Moving About in the Hierarchy</H2>
+
+<P>
+When working in GENESIS you are always located at a particular element
+within the hierarchy which is referred to as the "working element".
+This location is used as a default for many commands which require
+path specifications. For example, the <i>le</i> command used above
+normally takes a path argument. When the path argument is omitted
+the working element is used and thus all elements located under the
+working element are listed. 
+To move about in the hierarchy use the <I>ce</I> (change element) command.
+To change the current working element to the newly create soma, type 
+
+<PRE>
+    ce /cell/soma
+</PRE>
+<P>
+
+<P>
+Now you can repeat the <i>show</i> command used above omitting the explicit
+reference to the <i>/cell/soma</i> pathname. 
+
+<PRE>
+    showfield *
+</PRE>
+
+<P>
+This should display the contents of the <i>/cell/soma</i> data fields.
+
+You may find the current working element by using the <i>pwe</i> (print working
+element) command. Try giving the command:
+
+
+<PRE>
+    pwe
+</PRE>
+
+<P>
+Note the analogy between these commands and the UNIX commands
+<i>ls</i>, <i>cd</i>, and <i>pwd</i>.  By analogy with UNIX, GENESIS uses
+the symbols "." to refer to the working element, and ".."
+to refer to the element above it in the hierarchy. Try using these with
+the <i>le</i>, <i>ce</i>, and <i>showfield</i> commands.  Likewise, GENESIS
+has <i>pushe</i> and <i>pope</i> commands
+to correspond to the UNIX  <i>pushd</i> and <i>popd</i> commands.  These
+provide a convenient method of changing to a new working element and
+returning to the previous one.  Try the sequence of commands
+
+<PRE>
+    pushe /cell
+    pwe
+    pope
+    pwe
+</PRE>
+<P>
+
+<H2>Modifying Elements</H2>
+
+<P>
+The contents of the element data fields can be changed using the
+<i>setfield</i> command. To set the transmembrane resistance of your cell type 
+
+
+<PRE>
+    setfield /cell/soma Rm 10
+</PRE>
+
+<P>
+You can set multiple fields in a single command as in
+
+
+<PRE>
+    setfield /cell/soma Cm 2 Em 25 inject 5
+</PRE>
+
+<P>
+Now if you do a <i>showfield</i> command on the element you should see the new
+values appearing in the data fields. 
+
+
+<PRE>
+    showfield /cell/soma *
+</PRE>
+
+<P>
+State variables are automatically updated by the elements when they are
+"run" during a simulation. For instance the <i>Vm</i> field is a state variable
+which, while you can change it, will be updated by the element automatically,
+replacing your value.
+
+<P>
+
+<H2>Running a Simulation</H2>
+
+<P>
+Before running a simulation the elements must be placed in a known initial
+state. This is done using the <i>reset</i> command, which should be performed
+prior to all simulation runs. 
+
+
+<PRE>
+    reset
+</PRE>
+
+<P>
+If you now show the value of the compartment voltage <i>Vm</i> you will see
+that it has been reset to the value given by the parameter <i>Em</i>.
+
+
+<PRE>
+     showfield /cell/soma *
+</PRE>
+
+<P>
+To run a simulation use the <i>step</i> command, which causes the simulator
+to advance a given number of simulation steps. 
+
+
+<PRE>
+    step 10
+</PRE>
+
+<P>
+Displaying the <i>Vm</i> field now shows that the simulator actually did
+something and the value has changed from its initial value due to the
+current injection.
+
+<PRE>
+    showfield /cell/soma Vm
+</PRE>
+
+<H2>Adding Graphics</H2>
+
+<P>
+Some people find that graphics are more effective than endless columns of
+numbers in monitoring the course of a simulation. With that in mind we
+will attempt to add a graph to the simulation which will display the
+voltage trajectory of your cell.
+Graphics are implemented using graphical objects from the XODUS library 
+which are manipulated using the same techniques described above.
+The "form" is the graphical object which is used as a container for
+all other graphical items. Thus, before making a graph we need to make a 
+form to put it in which we will arbitrarily name <i>/data</i>.
+
+
+<PRE>
+    create xform /data
+</PRE>
+
+<P>
+You may have noticed that nothing much seemed to happen. By default, forms
+are hidden when first created. To reveal the newly created form use the
+command
+
+<PRE>
+    xshow /data
+</PRE>
+
+<P>
+An empty box should appear somewhere on your screen. 
+To create a graph in this form with the name <i>voltage</i> use the command
+
+<PRE>
+    create xgraph /data/voltage
+</PRE>
+
+<P>
+Note that the graph was created beneath the form in the element hierarchy.
+This is quite important, as the hierarchy is used to define the nesting of 
+the displayed graphical elements.
+
+<P>
+
+<H2>Linking Elements</H2>
+
+<P> Now you have a cell with a soma, and a graph, but you need some way of
+passing information from one to the other.
+
+<P>
+Inter-element communication within GENESIS is achieved through a system of
+links called <i>messages</i>. Messages allow one element to access the data
+fields of another element. For example to cause the graph to display the
+voltage of the cell you must first pass a message from the cell to the graph
+indicating that you would like a particular data field to be plotted. This
+is done using the command  
+
+
+<PRE>
+    addmsg /cell/soma /data/voltage PLOT Vm *volts *red
+</PRE>
+
+<P>
+The first two arguments give it the source and destination elements. The
+third argument tells it what type of message you are sending. In this case
+the message is a request to plot the contents of the fourth argument which
+is the name of the data field in the cell which you wish to be plotted.
+The last two arguments give the label and color to be used in plotting this
+field.  You can now run the simulation and view the results in the graph.
+
+
+<PRE>
+    reset
+    step 100
+</PRE>
+
+
+<P>
+Note that to plot another field in the same graph, just send another
+message 
+
+
+<PRE>
+    addmsg /cell/soma /data/voltage PLOT inject *current *blue
+    reset
+    step 100
+</PRE>
+
+<P>
+and you are displaying current and voltage.
+
+<P>
+
+<H2>Adding Buttons to a Form</H2>
+
+<P>
+The <b>xbutton</b> graphical element is often used to invoke a function when a
+mouse button is clicked.  Give the command 
+
+
+<PRE>
+    create xbutton /data/RESET -script reset
+</PRE>
+
+<P>
+This should cause a bar labeled <TT>RESET</TT> to appear within the "data"
+form below the "voltage" graph.  When the mouse is moved so that the cursor
+is within the bar and the left mouse button is clicked, the function
+following the argument <TT>-script</TT> is invoked.  Now add another button
+to the form with the command
+
+<PRE>
+    create xbutton /data/RUN -script "step 100"
+</PRE>
+<P>
+
+<P>
+In this case, the function to be executed has a parameter (the number of
+steps), so <TT>"step 100"</TT> must be enclosed in quotes so that the
+argument of <TT>-script</TT> will be treated as a single string.
+
+<P>
+At this stage, you have a complete GENESIS simulation which may be run by
+clicking the left mouse button on the bar labeled <TT>RESET</TT> and then
+on the one labeled <TT>RUN</TT>.  To terminate the simulation and leave
+GENESIS, type either <TT>quit</TT> or <TT>exit</TT>.  If you like, you may
+implement one of these commands with a button also.
+
+<P>
+At this time, you should use an editor to create a script containing the
+GENESIS commands which were used to construct this simulation.  The script
+should begin with 
+
+
+<PRE>
+//genesis
+</PRE>
+
+<P>
+and the filename should have the extension ".g".   For example, if the
+script were named <i>tutorial1.g</i>, you could create the objects and set
+up the messages with the GENESIS command
+
+
+<PRE>
+    tutorial1
+</PRE>
+
+<P>
+If you have exited GENESIS and are back at the unix prompt, you may run
+GENESIS and bring up the simulation with the single command 
+
+
+<PRE>
+    genesis tutorial1
+</PRE>
+
+<HR>
+Next: <A HREF="tut2-lite.html">Making realistic neural compartments</A>
+Previous: <A HREF="tut1-lite.html">Getting started with GENESIS programming</A>
+Up: <A HREF="genprog.html">Table of Contents</A>
+
+</BODY>
+</HTML>

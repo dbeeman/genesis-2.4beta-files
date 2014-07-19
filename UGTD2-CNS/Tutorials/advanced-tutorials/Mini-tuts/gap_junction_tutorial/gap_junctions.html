@@ -1,0 +1,714 @@
+<html>
+
+<A NAME = "GapJ_Top"></A>
+
+<p>
+<center>
+<H2> HOWTO on Hsolvable Gap Junctions in Genesis</H2>
+</center>
+
+<p>
+01/05/2006<br>
+Carson B Roberts<br>
+University of Texas at San Antonio<br>
+<a href="mailto:carson_roberts@yahoo.com.com">carson_roberts@yahoo.com</a>
+
+<HR>
+<center>
+<b> Overview of This Document:</b> 
+</center>
+<HR>
+
+<p>
+This HOWTO is intended for users of the Genesis modeling system, to show how to couple
+two or more cells via electrical synapses or "Gap Junctions", when the model cells have
+been taken over by the Genesis Hsolver.  For models not using <b>hsolve</b>, there are
+probably easier ways to implement gap junctions.  
+<p>
+This HOWTO may also serve as an introduction to the creation and use of Genesis "Extended
+ Objects", since this is the method used here to implement the gap junctions.  For a 
+different type of coupling, or for models not using <b>hsolve</b>, the basic structure 
+used here could be copied, with just the commands inside the main function changed.
+<p>
+In addition, this HOWTO discusses potential instabilities that may arise with models having 
+gap junctions, where they come from, and how to deal with them.  For some theory on Gap 
+Junctions, and the implications for finite time-step modeling, see 
+ <A HREF = "#GapJ_Theory">An Explanation of some properites of Gap Junctions</A>,
+ further down in this document.
+<p>
+
+<HR>
+<center>   
+<b> Outline:</b> 
+</center>
+<HR>
+
+<UL>
+<Li><A HREF = "#Important_commands">
+     An Explanation of several Genesis commands used with the Hsolver</A>
+	<UL>
+	  <Li><A HREF = "#findsolvefield">findsolvefield</A>
+	  <Li><A HREF = "#getfield">getfield</A>
+	  <Li><A HREF = "#setfield">setfield</A>
+	</UL>
+<Li><A HREF = "#Detailed_Instructions">
+	  Detailed instructions on setting up an extended object to implement a 
+	  prototype Gap Junction</A>
+	<UL>
+	  <Li><A HREF = "#create">creating the extended object</A>
+	  <Li><A HREF = "#addparts">adding fields, actions and classes</A>
+	  <Li><A HREF = "#extracting_fields">
+	      Extracting field values to local variables</A>
+          <Li><A HREF = "#reading_in">
+	      Reading voltages from the hsolved cells</A>
+          <Li><A HREF = "#calculating_currents">
+	      Calculating Gap Junction Currents</A>
+          <Li><A HREF = "#injecting_currents">
+	      Injecting calculated currrents back into the hsolved cells</A>
+	  <Li><A HREF = "#bookkeeping">
+	      Genesis bookkeeping to finish Extended Object setup</A>
+	</UL>
+
+<Li><A HREF = "#GapJ_Theory">An explanation of some properites of Gap Junctions</A>
+<Li> <A HREF = "#GapJ.g">A complete script to create a prototype Gap Junction</A> 
+<Li><A HREF = "#Gap_Junction_setup.g">
+	  A script to set up multiple copies of the prototype object, with different properites</A> 
+<Li><A HREF = "#Gap_Junction_Run_Script_Calls">
+	  Examples of how to call the above in a Run Script</A>.
+</Ul>
+
+
+
+<A NAME="Important_Commands"></A>
+
+<HR>
+<center>   
+<b> Important Genesis Commands for Use With Hsolved Model Cells:</b> 
+</center>
+<HR>
+
+<p>
+Once a model cell has been taken over by the hsolver, reading and writing to
+cell compartments is not a simple manner.  The three key commands to use to 
+read and write to hsolved compartments are:
+
+<A NAME="findsolvefield"></A>
+
+<p>
+1.) <b>findsolvefield</b>:  This command will return an address from the "chip array",
+not an actual value. It seems general practice to read this chip address into a 
+string called "hstr". For example, in the models used to develop the Gap 
+Junction codes, to find the soma membrane voltage, one can use the command:
+
+<pre>genesis #0 > hstr = {findsolvefield {cellpath} {cellpath}/soma Vm}</pre>
+
+This will read the address into the string, but the actual value of "hstr" will be 
+kind of meaningless:
+
+<pre>
+genesis #2 > echo {hstr}
+
+vm[447]
+</pre>
+
+<A NAME="getfield"></A>
+
+The actual value of the membrane potential can, however, be extracted with the 
+second important command, <b>getfield</b>:
+<p>
+2.) <b>getfield</b>:  This command will extract the actual value from the chip 
+array address found by the <b>findsolvefield</b> command.  With the example
+above, the actual value of the membrane potential can be found with the following 
+two commands: 
+
+<pre>
+genesis #4 > float Vm_Test ={getfield {cellpath} {hstr}}
+
+genesis #5 > echo {Vm_Test}
+
+-0.04801133517
+</pre>
+
+<A NAME="setfield"></A>
+
+<p>
+The <b>findsolvefield</b> and <b>getfield</b> commands are used to extract
+information from the hsolve object.  In practice, though, one will want to extract 
+these data, and then use them to calculate some quantity to be applied back to the
+model cell(s).  This is accomplished with the <b>setfield</b> command.
+<p>
+3.) <b>setfield</b>:  This command can be used to set the value of one of the 
+fields of a part of an hsolved object.  For this example, let us assume that some set 
+of values, read in as above above, have been used to calculate the current that would flow
+due to some model conductance.  Further, (for this example), assume that the compartment
+we want to inject this calculated curent into is called "Comp_1".
+<p>
+The first thing to do is to find what the address of the "inject" field of this compartment is:
+
+<pre>
+genesis #6 > hstr = {findsolvefield {cellpath} {cellpath}/{Comp_1} inject}
+
+genesis #7 > echo {hstr}
+
+chip[2663]
+</pre>
+
+Again, the actual value of the hstr is irrelevant.
+<p> To set the value of the injected current to "Comp_1" to 0.1 nA, we can use the commands:
+
+<pre>
+genesis #8 > float I_inj = 0.1e-9
+
+genesis #9 > setfield {cellpath} {hstr} {I_inj}
+
+OK
+</pre>
+
+<p>
+With these three commands, <b>findsolvefield</b>, <b>getfield</b>, and 
+<b>setfield</b>, one can, in principle, implement any type of conductance on or between
+one or more hsolved objects.  In order to implement the "Gap Junction" electrical synapse,
+they can be all put into an "extended object" that can be called in a run script, and
+potentially implemented multiple times with multiple different properites.
+<p>
+
+<A HREF = "#GapJ_Top">Back To Top</A>
+
+<A NAME="Detailed_Instructions"></A>
+
+<HR>
+<center>  
+<b> Detailed Instructions for Creating a Prototype Gap Junction 
+Extended Object </b> 
+</center>
+<HR>
+
+<p>
+The rest of this HOWTO will concentrate on a particular implementation of an
+hsolvable gap junction extended object.
+
+<p>
+This particular extended object has five "<b>fields</b>" one 
+"<b>action</b>" and one "<b>process</b>".  
+<p>For the complete implementation, see the
+<A HREF = "#GapJ.g">GapJ.g</A> script. In the next few paragraphs, I'll try to 
+go through that script to explain what its parts do.
+<p>For an example of how to put copies 
+of the Gap Junction object into a simulation, see the 
+<A HREF = "#Gap_Junction_setup.g">Gap_Junction_setup.g</A> script, and the 
+<A HREF = "#Gap_Junction_Run_Script_Calls">Run Script Calls</A>.
+<p>
+
+<A NAME="create"></A>
+
+The <b>fields</b> in the Gap Junction extended object are the maximum 
+conductance, the names of the two hsolve objects that contain the two 
+coupled cells, and the compartment names of the pre- and post-synaptic 
+compartments (which should be in different cells).  After the GapJ object 
+is created with the 
+
+<A NAME="addparts"></A>
+
+<pre> create neutral /GapJ</pre>
+
+command, the fields are defined with <b>addfield</b> commands, such as:
+
+<pre> addfield /GapJ Gbar    // The Conductance of the Gap Junction</pre>
+
+<p>
+Next, the extended object needs to have an <b>action</b> and a <b>class</b>
+ set up.  I'm not sure what these do, but the lines:
+
+<pre>
+addaction /GapJ PROCESS GapJPROCESS
+addclass /GapJ device
+</pre>
+
+work to do the setup.
+<p>
+The <b>process</b> looks just like any other Genesis function, and indeed is
+set up with the line:
+
+<pre>function GapJPROCESS(action)</pre>
+
+<A NAME="extracting_fields"></A>
+
+<p>
+The next bit is a little tricky, since even though the fields are defined in 
+the prototype script, and set in the setup script, they are not directly 
+available for use inside the process function.  For example, in order to get
+and set fields in the two cells, new local variables must be defined inside the
+function:
+
+<pre>str Cell_1 = {getfield . Cell_1}</pre>
+
+This line writes the string found in the local field "Cell_1" (that's what the "."
+means) into the local variable of the same name.  Similar lines can be used to
+copy all the local fields into local variables.
+
+<A NAME="reading_in"></A>
+
+<p>
+Now that the function knows the names and values of all the relevant quantities, 
+a series of <b>findsolvefield</b>, <b>getfield</b>, and <b>setfield</b> 
+commands can be used to calculate the current that will flow in each time step.
+<p>
+As described above, the two commands:
+
+<pre>
+hstr ={findsolvefield {Cell_1} {Cell_1}/{Comp_1} Vm}  
+           float V1 = {getfield {Cell_1} {hstr}}
+</pre>
+
+will copy the value of the membrane potential in "Comp_1" of "Cell_1" into the
+local variable "V1".  The voltage of the other compartment in the other cell is 
+found with a similar pair of commands.
+
+<A NAME="calculating_currents"></A>
+
+<p>
+In actual cells, some gap junctions are "rectifying", meaning that their 
+conductance will depend on the potential difference across the gap.  This can
+be implemented by defining another local variable "<b>r</b>", with some pre-defined
+dependance on the two voltages.  For a simple, non-rectifying gap junction, either 
+eliminate the variable <b>r</b>, or set it to 1.
+<p>
+Next, the current that will flow in the next time step is calculated, following 
+Ohm's law:
+
+<pre>float I = {Gbar}*{r}*{{V2}-{V1}}</pre>
+
+<A NAME="injecting_currents"></A>
+
+The currents are then injected into the appropriate compartments with paired 
+<b>findsolvefield</b> and <b>setfield</b> commands:
+
+<pre>
+hstr ={findsolvefield {Cell_1} {Cell_1}/{Comp_1} inject}  
+            setfield {Cell_1} {hstr} {I}
+</pre>
+
+<b>NOTE:</b>  The currents injected into the two compartments should have 
+<u>opposite signs</u>.
+
+<A NAME="bookkeeping"></A>
+<p>
+That's it for the actual calculations; to finish setting up the process function, 
+the lines:
+
+<pre>
+return 1
+ end // of function GapJPROCESS
+  // create the GapJ object
+addobject GapJ GapJ -author "Carson B Roberts" \
+   -description "hsolvable electrical synapse"
+resched
+</pre>
+
+are necessary.  The last command, "<b>resched</b>" is called in order to reread 
+the simulation schedule and schedule the listed element types for simulation.  
+This is necessary bookkeeping for the extended object to be properly included 
+in the simulation. 
+<p>
+With the <b>process</b> defined, it remains to create the prototype Gap Junction
+extended object in the library.  A short function:
+
+<pre>
+function create_Gap_Junction
+   ce /library
+     if (!{exists Gap_Junction})
+        create GapJ Gap_Junction
+     end // of ifloop for creating GapJ.
+end // of function create_Gap_Junction
+</pre>
+
+will create in the library a prototype "GapJ" object, named "Gap_Junction",
+ if it has not already been done.  
+
+<p>
+From this point on, the Gap Junction object can be treated like any other 
+Genesis object, such as a <b>synchan</b> or a <b>spikegen</b>. 
+ Multiple copies of the prototype object can be made, and their properties 
+set with <b>setfield</b> commands.  
+An example of how this can be implemented can be found below, in 
+the <A HREF = "#Gap_Junction_setup.g">Gap_Junction_setup.g</A> script. 
+
+The basic set of commands to setup a functional copy of the prototype Gap Junction
+object is:
+
+<pre>
+str GapJPath2 = "/inputs/GapJ2"
+copy /library/Gap_Junction {GapJPath2}
+setfield {GapJPath2} Cell_1 {cellpath}
+setfield {GapJPath2} Cell_2 {cellpath2}
+str GapJ2_compt1 = "p1[1]"
+str GapJ2_compt2 = "p1[1]"
+setfield {GapJPath2} Comp_1 {GapJ2_compt1}
+setfield {GapJPath2} Comp_2 {GapJ2_compt2}
+setfield {GapJPath2} Gbar {G_Gap}
+</pre>
+
+This block of code will create a Gap Junction object, named "GapJ2" in the
+"/inputs/" element of the Genesis tree, connecting the "p1[1]" compartments of
+the two hsolved cells with a conductance of "G_Gap" (defined elswhere).
+<p>
+This should be enough information to allow one to set up gap junctions between
+hsolved cells.  One thing to be very careful of, though, is the relationship 
+between the gap junction conductance and the integration timestep of the 
+simulation.  The reasons for this are outlined 
+<A HREF = "#GapJ_Theory">below</A>, along with some suggestions for appropriate 
+values.
+<p>
+----Good Luck!!!!
+<p>
+Carson B Roberts<br>
+University of Texas at San Antonio<br>
+<a href="mailto:carson_roberts@yahoo.com.com">carson_roberts@yahoo.com</a>
+
+<p><A HREF = "#GapJ_Top">Back To Top</A>
+
+<A NAME="GapJ_Theory"></A>
+
+<HR>
+<center>
+<b> An Explanation of Some Properties of Gap Junctions </b> 
+</center>
+<HR>
+
+<p>
+One main difference between an electrical synapse or "Gap Junction" and a 
+chemical synapse is that in the chemical synapse, the signal propagates 
+from the pre-synaptic cell to the post-synaptic cell by a series of 
+processes, each of which takes a finite amount of time.  When the action 
+potential reaches the end of the pre-synaptic axon, first it triggers 
+release of neurotransmitter chemicals from vesicles, then the neurotransmitter 
+molecules must diffuse across the synaptic cleft to receptors on the 
+post-synaptic cell.  
+
+<p>
+When the neurotransmitter molecules reach the post-synaptic cell, they must 
+bind to ligand-gated ion channel molecules, and cause them to undergo some 
+morphological transformation to allow ions to flow across the membrane.  
+In general, after being activated, the receptor will inactivate (close) with 
+some characteristic time constant.
+
+<p>
+In modeling, these various processes are often simulated with a "rise time" 
+and a "fall time", as in the Genesis <b>synchan</b> object, with its 
+"<b>tau1</b>" and "<b>tau2</b>" fields.  For most simulations, these time
+ constants will be on the order of 10<sup>-4</sup> seconds or greater.  Thus, these 
+processes will be slow compared to an integration timestep of 10<sup>-5</sup> seconds.
+
+<p>
+In contrast, the Gap junction channel is always open, and thus a current will begin
+to flow across it as soon as there is any non-zero potential difference between the
+two cells.  This is the equivalent of a synchan object with a <b>tau1</b> of zero.
+
+<p>
+One possible result of this is related to the fact that, at each time step, the 
+current is calculated and sent across the gap junction.  Of course, the values 
+are never exactly right, and so some will be a little high, and some a little low.  
+This should be made up in the next time step.
+
+<p>
+However, the larger the time step, the larger the amount of charge transferred, 
+which is equal to the calculated current times the timestep.  A larger change in 
+charge means a larger change in voltage (Voltage is Charge divided by Capacitance).
+
+<p>
+This argument holds for the calculation errors in the Voltage as well,
+and if this incorrect current is held on for too long, then the
+resultant voltage  errors will be larger, in inverse proportion to the
+size of the timestep.
+
+<p>
+However, If the size of the timestep is decreased as the gap junction conductance 
+is increased, one can avoid the instability.
+
+<p>
+
+In the models in which this Gap Junction object was developed, I started with a 
+timestep of 10<sup>-5</sup> seconds, which worked just fine for conductances of 
+50 nS or less.  If I decreased the timestep to 10<sup>-8</sup> seconds, then I 
+could get stable activity with a gap junction conductance of 50,000 nS, well 
+above the biophysically reasonable range.
+
+<p><A HREF = "#GapJ_Top">Back To Top</A>
+
+<A NAME="GapJ.g"></A>
+
+<HR>
+<center>
+<b>Genesis Script to Create a Prototype Gap Junction Object:</b>
+</center>
+<HR>
+
+<pre>
+// genesis 2.3 Script
+
+/***********************************************************************
+ ** GapJ:  Primitive Object to define an electrical synapse, or "Gap 
+ ** Junction" between two cells.  This code is meant to be used with
+ ** two or more cells that have been set up with the Genesis Hines 
+ ** Solver, in hsolve chanmode 3 or higher.  The following code assumes
+ ** that the two connected cells have been set up as hsolve objects.  
+ ** The actual names of the cells and the pre- and post-synaptic 
+ ** compartments are fields in the object that can be set after it is
+ ** created.
+ **
+ ** Written 12/2006 by Carson B. Roberts (carson_roberts@yahoo.com)
+ ** based on code for rectifying electrical synapses by 
+ ** Mariano Rodriguez (rodrigue74@yahoo.com)
+ ************************************************************************/
+
+ce /
+  /**********************************************************************
+   ** The following code will not work unless exectuted in the root of
+   ** the element paths.
+   **********************************************************************/
+create neutral /GapJ
+
+addfield /GapJ Gbar    // The Conductance of the Gap Junction
+addfield /GapJ Cell_1  // The name of the first cell hsolve object
+addfield /GapJ Cell_2  // The name of the second cell hsolve object
+addfield /GapJ Comp_1  // The name of the pre-synaptic compartment (in Cell_1)
+addfield /GapJ Comp_2  // The name of the post-synaptic compartment (in Cell_2)
+  /********************************************************************* 
+   **   Create fields for the Gap Junction object to be set in each 
+   ** individual instance of this object.
+   **********************************************************************/
+
+addaction /GapJ PROCESS GapJPROCESS
+addclass /GapJ device
+  /*************************************************************************
+   ** Required code to set up the Gap Junction Object 
+   *************************************************************************/
+
+  /*************************************************************************
+   ** PROCESS action definition:  The following block of code  is where to 
+   ** modify the properties of the gap junction
+   **************************************************************************/
+function GapJPROCESS(action)
+
+    str Cell_1 = {getfield . Cell_1}
+    str Cell_2 = {getfield . Cell_2}
+    str Comp_1 = {getfield . Comp_1}
+    str Comp_2 = {getfield . Comp_2}
+    float Gbar = {getfield . Gbar}
+            /***************************************************************
+             ** First, copy the fields naming the two hsolve objects and the
+             ** Pre- and Post-Synaptic compartments and the conductance 
+             ** into local variables, to make later commands more simple.
+             ***************************************************************/
+    hstr ={findsolvefield {Cell_1} {Cell_1}/{Comp_1} Vm}  
+           float V1 = {getfield {Cell_1} {hstr}}
+             /********************************************************* 
+              ** Ask the Hines Solver what the Pre-synaptic Compartment 
+              ** membrane potential is and write it to the local 
+              ** variable "V1" for use in calculating Gap Current.
+              *********************************************************/
+    hstr ={findsolvefield {Cell_2} {Cell_2}/{Comp_2} Vm}            
+            float V2 = {getfield {Cell_2} {hstr}}
+             /********************************************************* 
+              ** Ask the Hines Solver what the Post-synaptic Compartment 
+              ** membrane potential is and write it to the local 
+              ** variable "V2" for use in calculating Gap Current.
+              *********************************************************/
+    float r = 1
+             /*************************************************************
+              ** A variable to represent the "rectification" property of an
+              ** electrical synapse.  For a non-rectifying synapse, leave
+              ** "r = 1".  For rectification, define r as a function of
+              ** the compartment membrane potentials {V1} and {V2}
+              ** Example: 
+              **           float r = 1/{1+{exp{100*{{V1}-{V2}}}}}
+              *************************************************************/
+    float I = {Gbar}*{r}*{{V2}-{V1}}
+             /*************************************************************
+              ** Calculate the Gap Junction Current as the product of the 
+              ** local variable "{Gbar}" and the difference in membrane 
+              ** potential between the two compartments.
+              *************************************************************/
+    hstr ={findsolvefield {Cell_1} {Cell_1}/{Comp_1} inject}  
+            setfield {Cell_1} {hstr} {I}
+	      /***************************************************************
+               ** Tell the Hines Solver to update the "inject" 
+               ** (injected current) value for the Pre-Synaptic compartment.
+               ***************************************************************/
+    hstr ={findsolvefield {Cell_2} {Cell_2}/{Comp_2} inject}  
+            setfield {Cell_2} {hstr} {-1*{I}}
+              /***************************************************************
+               ** Tell the Hines Solver to update the "inject" 
+               ** (injected current) value for the Post-Synaptic compartment
+               ** This should be the negative of the Pre-Synaptic current.
+               ***************************************************************/
+    return 1
+	    // No idea what this does, but it seems necessary.
+  end // of function GapJPROCESS
+
+  // create the GapJ object
+addobject GapJ GapJ -author "Carson B Roberts" \
+   -description "hsolvable electrical synapse"
+resched
+   /*********************************************************************
+    ** "run resched so that the new object will be made known to the 
+    ** simulator... resched is called in order to reread the simulation 
+    ** schedule and schedule the listed element types for simulation."
+    ** (From Genesis Command Reference for "resched" command)
+    *********************************************************************/
+
+/**************************************************************************
+ ** Now, the basic Extended Object has been set up, and can be created and
+ ** set up, and multiple copies made for later use.  The actual creation of
+ ** the object to be used is done in the following block of code, which 
+ ** should be called in the main run script, after the Hines Solvers have
+ ** been set up, and after this file (GapJ.g) has been included.
+ **************************************************************************/
+
+function create_Gap_Junction
+   ce /library
+      /**************************************************************** 
+       ** This function should be called in "/library", and then the
+       ** prototype object created in the library can be copied 
+       ** multiple times to be used in various places.  
+       ****************************************************************/
+   if (!{exists Gap_Junction})
+        create GapJ Gap_Junction
+         /****************************************************************
+          ** This sets up a specific instance of the Gap Junction object
+          ****************************************************************/
+   end // of ifloop for creating GapJ.
+
+end // of function create_Gap_Junction
+</pre>
+
+<p><A HREF = "#GapJ_Top">Back To Top</A>
+
+<A NAME="Gap_Junction_setup.g"></A>
+
+<HR>
+<center>
+<b>Genesis Script to Implement Gap Junction Objects in a Simulation:</b>
+</center>
+<HR>
+
+<pre>
+//genesis 2.3 Script
+
+/********************************************************************
+ ** Gap_Junction_setup.g:  This creates an electrical  synapse 
+ ** between cells 1 and 2, based on an initial Gap Junction created 
+ ** in the library.
+ ** Include this script in the main run script after setting up the 
+ ** Hines Solvers for the two cells to be coupled.  
+ **
+ ** This script assumes that the prototype Gap Junction object has
+ ** been set up in the run script with the calls:
+ **                      include GapJ.g
+ ** and
+ **                     create_Gap_Junction
+ **
+ ** See the documentation in "GapJ.g" for details.
+ **
+ ** This code has been tested to work with hsolve "chanmode 4".  
+ ** It should work with any hsolve mode that requires the 
+ ** "finsdolvefield" command to get component values.
+ **
+ ** As with any implementation of a "fast" neuronal structure like a
+ ** Gap Junction, the integration timestep should be adjusted to be 
+ ** small enough that the solution does not "blow up".  For the cell
+ ** models used in the development of this code, a timestep of 1e-5 
+ ** seconds works well for conductances on the order of 10.0e-9 
+ ** (10 nanoSiemens), while values on the order of 100 nS need a 
+ ** timestep of 1e-6 sec.  
+ ** Gap Junction Conductance values as high as 50,000 nS have been
+ ** succesfully simulated with this code, but required a timestep of
+ ** 1e-8 (10 nanoseconds).
+ **
+ ** Written 12/2006 by Carson B Roberts (carson_roberts@yahoo.com)
+ ********************************************************************/
+
+
+str GapJPath = "/inputs/GapJ1"
+     /****************************************************************
+      ** This sets up the location where this particular Gap Junction 
+      ** will be created.
+      ****************************************************************/
+copy /library/Gap_Junction {GapJPath}
+     /************************************************************************
+      ** Copy the prototype Gap Junction from the library to the place where 
+      ** it will be used.  It can be referred to by "{GapJPath}" from now on.
+      *************************************************************************/
+setfield {GapJPath} Cell_1 {cellpath}
+setfield {GapJPath} Cell_2 {cellpath2}
+     /*****************************************************************
+      ** Set up the prototype Gap Junction to know the names of the
+      ** two hsolve elements. 
+      ** These two lines should be edited to reflect the specific names
+      ** of the two cells in the particular simulation in which this 
+      ** script is included.
+      *****************************************************************/
+str GapJ_compt1 = "p1b2[1]"
+str GapJ_compt2 = "p1b2[1]"
+     /*************************************************************
+      ** These two strings define the Pre- and Post- Synaptic 
+      ** compartments for the Gap Junction.  {GapJ_compt1} should
+      ** refer to a compartment in {Cell_1} and {GapJ_compt2}
+      ** should refer to a compartment in {Cell_2}
+      *************************************************************/
+setfield {GapJPath} Comp_1 {GapJ_compt1}
+setfield {GapJPath} Comp_2 {GapJ_compt2}
+setfield {GapJPath} Gbar {G_Gap}
+     /**************************************************************
+      ** Tell the newly-created object what its location and
+      ** parameters are.  The variable "{G_Gap}" (channel conductance)
+      ** needs to have been given a value previously.  
+      **************************************************************/
+
+/***********************************************************************
+ ** Below is an example of how a second Gap Junction can be made from 
+ ** the prototype in the library.
+ **********************************************************************/
+
+// str GapJPath2 = "/inputs/GapJ2"
+// copy /library/Gap_Junction {GapJPath2}
+// setfield {GapJPath2} Cell_1 {cellpath}
+// setfield {GapJPath2} Cell_2 {cellpath2}
+// str GapJ2_compt1 = "p1[1]"
+// str GapJ2_compt2 = "p1[1]"
+// setfield {GapJPath2} Comp_1 {GapJ2_compt1}
+// setfield {GapJPath2} Comp_2 {GapJ2_compt2}
+// setfield {GapJPath2} Gbar {G_Gap}
+</pre>
+
+<p><A HREF = "#GapJ_Top">Back To Top</A>
+
+<A NAME="Gap_Junction_Run_Script_Calls"></A>
+
+<HR>
+<center>
+<b>Code to Include in a Run Script:</b>
+</center>
+<HR>
+
+<pre>
+include GapJ.g
+  /***********************************************************************
+   ** Script that contains the definitions for the "GapJ"  Electrical 
+   ** Synapse Gap Junction object, and a function to create one.
+   **********************************************************************/
+create_Gap_Junction
+   /***********************************************************************
+    ** Call the function "create_Gap_Junction" in script Gapj.g, to create
+    ** the first instance of this object in the library.
+    ***********************************************************************/
+include Gap_Junction_setup.g
+   /*************************************************************************
+    ** A script that sets up one or more gap junctions, all based on copies
+    ** of the one made in the library by the function "create_Gap_Junction"
+    ************************************************************************/
+</pre>
+
+
+</html>
+

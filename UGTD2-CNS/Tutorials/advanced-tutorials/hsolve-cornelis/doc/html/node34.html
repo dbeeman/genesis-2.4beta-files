@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002 (1.62) JA patch-1.4
+patched version by:  Kenshi Muto, Debian Project.
+LaTeX2HTML 2002 (1.62),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Exercises</TITLE>
+<META NAME="description" CONTENT="Exercises">
+<META NAME="keywords" CONTENT="tutorial2">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002 JA patch-1.4">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutorial2.css">
+
+<LINK REL="previous" HREF="node31.html">
+<LINK REL="up" HREF="node2.html">
+<LINK REL="next" HREF="node35.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html569"
+  HREF="node35.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html565"
+  HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html561"
+  HREF="node33.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html567"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html570"
+  HREF="node35.html">Some Useful Tricks with</A>
+<B> Up:</B> <A NAME="tex2html566"
+  HREF="node2.html">Towards basic use of</A>
+<B> Previous:</B> <A NAME="tex2html562"
+  HREF="node33.html">The DUPLICATE Action</A>
+ &nbsp <B>  <A NAME="tex2html568"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION02400000000000000000"></A>
+<A NAME="sec:exercises1"></A>
+<BR>
+Exercises
+</H1>
+
+<P>
+
+<OL>
+<LI>If you use the <TT>-hsolve</TT> option of <TT>readcell</TT>, why
+  does it make good sense <I>not</I> to call the <TT>SETUP</TT>
+  action after the <TT>readcell</TT> command has been completed.  This
+  means that you always have to manually call the <TT>SETUP</TT>
+  action to get everything work.
+</LI>
+<LI>About the demo for interfacing to an <TT>efield</TT> element:
+  
+<OL>
+<LI>How can you be sure that indeed two plots have been
+    created?
+</LI>
+<LI>Add a plot for the conductance of a channel.
+</LI>
+<LI>Add an <TT>xcell</TT> display.  You should know that this can
+    be done in two different ways (which ones ?).  Implement these two
+    methods and try to figure out if there is a performance
+    difference.
+</LI>
+</OL>
+</LI>
+<LI>Examine the Purkinje cell tutorial that comes with the Genesis
+  distribution.  Try to understand the different experiments that can
+  be done with the tutorial.
+  
+<OL>
+<LI>The tutorial supports two different protocols for current
+    injection: (1) a constant current and (2) a pulsed current via
+    the use of the <TT>pulsegen</TT> object.  Is this invisible to
+    <TT>hsolve</TT>?  Why?  It is possible to switch the current
+    on or off during the simulation.  How is that made possible?
+</LI>
+<LI>Find and examine the code to update the <TT>frequency</TT>
+    field of synaptic channels (you have to know the actions
+    <TT>HSAVE</TT> and <TT>HRESTORE</TT>, but the comments in the code
+    clarify what they are supposed to do).  How efficient or
+    inefficient is this implementation?  Can this be implemented
+    with a <TT>script_out</TT> element?  Would that make any
+    difference?
+</LI>
+<LI>It is possible to synchronously activate synaptic channels of
+    the Purkinje cell (via the synapses of the parallel fibers).
+    Examine how the code is organized to implement this functionality.
+</LI>
+<LI>The climbing fiber gives excitatory input to the Purkinje cell
+    at different locations, with various time delays.  Examine the
+    implementation of the time delay.
+</LI>
+<LI>The code that links the membrane potential of the excitatory
+    currents with the <TT>xcell</TT> element uses
+    <TT>findsolvefield</TT>.  Examine the Genesis element hierarchy to
+    locate the elements that are the original sources for the messages
+    (not <TT>hsolve</TT>).  What is peculiar in this use of
+    <TT>findsolvefield</TT>?
+</LI>
+</OL>
+</LI>
+<LI>Improve the example for the <TT>DUPLICATE</TT> action:
+  
+<OL>
+<LI>Create a second population, let's say 10 cells.  You could use
+    the multi-compartmental cell that is used for the single cell part
+    of this tutorial.  Create connections between the populations
+    (when do you have to create these connections and how does this
+    restriction propagate to your Genesis script?).  Create
+    <TT>hsolve</TT> elements for both populations.
+</LI>
+<LI>Add input to the network with a population of
+    <TT>randomspike</TT> elements.
+</LI>
+<LI>Add output to the network: plot some of the membrane
+    potentials (use <TT>findsolvefield</TT>).
+  
+</LI>
+</OL>
+</LI>
+</OL>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<TABLE  WIDTH="635">
+<TR><TD>
+  <FONT SIZE="-1"><B>NOTE:</B> The examples as well as the exercises
+    originate from scripts that have been used for scientific
+    research.  These scripts are available from
+    <TT>http://www.bbf.uia.ac.be/</TT>
+</FONT></TD></TR>
+</TABLE>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html569"
+  HREF="node35.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html565"
+  HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html561"
+  HREF="node33.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html567"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html570"
+  HREF="node35.html">Some Useful Tricks with</A>
+<B> Up:</B> <A NAME="tex2html566"
+  HREF="node2.html">Towards basic use of</A>
+<B> Previous:</B> <A NAME="tex2html562"
+  HREF="node33.html">The DUPLICATE Action</A>
+ &nbsp <B>  <A NAME="tex2html568"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+
+2002-11-15
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,27 @@
+
+This is a version of Traub's 51-compartment hippocampal interneuron,
+contributed by Eliot Menschik.  This, and the traub94 model pyramidal
+cell are described in the papers:
+
+Menschik, E. D. and Finkel, L. H. (1998) Neuromodulatory control of
+hippocampal function: Towards a model of Alzheimer's disease. Artificial
+Intelligence in Medicine 13:99-121.
+
+Menschik, E.D. and Finkel, L.H. (1999) Cholinergic neuromodulation and
+Alzheimer's disease: from single cells to network simulations. Progress in
+Brain Research, 121:19-45.
+
+The files are:
+
+traub95.p - the cell parameter file
+protodefs_traub95.g - file containing the channel definitions
+
+Note, this cell, like the Traub94 cell still suffers from the fact
+that the K_C current depends on using the vdep_object which is not
+supported by hsolve in other than chanmodes 0 and 1.  Ideally, the
+implementation of this current should be modified to use the GENESIS
+2.2 tabchannel "instant" field as was done in
+genesis/Scripts/traub91/traub91proto.g.
+
+If you carry out this relatively simple modification (which will speed up
+the simulation), please contribute it to BABEL.

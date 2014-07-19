@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<HTML>
+<HEAD><title>Creating and modifying channel models</title>
+<META NAME="generator" CONTENT="txt2html v1.21">
+</HEAD>
+<BODY BGCOLOR="#ffffff" TEXT="#000000">
+
+<H1>Creating and modifying channel models</H1>
+
+<P>
+You can find prototype definitions for many specific types of channels in
+the <i>genesis/Scripts/neurokit/prototypes</i> directory.  The files in
+this directory, <a href="textScripts/neurokit/prototypes/LIST.txt">
+LIST</a> and <a href="textScripts/neurokit/prototypes/LIST.description.txt">
+LIST.description</a>, summarize the ones that are available.
+
+<P>
+Many of these prototype files make use of the variable EREST_ACT, which can
+be changed to another value, in order to shift the voltage dependence of
+the steady state activation and time constant up or down.  For example,
+<i>hh_tchan.g</i> was designed for a mitral cell simulation with a resting
+potential of -0.06 volts.  The simplecell simulation changed this to -0.07
+volts for use in a cell that has a resting potential of -0.07 volts.
+
+<P>
+At some point, you may need to make more extensive changes in these
+scripts, or write your own.  As a start, we will examine the K channel that
+is implemented with a <b>tabchannel</b> object by the
+<i>make_K_hh_tchan</i> function in <i>hh_tchan.g</i>.  Older GENESIS
+simulations, such as <i>tutorial3.g</i>, implement this type of channel
+with the <b>hh_channel</b> object.  We recommend that you use the faster
+and more versatile <b>tabchannel</b>, instead.
+<i>genesis/Scripts/tutorials/newtutorial3.g</i> shows how to use
+tabchannels instead of the hh_channels that are used in <i>tutorial3.g</i>.
+
+<P>
+The basic equations that determine the conductance of the K channel in
+the squid giant axon are:
+
+<p align=center><IMG SRC="images/HHeqns.gif">
+ 
+<P>
+The simulator will solve the equation for <i>dn/dt</i>, so it is only
+necessary to specify the maximum conductance, represented by the field Gbar
+in the <b>tabchannel</b> object, the exponents for up to three gates (of
+which we only have one, <i>n</i>), and tables to represent the voltage
+dependence of the last two equations for the rate variables <i>alpha</i>
+and <i>beta</i>.
+
+<P>
+The relevant part of <i>hh_tchan.g</i> is
+
+<PRE>
+    str chanpath = "K_hh_tchan"
+
+    create tabchannel {chanpath}
+
+    setfield ^ Ek {EK} Gbar {360.0*SOMA_A} Ik 0 Gk 0  \
+                Xpower 4 Ypower 0 Zpower 0
+
+    setupalpha {chanpath} X {10e3*(0.01 + EREST_ACT)} -10.0e3  \
+        -1.0 {-1.0*(0.01 + EREST_ACT)} -0.01 125.0 0.0 0.0  \
+            {-1.0*EREST_ACT} 80.0e-3
+</PRE>
+
+<P>
+This sets the reversal potential Ek to the value previously assigned to the
+variable EK, and the exponent for the <i>n</i> gate (represented by the X
+gate field of the <b>tabchannel</b>) to 4.  As there is no inactivation or
+other gate, the exponents for the Y and Z gates are set to 0 (the default).
+Gbar will normally be set by the cell reader, but it is given the
+Hodgkin-Huxley value of 360 S/m^2 times the soma area, in case it is used
+without the cell reader, with an appropriate value of SOMA_A.  Setting Ik
+and Gk is not really necessary, as they will be recalculated by the
+simulator.
+
+<P>
+The function <i>setupalpha</i> uses a generalized version of the
+Hodgkin-Huxley rate variables <i>alpha</i> and <i>beta</i>, namely (A +
+B*Vm)/(C + exp((Vm + D)/F)), in order to set up the <b>tabchannel</b>
+tables.  The 10 arguments correspond to the A, B, C, D, and F parameters
+for <i>alpha</i> and for <i>beta</i>.  A similar function, <i>setuptau</i>,
+allows this form to represent the voltage-dependent activation time
+constant and steady state activation, instead.  A large percentage of
+published voltage-dependent Hodgkin-Huxley type channel models fit this
+general form.  For the others, one has to fill the tables with either an
+equation evaluated in a loop, or a set of experimentally measured values.
+The <a href="textDoc/tabchannel.doc.txt">documentation for tabchannel</a>
+gives the details.  It would also be useful to look at the documentation
+for <a href="textDoc/setupalpha.doc.txt">setupalpha</a>, <a
+href="textDoc/setuptau.doc.txt">setuptau</a>, <a
+href="textDoc/tweakalpha.doc.txt">tweakalpha</a>, and <a
+href="textDoc/tweaktau.doc.txt">tweaktau</a>.
+
+<P>
+
+Chapter 19 of the <A HREF="../iBoGpdf/index.html">BoG</A> covers the use of
+tabchannels to make calcium-dependent and other types of channels, using
+examples from the <a href="textScripts/neurokit/prototypes/traub91chan.g.txt">
+traub91chan.g</a> and <a href="textScripts/neurokit/prototypes/ASTchan.g.txt">
+ASTchan.g</a> prototype files. These files are extensively commented, and
+illustrate many of the ways to use a <b>tabchannel</b>.  For Ca-dependent
+channels, be sure to read the documentation for the <a
+href="textDoc/Ca_concen.doc.txt">Ca_concen</a> object.
+
+<HR>
+Back to <A HREF="simplecell-tut.html">Building a cell the easy way</A>
+
+</BODY>
+</HTML>

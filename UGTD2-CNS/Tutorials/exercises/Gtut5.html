@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.7: http://docutils.sourceforge.net/" />
+<title></title>
+</head>
+<body>
+<div class="document">
+
+
+<div class="section" id="genesis-tutorial-5-using-hsolve-synaptic-plasticity">
+<h2>GENESIS Tutorial 5 - Using hsolve; synaptic plasticity</h2>
+</div>
+<div class="section" id="some-useful-genesis-objects-and-examples">
+<h2>Some other useful GENESIS objects and examples</h2>
+<p>Documentation is in genesis-2.3/genesis/Doc</p>
+<dl class="docutils">
+<dt>efield.txt - An extracellular field potential recording electrode that</dt>
+<dd><p class="first">uses current sources and their distance from the electrode site to
+calculate the field</p>
+<p class="last">Examples in genesis/Scripts/piriform/field.g
+and UGTD2/Tutorials/networks/hippo2</p>
+</dd>
+<dt>asc_file.txt - writes data to a plain text file at clocked intervals,</dt>
+<dd><p class="first">typically with a time step that is larger than that used by the
+main simulation clock 0.</p>
+<p class="last">Examples (with and without hsolve) in  UGTD2/Tutorials/networks
+VAnet2 and ACnet2-GENESIS</p>
+</dd>
+</dl>
+<p>script_out.txt - executes a script command at each clock step</p>
+<p>Example:</p>
+<pre class="literal-block">
+// spikebeep.g - illustrate the use of the script_out element to beep
+// whenever a spike is produced  (assuming your terminal window
+// beeps when a ctrl-G is echoed).
+// Include this file at the end of Scripts/tutorials/tutorial4.g
+
+// The script_out element checks for a spike at every simulation step
+create script_out /catchspike
+setfield /catchspike command &quot;checkspike&quot;
+useclock /catchspike 0
+
+function checkspike
+      if ({getfield /cell/soma/spike state} != 0)
+             echo {chr 7} -nonewline
+      end
+end
+</pre>
+</div>
+<div class="section" id="using-hsolve-for-fast-efficient-calculations">
+<h1>Using hsolve for fast efficient calculations</h1>
+<p>hsolve.txt - the main documentation</p>
+<p>BoG Chapter 20 Sec 20.5 and following sections</p>
+<p>Single cell example:</p>
+<pre class="literal-block">
+int hflag = 1       // use hsolve if hflag = 1
+str cellpath = &quot;/cell&quot;
+
+readcell RScell.p  {cellpath}
+
+if (hflag)
+  create hsolve {cellpath}/solver
+  setfield {cellpath}/solver path &quot;/cell/##[][TYPE=compartment]&quot;
+  setmethod 11
+  setfield {cellpath}/solver chanmode {hsolve_chanmode}
+  call {cellpath}/solver SETUP
+  reset
+  echo &quot;Using hsolve&quot;
+end
+</pre>
+<p>UGTD2/Tutorials/advanced-tutorials/hsolve-cornelis/index.html
+Simulations with GENESIS using hsolve</p>
+<p>Section 3 - Networks of cells</p>
+<p>Detailed network example: UGTD2/Tutorials/networks/VAnet2/VAnet2-batch.g:</p>
+<pre class="literal-block">
+createmap /library/Ex_cell /Ex_layer {Ex_NX} {Ex_NY} \
+  -delta {Ex_SEP_X} {Ex_SEP_Y}
+
+/* Step 4: Setting up hsolve for a network requires setting up a
+ solver for one cell of each type in the network and then
+ duplicating the solvers for the remaining cells.  The procedure is
+ described in the advanced tutorial 'Simulations with GENESIS using
+ hsolve by Hugo Cornelis' at
+ genesis-sim.org/GENESIS/UGTD/Tutorials/advanced-tutorials
+*/
+
+if(hflag)
+  pushe /Ex_layer/Ex_cell[0]
+  create hsolve solver
+  setmethod solver 11 // Use Crank-Nicholson
+  setfield solver chanmode {hsolve_chanmode} path &quot;../soma&quot;
+  call solver SETUP
+  int i
+  for (i = 1 ; i &lt; {Ex_NX*Ex_NY} ; i = i + 1)
+      call solver DUPLICATE \
+      /Ex_layer/Ex_cell[{i}]/solver  ../soma
+      setfield /Ex_layer/Ex_cell[{i}]/solver \
+          x {getfield /Ex_layer/Ex_cell[{i}]/soma x} \
+          y {getfield /Ex_layer/Ex_cell[{i}]/soma y} \
+          z {getfield /Ex_layer/Ex_cell[{i}]/soma z}
+  end
+  pope
+  pushe /Inh_layer/Inh_cell[0]
+  create hsolve solver
+  setmethod solver 11
+  setfield solver chanmode {hsolve_chanmode} path &quot;../[][TYPE=compartment]&quot;
+  call solver SETUP
+  int i
+  for (i = 1 ; i &lt; {Inh_NX*Inh_NY} ; i = i + 1)
+      call solver DUPLICATE \
+          /Inh_layer/Inh_cell[{i}]/solver      ../##[][TYPE=compartment]
+  setfield /Inh_layer/Inh_cell[{i}]/solver \
+      x {getfield /Inh_layer/Inh_cell[{i}]/soma x} \
+      y {getfield /Inh_layer/Inh_cell[{i}]/soma y} \
+      z {getfield /Inh_layer/Inh_cell[{i}]/soma z}
+  end
+  pope
+end
+
+// Do an overall reset, just to be sure hsolve is properly set up
+reset
+
+/* Step 5: Now connect them up with planarconnect */
+</pre>
+</div>
+<div class="section" id="modeling-synaptic-plasticity">
+<h2>Modeling Synaptic Plasticity</h2>
+<p><strong>Built-in GENESIS objects</strong></p>
+<dl class="docutils">
+<dt>hebbsynchan.txt -synaptically activated channel with a simple</dt>
+<dd>mechanism for hebbian weight changes as a function of pre- and
+postsynaptic activities.</dd>
+</dl>
+<p>Scripts/examples/hebb/hebb.g and Scripts/examples/hebb/pavlov/pavlov.g</p>
+<dl class="docutils">
+<dt>facsynchan.txt - synaptically activated channel with synaptic</dt>
+<dd><p class="first">facilitation and/or synaptic depression.</p>
+<p class="last">Example: Scripts/examples/facsynchan/facdemo.g</p>
+</dd>
+</dl>
+
+
+<p>The plastic synchan variants listed obove are cannot be used in
+cells that that are taken over by hsolve, and this limits their use in
+large network models. However Spike Timing Dependent Plasticity (STDP)
+can be implemented under hsolve in GENESIS 2.4 by using
+the <I>stdp_rules</I> object.  For doucumentation, see the
+demonstration scripts for the <I>stdp_rules</I> object
+in <I>genesis/Scripts/stdp_rules</I>, and the documentation on
+<A HREF="../Hyperdoc/NewPlasticityObjects.html"> New Plasticity Objects</A>.
+
+<p><strong>A simple exercise:</strong>  Use the simplecell model with 5 cells</p>
+<p>cell[0]  the &quot;target cell&quot; dend/Ex_channel receives SPIKE messages
+from cell[1] - cell[4]</p>
+<p>Each of these fires at different random rates
+(see UGTD2/Tutorials/cells/simplecell2 for an example)</p>
+<p>alternatively, use the RSnet model.</p>
+
+<p><strong>A project:</strong></p>
+<p>Apply it to the VAnet2 model</p>
+<p><strong>Advanced projects:</strong></p>
+<ul class="simple">
+<li>Apply it the ACnet2 model</li>
+<li>Implement it on another network that uses hsolve.</li>
+</ul>
+</div>
+</body>
+</html>

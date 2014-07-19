@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002 (1.62) JA patch-1.4
+patched version by:  Kenshi Muto, Debian Project.
+LaTeX2HTML 2002 (1.62),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Data Model</TITLE>
+<META NAME="description" CONTENT="Data Model">
+<META NAME="keywords" CONTENT="tutorial2">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002 JA patch-1.4">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tutorial2.css">
+
+<LINK REL="previous" HREF="node54.html">
+<LINK REL="up" HREF="node54.html">
+<LINK REL="next" HREF="node56.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html855"
+  HREF="node56.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html851"
+  HREF="node54.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html847"
+  HREF="node54.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html853"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html856"
+  HREF="node56.html">Hsolve as a Virtual</A>
+<B> Up:</B> <A NAME="tex2html852"
+  HREF="node54.html">Compilation</A>
+<B> Previous:</B> <A NAME="tex2html848"
+  HREF="node54.html">Compilation</A>
+ &nbsp <B>  <A NAME="tex2html854"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION04211000000000000000">
+Data Model</A>
+</H2>
+
+<P>
+As already explained in the chapter on the numerical background,
+<TT>hsolve</TT> solves the equations in the model on a staggered time
+grid (see section <A HREF="node12.html#sec:single-compartment">1.2.1</A>, page
+<A HREF="node12.html#sec:single-compartment"><IMG  ALIGN="BOTTOM" BORDER="1" ALT="[*]"
+ SRC="file:/usr/share/latex2html/icons/crossref.png"></A>).  The decoupling of the equations of
+intracellular mechanisms and conductances from the cable equation
+propagates to the design of the implementation for the emulation of
+the byte-code.  Basically <TT>hsolve</TT> can be split into two almost
+separate parts: one part for the intracellular mechanisms and one
+part for the cable equations.  These two parts have their own byte-code
+engine.  Since <TT>hsolve</TT> stores the byte-code separately from the
+result values, each byte-code engine maintains two arrays (see figure
+<A HREF="node55.html#fig:compilation">6.1</A>).  So for conductance equations and cable
+equations, <TT>hsolve</TT> maintains four arrays in total as
+follows:
+
+<P>
+
+<OL>
+<LI>For cable equations:
+  
+<OL>
+<LI>The array that contains the byte-code is called the
+    <TT>funcs</TT> array.  It uses the conductance values to compute
+    membrane potentials on a future time point.
+</LI>
+<LI>The array that contains the computed values is partitioned
+    into three distinct subparts: <TT>ravals</TT>, <TT>results</TT>
+    and <TT>vm</TT>.
+  
+</LI>
+</OL>
+</LI>
+<LI>For conductance equations:
+  
+<OL>
+<LI>The array that contains the byte-code is called the
+    <TT>ops</TT> array.  It uses the membrane potentials for membrane
+    potential dependent conductances.
+</LI>
+<LI>The array that contains the computed values is called the
+    <TT>chip</TT> array.
+  
+</LI>
+</OL>
+</LI>
+</OL>
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="fig:compilation"></A><A NAME="1211"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 6.1:</STRONG>
+Byte code compilation phases</CAPTION>
+<TR><TD>
+<DIV ALIGN="CENTER">  <IMG
+ WIDTH="707" HEIGHT="542" ALIGN="BOTTOM" BORDER="0"
+ SRC="img66.png"
+ ALT="\includegraphics[scale=0.52]{figures/compile1.eps}">
+  </DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+The advantages of this design are:
+
+<P>
+
+<OL>
+<LI>Optimizations can be implemented that are not possible at the
+  modeling level.
+</LI>
+<LI>Because of a high cache use, you get extra performance (cache
+  misses are identified as a bottleneck in some application areas).
+</LI>
+<LI>Easy to emulate a single byte code.
+</LI>
+</OL>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<TABLE  WIDTH="635">
+<TR><TD>
+  <FONT SIZE="-1"><B>NOTE:</B> We did not consider diffusion or
+    concentration elements till now.  If these elements would be
+    incorporated into the discussion we would have to say that
+    <TT>hsolve</TT> can be split into three separate parts: also the
+    diffusion and concentration elements have their own byte code
+    engine.
+</FONT></TD></TR>
+</TABLE>
+
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html855"
+  HREF="node56.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html851"
+  HREF="node54.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html847"
+  HREF="node54.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html853"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html856"
+  HREF="node56.html">Hsolve as a Virtual</A>
+<B> Up:</B> <A NAME="tex2html852"
+  HREF="node54.html">Compilation</A>
+<B> Previous:</B> <A NAME="tex2html848"
+  HREF="node54.html">Compilation</A>
+ &nbsp <B>  <A NAME="tex2html854"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+
+2002-11-15
+</ADDRESS>
+</BODY>
+</HTML>

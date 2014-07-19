@@ -1,0 +1,49 @@
+\begin{thebibliography}{1}
+
+\bibitem{borg-graham00:_addit_effic_comput_branc_nerve_equat}
+{\sc Borg-Graham, L.~J.}
+\newblock Additional efficient computation of branched nerve
+  equations\::adaptive time step and ideal voltage clamp.
+\newblock {\em Journal of Computational Neuroscience 8\/} (2000), 209--226.
+
+\bibitem{bower98:_book_genes}
+{\sc Bower, J.~M., and Beeman, D.}, Eds.
+\newblock {\em The Book of GENESIS}, second~ed.
+\newblock Springer-Verlag, 1998.
+
+\bibitem{cornelis02:_purkin_cell_tutor}
+{\sc Cornelis, H., and DeSchutter, E.}
+\newblock The purkinje cell tutorial.
+\newblock Available from the Genesis source code distribution.
+  http://www.genesis-sim.org, May 2002.
+
+\bibitem{schutter98:_book_genes}
+{\sc DeSchutter, E., and Beeman, D.}
+\newblock {\em The Book of GENESIS}, second~ed.
+\newblock Springer-Verlag, 1998, ch.~22. Speeding up large simulations.
+
+\bibitem{schutter94:_simul_purkin}
+{\sc DeSchutter, E., and Bower, J.}
+\newblock Simulated responses of cerebellar purkinje cells are independent of
+  the dentritic location of granule cell synaptic inputs.
+\newblock {\em Proc. Natl. Acad. Sci. USA 91\/} (1994), 4736--4740.
+
+\bibitem{gerald99:_applied_numer_analy}
+{\sc Gerald, C.~F., and Wheatley, P.~O.}
+\newblock {\em Applied Numerical Analysis}, fifth~ed.
+\newblock Addison-Wesley Publishing Company, 1999.
+\newblock Year ?
+
+\bibitem{hines84:_effic}
+{\sc Hines, M.}
+\newblock Efficient computation of branched nerve equations.
+\newblock {\em International Journal on Biomedical Computing 15\/} (1984),
+  69--76.
+
+\bibitem{koch98:_method_neuron_model_from_ions_networ}
+{\sc Koch, C., and Segev, I.}, Eds.
+\newblock {\em Methods in Neuronal Modeling, From Ions to Networks}, second~ed.
+\newblock Series on Computational Neuroscience. The MIT Press, Cambridge,
+  Massachusetts, London, England, 1998.
+
+\end{thebibliography}

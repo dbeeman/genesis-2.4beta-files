@@ -1,0 +1,344 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE></TITLE>
+<META NAME="generator" CONTENT="txt2html v1.28">
+</HEAD>
+<BODY>
+<P>
+GENESIS 2.3 Binary Distribution README
+
+<P>
+<STRONG>CONTENTS</STRONG>
+<P>
+<STRONG>1  QUICK START</STRONG><BR>
+<STRONG>2  INTRODUCTION</STRONG><BR>
+<STRONG>3  INSTALLATION</STRONG>
+<PRE>
+       3.1  Unpacking
+       3.2  Site-specific Setup
+       3.3  Environment Variables
+       3.4  Running GENESIS
+       3.5  The GENESIS Neural Modeling Tutorials
+    4  OPERATING SYSTEM SPECIFIC NOTES
+       4.1  Cygwin
+       4.2  Linux
+       4.3  OSX Darwin
+    5  PROBLEMS RUNNING GENESIS
+       5.1  Floating Point Variation
+</PRE>
+
+
+<P>
+<STRONG>1  QUICK START</STRONG>
+<P>
+    cd &lt;install_directory&gt;<BR>
+    tar xzf genesis-2.3-&lt;os&gt;-bin.tar.gz
+    cd genesis-2.3/genesis<BR>
+    ./binsetup<BR>
+    cp .simrc ~<BR>
+    export PATH=$PATH:/usr/local/genesis-2.3/genesis   # use 'set' for csh
+
+<P>
+    If it didn't work, you'll have to read on...
+
+
+<P>
+<STRONG>2  INTRODUCTION</STRONG>
+
+<P>
+This distribution includes precompiled versions of both genesis (with XODUS,
+dependent on X11 installation) and nxgenesis (non-X genesis, without the XODUS
+GUI, hence no X11 dependence).
+
+<P>
+If you have a pre-2.0 version of GENESIS and some custom scripts you'd like to
+keep, you can use the 'convert' utility in the bin directory to update your
+scripts.
+
+<P>
+The genesis executables have been linked with certain versions of dynamic
+libraries. These libraries must be available at run time. See the Operating
+System Specific Notes below.  If have problems running this distribution or
+want to compile your own version of GENESIS, please get the source distribution
+from http://sourceforge.net/projects/genesis-sim.
+
+
+<P>
+<STRONG>3  INSTALLATION</STRONG>
+
+<P>
+3.1  Unpacking
+
+<P>
+Pick the place where you want to install the "genesis" directory tree.
+If you are making a system-wide installation as "root" user, /usr/local is a
+good choice.  For a personal installation, without root privileges, you can use
+your home directory ("~").  Change to this directory and extract the genesis
+directory from the archive file, e.g. genesis-2.3-linux-bin.tar.gz.  For
+example,
+
+<PRE>
+        cd /usr/local
+        tar xvzf /mnt/cdrom/genesis-2.3-linux-bin.tar.gz
+</PRE>
+
+<P>
+or from wherever you have it (e.g.~/downloads/genesis-2.3-linux-bin.tar.gz)
+
+
+<P>
+3.2  Site-specific Setup
+
+<P>
+A small setup script should be run to create a GENESIS initialization file
+(.simrc) which is modified to reflect your installation directory.
+
+<PRE>
+        cd genesis-2.3/genesis
+        ./binsetup
+</PRE>
+
+<P>
+Then copy the resulting .simrc to your home directory.
+
+<P>
+        cp .simrc ~
+
+
+<P>
+3.3  Environment Variables
+
+<P>
+Finally, add the genesis directory to your search path, so that "genesis"
+can be found from any directory.  If your login shell is bash, do this by
+editing the .bashrc file in your home directory. For example, if you have
+installed genesis in /usr/local, add this line:
+
+<P>
+        PATH=$PATH:/usr/local/genesis-2.3/genesis
+
+<P>
+If you are using tcsh or csh as your command shell, add
+
+<P>
+        set path=($path /usr/local/genesis-2.3/genesis)
+
+<P>
+to your .tcsh or .csh file.
+
+
+<P>
+3.4  Running GENESIS
+
+<P>
+At this point, you are ready to try running GENESIS.  Change into the
+directory genesis/Scripts and try some of the tutorials suggested in
+the README file.
+
+<P>
+If you have any trouble with the installation or execution of GENESIS, read
+the OS-specific notes below. If you still can't get it to work, please try
+downloading and installing the source distribution.
+
+
+<P>
+3.5  The GENESIS Neural Modeling Tutorials
+
+<P>
+The genesis/Tutorials directory in the GENESIS distribution is provided as
+a "place holder" for supplemental hypertext GENESIS modeling tutorials and
+documentation, including the GENESIS Neural Modeling Tutorials package.
+These are an evolving set of HTML tutorials intended to teach the process
+of constructing biologically realistic neural models with the GENESIS
+simulator. The latest version of this package is offered as a separate
+download from the GENESIS web site, http://www.genesis-sim.org/GENESIS. The
+downloaded file (Tutorials.tar.gz or Tutorials.zip) should be unpacked in
+the genesis directory in order to augment the files that are provided there.
+The "bare bones" version that is provided with the GENESIS distribution
+includes a beginner's guide to UNIX/Linux commands that may be useful
+for those who are new to the command line environment used by GENESIS.
+
+
+<P>
+<STRONG>4  OPERATING SYSTEM SPECIFIC NOTES</STRONG>
+
+<P>
+Statically linked binaries are no longer provided for GENESIS. The main reason
+for this is that many modern systems can be configured in ways that make it 
+impossible or impractical to provide static executables. In particular, system
+libraries may have different dependencies based on the flavor or version of the
+installed operating system.
+
+<P>
+So, the GENESIS executables have been linked against dynamic libraries creating
+runtime dependencies as described below.
+
+
+<P>
+4.1  Cygwin
+
+<P>
+Cygwin provides a UNIX-like environment for Windows that will let you run
+GENESIS and other UNIX programs that have been compiled to run under Cygwin.
+Go to http://cygwin.com, and look for the "Install Cygwin now" link.  This
+will download a small setup.exe, which will let you choose what to install and
+then download it.  For more information about selecting packages to install,
+use the link for "Help on setup.exe".  For more information on Cygwin, see
+the Cygwin users guide at http://cygwin.com/cygwin-ug-net/
+
+<P>
+More information on installing and using X windows with Cygwin can be found in
+the Cygwin/X User's Guide at http://x.cygwin.com/docs/ug/cygwin-x-ug.html
+
+<P>
+GENESIS can be run under Windows with the Cygwin software installed. If you want
+to run GENESIS with GUI capabilities, the X windows package must be installed
+under Cygwin. The instructions below assume you want GUI capabilities. You
+should be able to run non-graphical GENESIS (nxgenesis.exe) with a standard
+Cygwin installation.
+
+<P>
+Graphical GENESIS requires the following packages (and all their dependencies):
+
+<PRE>
+    Package             Cygwin Category
+    -------             ---------------
+    coreutils           Base*
+    sed                 Base
+    X-startup-scripts   X11
+    xorg-x11-base       X11
+</PRE>
+
+<P>
+*Recent versions of Cygwin roll textutils and fileutils into coreutils.
+If you have an older Cygwin, you may need to install these packages; they are
+in the Base category.
+
+<P>
+Go to the Cygwin site (http://www.cygwin.com) and use the "Install or update 
+now!" link to install the setup.exe program.  Running setup.exe will
+lead you through several dialogs and eventually to a list of packages. If there
+is a version number displayed next to the package under the 'Current' column,
+that package is already installed. Please see the Cygwin website for further
+instructions on using the setup.exe program.
+
+<P>
+More information on installing and using X windows with Cygwin can be found in
+the Cygwin/X User's Guide at http://x.cygwin.com/docs/ug/cygwin-x-ug.html
+
+<P>
+You will probably want to install a text editor for editing GENESIS simulation
+scripts or modifying configuration files.  These are found in the Editors
+category.  Text files that are created by UNIX have a different
+End-Of-Line terminator than Windows text files.  For that reason, it is best
+to use a UNIX editor instead of Windows Notepad for editing GENESIS files.  If
+you are more familiar with Windows than UNIX, choose "nedit".  This is an
+easy-to-use editor with built-in help that will be familiar to users of
+Windows Notepad.  If you are a UNIX user, you may prefer to install emacs or
+vi (Vim).
+
+<P>
+4.2  Linux
+
+<P>
+The linux executables have been linked against gnu libc6 (aka glibc2). Certain
+libraries will need to be available at run time. Non-graphical GENESIS
+(nxgenesis) depends on:
+<P>
+    libm.so.6<BR>
+    libncurses.so.5<BR>
+    libc.so.6<BR>
+    libgpm.so.1
+
+<P>
+Graphical GENESIS (genesis) needs these additional libraries:
+<P>
+    libXt.so.6<BR>
+    libX11.so.6<BR>
+    libdl.so.2
+
+<P>
+    and possibly:<BR>
+    libSM.so.6<BR>
+    libICE.so.6
+
+<P>
+Given the variety of Linuces available each with it's own package management
+system, there's no standard process for installing these libraries. Try to
+get packages from your OS vendor's web site. You'll need libc6 and X11R6.
+
+
+<P>
+4.3  OSX Darwin
+
+<P>
+The OSX executables were built using Xcode 2.2 tools, based on GCC 4.0.
+
+<P>
+The binary distribution of GENESIS will only work with OSX 10.2 and higher,
+on the PowerPC architectures.  You'll have to compile the package
+from source to run on earlier versions or on the Intel architecture.
+
+<P>
+The non-graphical version of GENESIS (nxgenesis) should run on any standard
+OSX installation. Graphical GENESIS (genesis) relies on the X11 libraries for
+it's graphical user interface (GUI). An X11 server needs to be started before
+graphical GENESIS can be run. If you can't locate the X11 application (usually
+Applications-&gt;Utilities-&gt;X11), see:<BR>
+http://developer.apple.com/darwin/runningX11.html
+for further information.
+
+<P>
+Starting the X11 application should bring up an 'xterm' window. Graphical
+GENESIS must be started from the xterm window; it will not work from a window
+started by the 'Terminal' application.
+
+
+<P>
+<STRONG>5  PROBLEMS RUNNING GENESIS</STRONG>
+
+<P>
+You must be running X11R5 or X11R6 in order to successfully run the
+graphical GENESIS. Earlier versions will not work.
+
+<P>
+SGI users: if your X11 server is set up to default to a
+TrueColor visual and you get X protocol errors running GENESIS,
+try using the -defaultcolor option on the GENESIS command line.
+
+<P>
+SGI and HP users: the default font used by some Irix and HPUX X
+windows implementations is too large for the widgets in many of
+the simulations.  You may modify this by setting X resources,
+as described in &lt;installdir&gt;/startup/Xdefaults.example.
+
+<P>
+Problems with XODUS colors:  By default, XODUS widgets should
+have a LightSteelBlue background, with black foreground (text
+and graphics).  If you are getting something else (or want to
+change these defaults), you can use the Xdefaults.example
+file described above.
+
+<P>
+FreeBSD users:  Some versions of FreeBSD (ver. 4.3) will run
+GENESIS simulations and accept input from XODUS dialog boxes, but
+will not accept input at the genesis prompt in the terminal
+window.  At present, we do not have a solution for this problem.
+
+
+<P>
+5.1  Floating Point Variation
+
+<P>
+Floating point computation may vary based on hardware, operating system,
+and compiler versions/options. While similar system configurations should
+reliably produce identical results, systems with different processors,
+operating systems, and/or compiler options can be expected to show some
+variation in floating point results. For the Rallpack benchmarks, this
+will be after the sixth decimal place -- any larger variation should be
+reported as a bug. Simulations with chaotic behavior and/or long runtimes
+may potentially have much larger variations.
+
+</BODY>
+</HTML>
