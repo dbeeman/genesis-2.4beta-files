@@ -146,14 +146,30 @@ each synapse until you can achieve a pattern of alternate bursts of action
 potentials.  To make it easy to change the weights, you may wish to add
 dialog boxes for entering weights to the control panel.
 
+<P> Gap junctions provide another way that neurons can interact, but
+without chemical synapses. The exercise in
+<A HREF="../exercises/gap_junctions/README.html">exercises/gap_junctions</A>
+suggests how you might add dendrodendritic connections between
+interneurons via gap junctions ("electical synapses").
+
 <P>
-This approach may also be used to create larger networks.  However,
-GENESIS has a number of commands that are intended specifically to
-create large arrays of cells and to connect them into a network, with
-just a few lines of scripting code.  That is the subject of the next
-section.
+<B>Detour:</B> <A HREF="plasticity-tut.html">Implementing synaptic plasticity</A>
 
+<P>
+In these examples, the value of the synaptic weight has been held fixed.
+In any biological cortical network, the response of cells to synaptic
+inputs varies with time. The tutorial on
+<A HREF="plasticity-tut.html">Implementing synaptic plasticity</A>
+describes how phenomena such as long term potentiation and depression
+(LTP and LTD) may be efficiently implemented in GENESIS.
 
+<P>
+
+The approach used in this tutorial may also be used to create larger
+networks.  However, GENESIS has a number of commands that are intended
+specifically to create large arrays of cells and to connect them into
+a network, with just a few lines of scripting code.  That is the
+subject of the next section.
 
 <H2>References</H2>
 

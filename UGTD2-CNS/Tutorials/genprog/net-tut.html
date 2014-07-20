@@ -445,7 +445,7 @@ examined previously.  Try adding a layer of these cells to the network, and
 make suitable excitatory connections to them from the RScells, and connections
 from them to inhibitory synchans in the RScells. The well documented network
 model in <A
-HREF="../networks/Vogels-Abbott_net/index.html">networks/Vogels-Abbott_net/</A>
+HREF="../networks/Vogels-Abbott_net/index.html">networks/Vogels-Abbot_net</A>
 implements the Vogels and Abbott (2005) model using single compartment
 neurons with Hodgkin-Huxley dynamics, instead of integrate and fire
 neurons.  This simple network has random connections between populations of
@@ -453,6 +453,18 @@ excitatory and inhibitory cells.  Although this is not a very biologically
 realistic model, the <A HREF="../networks/Vogels-Abbott_net/index.html">
 documentation</A> and comments in the scripts describe many options to modify
 the network connectivity and to incorporate more realistic cell models.
+
+<P>
+
+This July 2014 update of the tutorials package has two recent
+variations on the Vogels and Abbott model. The
+<A HREF="../networks/VAnet2/README.html">networks/VAnet</A> simulation
+serves as a tutorial on using hsolve with network models in order
+speed up simulations by factors of ten to
+twenty. The 
+<A HREF="../networks/ACnet2-GENESIS/README.html">networks/ACnet2-GENESIS</A>
+simulation is a study of cortical waves in primary auditory
+cortex that evolved from the models used in this tutorial.
 
 <P>
 The <i>cells/FScell</i> directory contains a simple fast spiking cell simulation,
@@ -537,6 +549,18 @@ PGENESIS</A>.  This analyzes the differences between RSnet and the
 parallel version par-RSnet in order to explain the steps needed
 to parallelize a network simulation that was developed for serial GENESIS.
 
+<P>
+<H2>Detour: Implementing synaptic plasticity</H2>
+
+<P>
+In these examples, the value of the synaptic weight has been held fixed.
+In any biological cortical network, the response of cells to synaptic
+inputs varies with time. The tutorial on
+<A HREF="plasticity-tut.html">Implementing synaptic plasticity</A>
+describes how phenomena such as long term potentiation and depression
+(LTP and LTD) may be efficiently implemented in GENESIS.
+
+<P>
 <H2>What next?</H2>
 
 <P>

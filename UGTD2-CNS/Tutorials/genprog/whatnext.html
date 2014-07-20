@@ -30,6 +30,21 @@ The advanced tutorial by Hugo Cornelis from the 2002 GENESIS Users Meeting
 <A HREF="../advanced-tutorials/index.html">Simulations with GENESIS using
 hsolve</A> gives further examples.
 
+<P>
+However, hsolve does more than provide efficient numerical integration
+for compartmental cell models.  When cells that have been taken over by
+hsolve are used in a network simulation, spikes are delivered much
+more efficiently. This can result in speed increase of ten to twenty times
+when using the approach described in the "Networks of Cells" section
+of the hsolve tutorial. This is illustrated in the two simulations
+<A HREF="../networks/VAnet2/README.html">networks/VAnet2</A> and
+<A HREF="../networks/ACnet2-GENESIS/README.html">networks/ACnet2-GENESIS</A>.
+<I>VAnet2</I> serves as a tutorial on using hsolve with network models
+and the <I>ACnet2-GENESIS</I> simulation is a study of cortical waves
+in primary auditory cortex that evolved from the models used in these tutorials.
+
+<P>
+
 <H2>Spike train objects in GENESIS</H2>
 <P>
 
@@ -86,17 +101,29 @@ hints, and pitfalls.
 
 <P> A demonstration of the use of GENESIS for modeling biochemical
 reactions such as occur in biochemical signaling pathways can be found in
-<i>genesis/Scripts/kinetikit</i>, and in the <A
-HREF="../advanced-tutorials/index.html">advanced tutorials</A> on Modeling
-Calcium and Biochemical Reactions from WAM-BAMM 2005 and LASCON 2008.  Some
-of the included example scripts use <i>chemesis</i>, a library of
-biochemical reaction objects for modeling calcium concentration, which is
-also included. The website for chemesis is  <A
-HREF="http://www.gmu.edu/departments/krasnow/CENlab/chemesis.html">
-http://www.gmu.edu/departments/krasnow/CENlab/chemesis.html</A>.
+<i>genesis/Scripts/kinetikit</i>, and in the documentation for the
+<i>chemesis</i> library, which has been incorporated into GENESIS 2.4.
 Chapter 10 of the <A HREF="../iBoGpdf/index.html">BoG</A>
 provides an introduction to the biochemistry involved, and a tutorial on
 Kinetikit and the GENESIS kinetics library.
+
+<P>
+<A HREF="../Hyperdoc/chemesis.html">chemesis</A> is a library of
+objects for creating models of biochemical reactions, second
+messengers, and calcium dynamics, developed and contributed to the
+GENESIS 2.4 libraries by K. T. (Avrama) Blackwell. The main website
+for the latest chemesis source code, tutorials, simulation scripts,
+and lecture slides is
+<A HREF="http://krasnow1.gmu.edu/CENlab/software.html">
+http://krasnow1.gmu.edu/CENlab/software.html</A>. The chemesis tutorial is 
+in <A HREF="htmlScripts/chemesis/CalTut.html">Scripts/chemesis/CalTut.html</A>.
+
+
+
+
+The <A HREF="../advanced-tutorials/index.html">advanced tutorials</A>
+on Modeling Calcium and Biochemical Reactions from WAM-BAMM 2005 and LASCON 2008
+have example scripts that use both <i>chemesis</i> and <i>kinetikit</i>.
 
 <P> If you need to create your own new GENESIS objects and commands, see the
 documentation on Customizing GENESIS in the <A HREF="../Hyperdoc/Manual.html">

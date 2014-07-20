@@ -41,17 +41,17 @@ is running, according to some model of synaptic plasticity.
 
 One way to do this is with variants of the synchan object that have
 the plasticity mechanism built in to them. This is the case with the
-hebbsynchan and facsynchan objects, or custom objects created
-according to 
+<B>hebbsynchan</B> and <B>facsynchan objects</B>, or custom objects
+created according to
 <A HREF="../Hyperdoc/Manual-21.html#ss21.3"> Creating New Synaptic
 Objects</A>.  However, these objects are not hsolvable, and cannot be
-used in cells that have been taken over by hsolve. The VAnet2
+used in cells that have been taken over by <B>hsolve</B>. The <I>VAnet2</I>
 simulation in <A HREF="../networks/VAnet2/README.html">networks/VAnet2</A>
 illustrates how the use of hsolve can increase the speed of a large
-network simulation as much as a factor of 20.
+network simulation by as much as a factor of 20.
 
 <P>
-The alternative that is consistent with hsolve is to perform the
+An alternative that is consistent with hsolve is to perform the
 weight changes with a clocked object or function that is external to
 the hsolved network. This can be done by either
 
@@ -59,23 +59,50 @@ the hsolved network. This can be done by either
   <LI>writing a script function that performs the weight change, and is called
 with a "../Doc/script_out.txt" script_out element
 
-  <LI>using a compiled GENESIS object, such as the stdp_rules object to
+  <LI>using a compiled GENESIS object, such as the <B>stdp_rules</B> object to
   perform the update.
 
 </UL>
+
+<P>
+
+The tutorial with example scripts in
+<A HREF="htmlScripts/stdp_rules/README.html">Scripts/stdp_rules</A>
+illustrates both methods as applied to the the Song, Miller, and
+Abbott (2000) (SMA) model for Spike Timing Dependent Plasticity (STDP).
+
+<P>
+
+The concept behind the <B>stdp_rules</B> object is very general, but
+this particular implementation is specific to the SMA phenomenological
+model of STDP. Rather than using a more biologically based model that
+depends on calcium influx to the cell, the weight modification rules
+are based on experimentally observed relationships between the timing
+of pre and postsynaptic spikes, e.g. Dan and Poo (2004).  The GENESIS
+implementation has been adapted for compartmental models with
+continous conductance changes, Hodgkin-Huxley channels, and axonal
+delays, rather than for 'point neuron' integrate and fire (IF) cells.
+
+<P>
+The demonstration script <I>Scripts/stdp_rules/W32ex-5-1-batch.g</I> defines a
+function <I>apply_stdp_rules</I> that illustrates the SMA application of the SMA
+weight update procedure in the GENESIS scripting language.  It is called by a
+<B>script_out</B> element at 1 msec intervals.  The
+function <I>setup_stdp_update</I> shows how to more rapidly perform
+the same weight modification rules by creating and initializing the
+fields of a <B>stdp_rules</B> element.
+
+<P>
+There are exercises in the application of the <B>stdp_rules</B> object in
+ <A HREF= "../exercises/course-tutorials.html">course-tutorials.html</A>
+and in  <A HREF= "../exercises/Gtut5.html">Gtut5.html</A>
+in the <I>exercises</I> directory.
+
 <P>
 For details of the implementation, see the GENESIS 2.4 documentation
 <A HREF= "../Hyperdoc/Manual-21.html#ss21.4"> Creating New Synaptic Plasticity
-Objects</A>. There is also a tutorial with example scripts in
-<A HREF="htmlScripts/stdp_rules/README.html">Scripts/stdp_rules</A>.
-This tutorial illustrates both methods as applied to the the Song,
-Miller, and Abbott (SMA) model for Spike Timing Dependent Plasticity
-(STDP).
+Objects</A>. 
 
-There are further examples in
- <A HREF= "../exercises/course-tutorials.html">course-tutorials.html</A>
-and in  <A HREF= "../exercises/Gtut5.html">Gtut5.html</A>
-in the <I>exercises</I> directory
 
 <H1><A NAME="section-2.">References</A></H1>
 
