@@ -36,8 +36,7 @@
    stdp_rules object.
 */
 
-inline void
-stdp_rules_reset(stdpelement)
+void stdp_rules_reset(stdpelement)
   struct stdp_rules_type *stdpelement;
  {
    char  *cellpath, *synpath, *spikepath;
@@ -66,8 +65,7 @@ stdp_rules_reset(stdpelement)
    a particular synchan, with information from the spikegen of the same cell.
 */
 
-inline int
-do_stdp_update(stdpelement, synchan, spikegen)
+int do_stdp_update(stdpelement, synchan, spikegen)
     register struct stdp_rules_type *stdpelement;
     register struct Synchan_type *synchan;
     register struct Spikegen_type *spikegen;
