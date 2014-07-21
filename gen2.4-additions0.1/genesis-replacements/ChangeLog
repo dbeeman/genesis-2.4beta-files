@@ -15,20 +15,23 @@ BETA RELEASE 2.4 beta
 2014-July
 ------------------------------------------
 
--addition of 'stdp_rules' object, documentation, and Scripts for implementing
-spike timing dependent plasticity in networks of hsolvd cells
+- addition of 'stdp_rules' object, documentation, and Scripts for implementing
+  spike timing dependent plasticity in networks of hsolved cells
 
--the chemesis library for modeling second messengers and calcium dynamics
-has been added to GENESIS
+- the chemesis library for modeling second messengers and calcium dynamics
+  has been added to GENESIS
 
 
--new src/Makefile.dist includes chemesis, and has updated compilation flags
-for modern versions of Linux.
+- new src/Makefile.dist includes chemesis, and has updated compilation flags
+ for modern versions of Linux.
 
--fix added to src/sim/sim_notes.c to prevent compilation errors
+- fix added to src/sim/sim_notes.c to prevent compilation errors
 
--new tutorial Scripts were added for chemesis, gpython-tools,
-purkinje, stdp_rules, VAnet2
+- new tutorial Scripts were added for chemesis, gpython-tools,
+  purkinje, stdp_rules, VAnet2
+
+- removed inline declarations from facsynchan and stdp_rules, and fixes to
+  netcdf to allow   compilation with Mac OS X
 
 ------------------------------------------
 FINAL RELEASE 2.3
@@ -50,7 +53,7 @@ streams.
 -Documentation has been revised for BoG.txt, Changes.txt, asc_file.txt, and
 Objects.txt, tabchannel.txt, README.cygwin.
 
--Some files were moved and Makefile.dist updated to facilitate creating src and
+- Some files were moved and Makefile.dist updated to facilitate creating src and
 binary distributions with minimal impact on the existing directory hierarchy.
 
 

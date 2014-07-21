@@ -935,25 +935,51 @@ SPRNGLIB   = $(SPRNGDIR)/lib/lib$(SPRNG_LIB).a
 ## end	Linux 2.x and up on PPC-based systems (LinuxPPC)
 
 # ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~
-# System:       MacOS X and Darwin (PPC and Intel x86 based systems)
+# System:       Mac OS X and Darwin (PPC and Intel x86 based systems)
 # Compiler:     Apple Computer, Inc. v.gcc-932.1, based on gcc v.2.95.2
 # ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~
 
-## This configuration was originally provided by a GENESIS user, Alfonso
-## Delgado-Reyes.
+## This configuration was originally provided by a GENESIS user,
+## Alfonso Delgado-Reyes.  For this GENESIS 2.4 beta release, we would
+## appreciate comments and feedback from other users of recent
+## versions of MacOS , and the upcoming Yosemite release, in
+## particular.  
 ##
-## For this beta release, we would appreciate comments and feedback from other
-## users of recent versions of MacOS.  The paths below for XLIB and XINCLUDE
-## may no longer be valid, will probably not cause problems.
-## If compilation fails because of errors in netcdf, see the earlier comments
-## on changing the definitions for the netCDF file format, in order to disable it.
+## If compilation fails because of errors in netcdf, see the earlier
+## comments on changing the definitions for the netCDF file format, in
+## order to disable it. Recent changes to the src/diskio library may
+## have solved this problem.
 ##
+## For most Mac users, the biggest problem will be installing the
+## necessary X window system libraries, and locating where they are
+## installed in order to properly set the Makefile definitions in the
+## section "Mac OS X and Darwin (PPC and Intel x86 based systems)".
+##
+## It is recommended that you first try "make nxgenesis" to see if
+## there are any problems other than with the installation of XODUS.
+## XODUS makes use of the legacy Athena Widget set (Xaw) within the
+## X.org libraries. When building GENESIS with XODUS, you may
+## encounter compilation errors involving the failure to find header
+## files for Xlib.h and Intrinsic.h, which are expected to be in
+## /usr/X11/include/.
+
+## Support for the X.org version of the X11 libraries is often found
+## within the 'Xcode' developer toolset provided by Apple. On newer
+## Macs, there will be a menu within Xcode for installing development
+## packages.  Another option is to visit the web site
+## htp://xquartz.macosforge.org/landing/ for a version of the X.Org X
+## Window System that runs on OS X.
+
+## The paths below for XLIB and XINCLUDE may not be valid, but may not
+## cause problems if the compiler is aware of the actual location of
+## the needed X libraries and include files.
 
 # MACHINE=MacOSXDarwin
 # OS=BSD
 
-# XINCLUDE=-I/usr/X11R6/include
-# XLIB=/usr/X11R6/lib
+## Older versions may use /usr/X11R6
+# XINCLUDE=-I/usr/X11/include
+# XLIB=/usr/X11/lib
 
 # CC=cc
 # CPP=cpp -P 
@@ -980,7 +1006,7 @@ SPRNGLIB   = $(SPRNGDIR)/lib/lib$(SPRNG_LIB).a
 # TERMCAP=-lcurses
 # TERMOPT=-DTERMIO -DDONT_USE_SIGIO
 
-## end  MacOS X and Darwin (PPC and Intel x86 based systems)
+## end  Mac OS X and Darwin (PPC and Intel x86 based systems)
 
 # ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~
 # System:	FreeBSD 4.1
