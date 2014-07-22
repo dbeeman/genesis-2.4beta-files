@@ -836,7 +836,7 @@ SPRNGLIB   = $(SPRNGDIR)/lib/lib$(SPRNG_LIB).a
 # MACHINE=Linux
 # OS=BSD
 
-# XINCLUDE=/usr/include/X11
+# XINCLUDE=-I/usr/include/X11
 
 ## Choose ONE XLIB line to uncomment:
 ## For 32-bit architectures
