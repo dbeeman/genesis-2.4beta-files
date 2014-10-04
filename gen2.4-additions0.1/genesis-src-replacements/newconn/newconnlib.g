@@ -427,6 +427,7 @@ addfunc planarweight        PlanarWeight
 addfunc volumeweight        VolumeWeight
 addfunc planarconnect       do_planarconnect
 addfunc volumeconnect       do_volumeconnect
+addfunc volumeconnect3      do_volumeconnect3
 addfunc normalizeweights    NormalizeWeights
 addfunc getsynindex         do_getsynindex int
 addfunc getsyncount         do_getsyncount int 
@@ -436,7 +437,9 @@ addfunc resetsynchanbuffers ResetSynchanBuffers
 addfunc planarweight2       PlanarWeight2
 addfunc planardelay2        PlanarDelay2
 addfunc volumedelay2        VolumeDelay2
+addfunc volumedelay3        VolumeDelay3
 addfunc volumeweight2       VolumeWeight2
+addfunc volumeweight3       VolumeWeight3
 addfunc fileconnect       	do_fileconnect
 
 /*

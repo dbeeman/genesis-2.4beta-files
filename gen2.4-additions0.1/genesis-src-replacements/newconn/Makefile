@@ -156,8 +156,10 @@ default : $(TARGET_OBJ)
 
 OBJECTS = 	\
 		connect.o		\
+		connect3.o		\
 		delay.o			\
 		delay2.o		\
+		delay3.o		\
 		facsynchan.o		\
 		getsyn.o		\
 		hebbsynchan.o		\
@@ -170,6 +172,7 @@ OBJECTS = 	\
 		SynE.o SynG.o SynS.o \
 		weight.o		\
 		weight2.o		\
+		weight3.o		\
 		stdp_rules.o
 
 HEADERS = 	\
