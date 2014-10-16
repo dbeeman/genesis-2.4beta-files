@@ -1,12 +1,12 @@
-Contents of the GENESIS 2.4 Reference Manual (July 2014 beta release)
-
-Note that for this beta release, HTML versions of new additions have not yet
-been added to genesis/Hyperdoc.
+Contents of the GENESIS 2.4 Reference Manual
 
 The *.txt files listed here are those used by the on-line help within
 GENESIS.  For example:
 
 	genesis > help Intro | more
+
+The hypertext version of the Reference Manual can be found in the
+genesis/Hyperdoc directory.
 
 Contents - CONTENTS.txt
 
