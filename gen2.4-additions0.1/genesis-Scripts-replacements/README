@@ -6,16 +6,16 @@ into the appropriate directory and follow the directions given in the
 README file for that directory.
 
 These simulations fall into two categories.  The "neuroscience tutorials"
-are
+and their README files are:
 
-squid
-cable
-neuron
-burster
-traub91
-CPG
-piriform
-purkinje
+* squid: squid/README.txt, squid/squid.txt
+* cable: cable/README.txt
+* neuron: neuron/README.txt
+* burster: burster/README.txt
+* traub91: traub91/README.txt
+* CPG: CPG/README.txt
+* piriform: piriform/piriform-help.txt
+* purkinje: purkinje/README.txt
 
 These  simulations were designed as interactive tutorials for
 teaching concepts in neurobiology and neural modeling.  As their use
@@ -30,7 +30,7 @@ research simulations.
 
 Further details of these tutorials and the theory behind them are given
 in "The Book of GENESIS" by James M. Bower and David Beeman.  The file
-"Doc/BoG.txt" provides more information about this book.
+"../Doc/BoG.txt" provides more information about this book.
 
 The tutorial on single neuron behavior in "Scripts/neuron" is a good one to
 start with, as it has fairly extensive built-in help available.  To run it,
@@ -44,7 +44,7 @@ generate state plots.  The accompanying exercises help the student
 understand the Hodgkin-Huxley model and the procedure used to calculate rate
 parameters from voltage clamp experiments.  Other exercises elucidate the
 basis of post-inhibitory rebound and refractory period.  Documentation is
-contained in the file squid.text.  Give the command "genesis Squid" to run
+contained in the file squid/squid.text.  Give the command "genesis Squid" to run
 the tutorial and then click on "help".
 
 The "cable" tutorial simulates an extensible neuronal cable.  Current
@@ -58,7 +58,7 @@ cell builder environment and can also serve as an introduction to Neurokit.
 This allows the user to modify most of the relevant parameters and
 assumptions used in the model and to investigate the causes of many of the
 features seen in molluscan pacemaker firing patterns.  The cell which is
-modeled is a ``generic burster'', loosely modeled after the Aplysia R15
+modeled is a "generic burster", loosely modeled after the Aplysia R15
 cell, although it contains channel models fitted to measurements on bursting
 neurons in several different molluscs.  The README file gives instructions
 for running the tutorial.
@@ -78,7 +78,7 @@ neuronal network of four cells.  The simulation allows you to set any
 pattern of connections between the cells, using either excitatory or
 inhibitory connections, and to vary the cell and channel parameters.
 
-The "piriform" directory contains a ``user-friendly'' adaptation of
+The "piriform" directory contains a "user-friendly" adaptation of
 the research simulation used by Wilson and Bower to model the processing of
 olfactory inputs to the piriform cortex.  This scaled-down version of the
 original simulation uses 135 each of pyramidal cells, feedforward and
@@ -95,23 +95,23 @@ and channel conductances vary and interact within a real Purkinje cell.
 --------------------------------------------------------------------------
 
 The "demos" are intended as examples of simulations which can be built
-with the package.  The demos currently include:
+with the package.  The demosand their documentation currently include:
 
-* torials
-* MultiCell
-* orient_tut
-* neurokit
-* kinetikit
-* channels
-* vclamp
-* int_methods
-* examples
-* newlib
-* param
-* chemesis
-* gpython-tools 
-* stdp_rules
-* VAnet2
+* tutorials: tutorials/README.txt
+* MultiCell: MultiCell/README.txt, MultiCell/README.txt
+* orient_tut: orient_tut/README.txt
+* neurokit: neuroktit/README.txt
+* kinetikit: kinetikit/README.txt
+* channels: channels/README.txt
+* vclamp: vclamp/README.txt
+* int_methods: int_methods/README.txt
+* examples: examples
+* newlib: newlib/README.txt
+* param: param/README.txt
+* chemesis: chemesis/README.html, chemesis/CalTut.html
+* gpython-tools: gpython-tools/README.html, gpython-tools/README-gipyplot.html
+* stdp_rules: stdp_rules/README.html
+* VAnet2: VAnet2/README.html
 
 The Scripts/tutorials directory contains the GENESIS scripts which are
 listed in Appendix B of "The Book of GENESIS".  These scripts are used
