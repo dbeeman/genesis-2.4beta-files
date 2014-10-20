@@ -1,18 +1,25 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <HTML>
 <HEAD>
-<TITLE></TITLE>
+<TITLE>src/README</TITLE>
 <META NAME="generator" CONTENT="txt2html v1.28">
 </HEAD>
 <BODY>
 
-<H2>GENESIS 2.4 beta genesis/src/README file</H2>
+<P>
+<a href="../index.html"><img src="../images/back2.gif" align="middle"
+ hspace=12>Return to the GENESIS main index</a>
+<P>
+<HR>
+<P>
+
+
+<center><H2>GENESIS 2.4 genesis/src/README file</H2></center>
 
 <P>
 GENESIS Version 2.4 README<BR>
 Building and Installing GENESIS<BR>
-Last edited: $Date: 2014/07/21 10:00:08 $
-.
+Last edited: $Date: 2014/10/19 20:23:58 $
 
 <P>
 <STRONG>CONTENTS</STRONG>
@@ -37,10 +44,11 @@ Last edited: $Date: 2014/07/21 10:00:08 $
 <STRONG>6  KNOWN PLATFORMS</STRONG><BR>
 <STRONG>7  PROBLEMS COMPILING GENESIS</STRONG>
 <P>
-        7.1 Compiling with Mac OS X<BR>
+<B>7.1 Compiling with Mac OS X</B>
+<P>
 <STRONG>8  PROBLEMS RUNNING GENESIS</STRONG>
 <P>
-        8.1  Floating Point Variation
+ <B>8.1  Floating Point Variation</B>
 
 <P>
 <STRONG>1  QUICK START</STRONG>
@@ -75,7 +83,7 @@ Last edited: $Date: 2014/07/21 10:00:08 $
 <P>
     In particular, see Section 4.5 on directing error messages to a
     file, and Section 7. Mac users, be sure to read Section 7.1.
-    For this GENESIS 2.4 beta release, we would like to hear your
+    For this GENESIS 2.4 release, we would like to hear your
     experiences compiling GENESIS with XODUS.
 
 <P>
@@ -121,7 +129,7 @@ Last edited: $Date: 2014/07/21 10:00:08 $
     actual build process.
 
 <P>
-4.1  X11 Development Kit
+<B>4.1  X11 Development Kit</B>
 
 <P>
     X11 development files are needed if you intend to compile the graphical
@@ -150,7 +158,7 @@ Last edited: $Date: 2014/07/21 10:00:08 $
     by someone else for your OS.
         
 <P>
-4.2  yacc and lex
+<B>4.2  yacc and lex</B>
 
 <P>
     GENESIS uses the yacc and lex programs to generate a parser for SLI, the
@@ -162,7 +170,7 @@ Last edited: $Date: 2014/07/21 10:00:08 $
     the current releases of bison and flex are in the /pub/gnu directory.
 
 <P>
-4.3  Required Makefile Modifications
+<B>4.3  Required Makefile Modifications</B>
 
 <P>
     Make a copy of src/Makefile.dist to src/Makefile and edit src/Makefile
@@ -176,7 +184,7 @@ Last edited: $Date: 2014/07/21 10:00:08 $
     the beginning of the file.
 
 <P>
-4.4  Custom Makefile Modifications
+<B>4.4  Custom Makefile Modifications</B>
 
 <P>
     If for some reason your X11 include and library files are located in
@@ -211,7 +219,7 @@ Last edited: $Date: 2014/07/21 10:00:08 $
     src/Makefile about using openwin.)
 
 <P>
-4.5  Compiling
+<B>4.5  Compiling</B>
 
 <P>
     From the src directory type:
@@ -228,8 +236,9 @@ Last edited: $Date: 2014/07/21 10:00:08 $
     viewed by typing:
 
 <P>
+<PRE>
         tail -f make.out     [ hit ^C to exit the tail ]
-
+</PRE>
 <P>
     After you return from your coffee break, check the end (say, the last 30-50
     lines) of make.out for any sign of errors. Unfortunately, the GENESIS
@@ -245,7 +254,7 @@ Last edited: $Date: 2014/07/21 10:00:08 $
     "make minall".
     
 <P>
-4.6  Installation
+<B>4.6  Installation</B>
     
 <P>
     After a successful compile, the distribution can be installed by
@@ -274,8 +283,9 @@ Last edited: $Date: 2014/07/21 10:00:08 $
 <P>
     After a successful installation, type:
 <P>
+<PRE>
         make clean
-
+</PRE>
 <P>
     to remove temporary files which were created during the compilation.
     For a more thorough cleaning, use 'make cleandist', but note that this will
@@ -306,8 +316,9 @@ Last edited: $Date: 2014/07/21 10:00:08 $
     /usr/local/genesis-2.4/genesis and your shell is tcsh or csh, use:
 
 <P>
+<PRE>
         set path=($path /usr/local/genesis-2.4/genesis)
-
+</PRE>
 <P>
     If you are using sh or bash, use
 
@@ -332,7 +343,7 @@ Last edited: $Date: 2014/07/21 10:00:08 $
     system (e.g., README.OSX) in this directory.
 
 <P>
-5.1  Testing the Distribution
+<B>5.1  Testing the Distribution</B>
 
 <P>
     If you wish to test specifics, cd to Scripts/{neuron, squid, neurokit,
@@ -359,22 +370,22 @@ Last edited: $Date: 2014/07/21 10:00:08 $
     Also, see the discussion on floating point computation below.
 
 <P>
-5.2  The GENESIS Neural Modeling Tutorials
+<B>5.2  The GENESIS Neural Modeling Tutorials</B>
 
 <P>
     The genesis/Tutorials directory in the GENESIS distribution is provided as
     a place holder for supplemental hypertext GENESIS modeling tutorials and
     documentation, including the GENESIS Neural Modeling Tutorials package.
     These are an evolving set of HTML tutorials intended to teach the process
-    of constructing biologically realistic neural models with the GENESIS
-    simulator. The latest version of this package is offered as a separate
-    download from the GENESIS web site. The downloaded files from
-    http://genesis-sim.org/GENESIS/UGTD.html should be unpacked in the
-    genesis/Tutorials directory in order to augment the files that are
-    provided there.  The "bare bones" version that is provided with the
-    GENESIS distribution includes a beginner's guide to UNIX/Linux commands
-    that may be useful for those who are new to the command line environment
-    used by GENESIS.
+of constructing biologically realistic neural models with the GENESIS
+simulator. The latest version of this package is offered as a separate
+download from the GENESIS web site. The downloaded files from
+<A HREF="http://genesis-sim.org/GENESIS/UGTD.html">http://genesis-sim.org/GENESIS/UGTD.html</A>
+should be unpacked in the genesis/Tutorials directory in order to
+augment the files that are provided there.  The "bare bones" version
+that is provided with the GENESIS distribution includes a beginner's
+guide to UNIX/Linux commands that may be useful for those who are new
+to the command line environment used by GENESIS.
 
 <P>
 <STRONG>6  KNOWN PLATFORMS</STRONG>
@@ -420,18 +431,15 @@ Last edited: $Date: 2014/07/21 10:00:08 $
 
 <P>
     --&gt; You have not properly set the various options in the Makefile.
-<PRE>
         Make sure you have removed the comment marker (#) from all variables
         relevant to your operating system. If you've used the Makefile before,
         make sure there are no variables uncommented under other operating
         systems. Also, be sure there is not a different section which more
         closely resembles the system you are using; there are separate sections
         for Linux on a Power PC and Linux on an x86 for example.
-</PRE>
 
 <P>
     --&gt; Some necessary library or directory of include files (e.g. the X11
-<PRE>
         libraries) has been installed in a non-standard place on your system,
         or were not installed.  For example, be sure that all the C and X11
         development libraries and tools have been installed.  If a file or
@@ -441,90 +449,70 @@ Last edited: $Date: 2014/07/21 10:00:08 $
         changes to the path given in XLIB, XINCLUDE, or LIBS.  You may have to
         specify an additional library search path with the "-L" option, for
         example "LIBS= $(LEXLIB) -lm -L/usr/pubsw/lib"
-</PRE>
 
 <P>
     --&gt; M4 errors. Some architectures may require modification of:
-<PRE>
         src/diskio/interface/netcdf/netcdf-3.4/src/macros.make
         The file contains a flag (-B10000) to the m4 processor which most
         modern m4 implementations ignore. The m4 processor distributed with
         FreeBSD is known to reject this flag, as well as some Solaris versions.
         Comment out or eliminate the flag (7 characters), or install GNU m4
         and make sure it is first in your PATH.
-</PRE>
-
 <P>
     --&gt; GCC 2.6.3 users should probably upgrade to a newer version. If
-<PRE>
         __OPTIMIZE__ is defined when including stdlib.h, it will causes
         incompatible redefinition of some functions.
-</PRE>
-
 <P>
     --&gt; Sun Openwin: you may need to add /usr/openwin/lib to the
-<PRE>
         LD_LIBRARY_PATH environment variable when compiling and/or
         running GENESIS.  If, when running GENESIS, you get a complaint
         that libX11.so.4.2 can't be found (or something similar),
         LD_LIBRARY_PATH is likely to be the problem.
-</PRE>
-
 <P>
     --&gt; Sun Solaris with the GCC compiler: There have been reports
-<PRE>
         that GCC versions 3.x produce errors when the code_g program
         is compiled using optimization level O2.  If you encounter this
         problem, change the CFLAGS line to read
         'CFLAGS=-O -DBIGENDIAN'.
-</PRE>
-
 <P>
     --&gt; The SGI version of lex allocates a relatively small
-<PRE>
         input buffer of 200 characters.  If this buffer overflows, GENESIS
         will exit.  This can happen with very long arguments to commands.
         We have made changes elsewhere in the distribution to avoid this
         situation.  However, should you encounter this, you might consider
         using GNU flex instead of the SGI lex.
-</PRE>
 
 <P>
-    --&gt; Different versions of an operating system may require changes in the
-<PRE>
-        GENESIS source code or Makefile options.  If you do not find a fix in
-        the Bug-fixes directory on the GENESIS web site, please give us as much
-        information as possible about the error messages and your operating
-        system and use the bug reporting features at:
-        http://sourceforge.net/tracker/?func=add&amp;group_id=141069&amp;atid=748364
-        Simple questions can be sent to the Compilation Issues Forum:
-        http://sourceforge.net/forum/forum.php?forum_id=486276
-</PRE>
+--&gt; Different versions of an operating system may require changes in the
+GENESIS source code or Makefile options.  If you do not find a fix on
+the GENESIS web site, please give us as much information as possible
+about the error messages and your operating system in an email to the
+GENESIS Users Mailing List at
+<A HREF="https://lists.sourceforge.net/lists/listinfo/genesis-sim-users">
+https://lists.sourceforge.net/lists/listinfo/genesis-sim-users</A>
+and use the bug reporting features at:
+<A HREF="http://sourceforge.net/tracker/?func=add&amp;group_id=141069&amp;atid=748364">
+http://sourceforge.net/tracker/?func=add&amp;group_id=141069&amp;atid=748364</A>.
 
 <P>
     --&gt; SunOS 4.1 may have some peculiarities which prevent SPRNG and NETCDF
-<PRE>
         from compiling. You may need to comment out these sections in your
         Makefile.
-</PRE>
 
 <P>
     --&gt; When compiling under Cygwin, all source files should use Unix-like
-<PRE>
         line terminators. This should be the default in the distribution.
         However, if you've edited some source file or are compiling your
         own objects into GENESIS, your source file(s) may have some Windows/DOS
         line terminators. This may manifest itself during compilation as
         "syntax error"s when 'make' runs the code_sys or code_g auxiliary
         programs. Use the dos2unix command to fix the offending file(s).
-</PRE>
-
 <P>
-7.1 Compiling with Mac OS X
+<B>7.1 Compiling with Mac OS X</B>
 
 
 <P>
-    For this GENESIS 2.4 beta release, we would appreciate comments and feedback
+    For this GENESIS 2.4 release, we would appreciate comments and feedback
     from other users of recent versions of Mac OS X, and the upcoming Yosemite
     release, in particular.
 
@@ -567,7 +555,7 @@ Last edited: $Date: 2014/07/21 10:00:08 $
     Please see README.bindist in the top-level directory.
 
 <P>
-8.1  Floating Point Variation
+<B>8.1  Floating Point Variation</B>
 
 <P>
     The default compiler options will differ for different compilers (say Intel
@@ -585,6 +573,11 @@ Last edited: $Date: 2014/07/21 10:00:08 $
     point conformance will break GENESIS! In particular, the gcc option
     -funsafe-math-optimizations (implied by -ffast-math) is known to cause
     some GENESIS operations to fail.
-
+<P>
+<HR>
+<P>
+<a href="../index.html"><img src="../images/back2.gif" align="middle"
+ hspace=12>Return to the GENESIS main index</a>
+<P>
 </BODY>
 </HTML>
