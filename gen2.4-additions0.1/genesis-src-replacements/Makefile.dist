@@ -2,7 +2,7 @@
 #
 #				G E N E S I S
 #		    The General Neural Simulation System
-#				 Version 2.4beta
+#				 Version 2.4
 #
 # SYNOPSIS: This is the top-level Makefile for GENESIS.  
 #           YOU MUST EDIT THIS FILE BEFORE RUNNING "make".
@@ -940,7 +940,7 @@ SPRNGLIB   = $(SPRNGDIR)/lib/lib$(SPRNG_LIB).a
 # ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~
 
 ## This configuration was originally provided by a GENESIS user,
-## Alfonso Delgado-Reyes.  For this GENESIS 2.4 beta release, we would
+## Alfonso Delgado-Reyes.  For this GENESIS 2.4 release, we would
 ## appreciate comments and feedback from other users of recent
 ## versions of MacOS , and the upcoming Yosemite release, in
 ## particular.  
